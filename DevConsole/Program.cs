@@ -36,9 +36,8 @@ internal class Program
     /// </summary>
     private static async Task<Space> CreateSpaceAsync(AnytypeClient client, string name, string? description = null)
     {
-        var request = new CreateSpaceRequest
+        var request = new CreateSpaceRequest(name)
         {
-            Name = name,
             Description = description ?? string.Empty
         };
 
