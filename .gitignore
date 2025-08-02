@@ -18,7 +18,6 @@
 *.bak
 *.[Cc]ache
 *.ilk
-*.log
 *.lib
 *.sbr
 *.sdf
@@ -36,6 +35,9 @@ Ankh.NoLoad
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
+.idea/
+.vscode/
+*.code-workspace
 
 #Project files
 [Bb]uild/
@@ -43,13 +45,27 @@ _ReSharper*/
 #Subversion files
 .svn
 
-# Office Temp Files
-~$*
+# Configuration files (local/dev only)
+appsettings.Development.json
 
+# Logs
+*.log
 log.txt
-liquibase.local.properties
-*.orig
+
+#NuGet-related
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+packages/
+
+# Other
+*.bak
+*.old
+*.tmp
+*.swp
+*.swo
 *.playlist
-/packages
-packages
- 
+*.dbmdl
+*.sdf
+*.sql
