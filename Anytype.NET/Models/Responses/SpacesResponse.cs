@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Anytype.NET.Models;
+namespace Anytype.NET.Models.Responses;
 
 /// <summary>
 /// Represents the response returned from the Anytype API when requesting a list of spaces.

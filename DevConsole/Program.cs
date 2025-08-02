@@ -1,5 +1,6 @@
 ﻿using Anytype.NET;
 using Anytype.NET.Models;
+using Anytype.NET.Models.Requests;
 using Microsoft.Extensions.Configuration;
 
 namespace DevConsole;

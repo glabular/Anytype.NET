@@ -1,4 +1,4 @@
-﻿namespace Anytype.NET;
+﻿namespace Anytype.NET.Models.Requests;
 
 /// <summary>
 /// Represents the data required to create a new space.

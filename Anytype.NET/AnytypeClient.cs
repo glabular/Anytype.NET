@@ -1,4 +1,6 @@
 ﻿using Anytype.NET.Models;
+using Anytype.NET.Models.Requests;
+using Anytype.NET.Models.Responses;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
