@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Anytype.NET\Anytype.NET.csproj" />
+  </ItemGroup>
+
 </Project>
