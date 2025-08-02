@@ -1,4 +1,6 @@
 ﻿using Anytype.NET.Models;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace Anytype.NET;
@@ -26,9 +28,9 @@ public class AnytypeClient
     }
 
     /// <summary>
-    /// Gets the list of spaces asynchronously.
+    /// Retrieves a simplified list of all accessible spaces.
     /// </summary>
-    /// <returns>A list of <see cref="Space"/> objects (or empty list if no spaces are found).</returns>
+    /// <returns>A list of <see cref="Space"/> objects (or empty list if none are found).</returns>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"></exception>
     /// <exception cref="InvalidOperationException"/>
@@ -49,7 +51,7 @@ public class AnytypeClient
     }
 
     /// <summary>
-    /// Sends a request to the /spaces endpoint.
+    /// Retrieves detailed space data.
     /// </summary>
     /// <returns>A <see cref="SpacesResponse"/> containing the list of Spaces and additional response data.</returns>
     /// <exception cref="HttpRequestException">Thrown when the HTTP request fails or returns a non-success status code.</exception>
@@ -65,12 +67,88 @@ public class AnytypeClient
 
             var response = await _httpClient.SendAsync(request);
 
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                var statusCode = (int)response.StatusCode;
+                var content = await response.Content.ReadAsStringAsync();
+
+                throw new HttpRequestException(
+                    $"Request to Anytype API failed with status code {statusCode}. Response: {content}",
+                    null,
+                    response.StatusCode);
+            }
 
             var responseBody = await response.Content.ReadAsStringAsync();
             var spacesResponse = JsonSerializer.Deserialize<SpacesResponse>(responseBody, _serializerOptions);
 
             return spacesResponse ?? throw new InvalidOperationException("Failed to deserialize SpacesResponse.");
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new Exception("Error occurred while sending request to Anytype API.", ex);
+        }
+        catch (JsonException ex)
+        {
+            throw new Exception("Error occurred while parsing response from Anytype API.", ex);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Creates a new space.
+    /// </summary>
+    /// <param name="createSpaceRequest">
+    /// An object containing the name and description of the space to create.
+    /// </param>
+    /// <returns>
+    /// The newly created <see cref="Space"/>.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="createSpaceRequest"/> is null.</exception>
+    /// <exception cref="HttpRequestException">Thrown when the HTTP request fails or returns a non-success status code.</exception>
+    /// <exception cref="JsonException">Thrown when the response cannot be parsed into a <see cref="Space"/> object.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if the deserialized <see cref="Space"/> object is null.</exception>
+    /// <exception cref="Exception">Thrown when an unexpected error occurs during the request or processing.</exception>
+    public async Task<Space> CreateSpaceAsync(CreateSpaceRequest createSpaceRequest)
+    {
+        ArgumentNullException.ThrowIfNull(createSpaceRequest);
+
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseAddress}/v1/spaces");
+
+            request.Headers.Add("Authorization", $"Bearer {_apiKey}");
+
+            var json = JsonSerializer.Serialize(createSpaceRequest);
+
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var statusCode = (int)response.StatusCode;
+                var content = await response.Content.ReadAsStringAsync();
+
+                throw new HttpRequestException(
+                    $"Request to Anytype API failed with status code {statusCode}. Response: {content}",
+                    null,
+                    response.StatusCode);
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var wrapper = JsonSerializer.Deserialize<CreateSpaceResponse>(responseBody, _serializerOptions);
+
+            if (wrapper == null || wrapper.Space == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize the created Space.");
+            }
+
+            return wrapper.Space;
         }
         catch (HttpRequestException ex)
         {
