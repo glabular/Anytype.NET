@@ -4,6 +4,7 @@ using Anytype.NET.Models.Responses;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET;
 
@@ -14,7 +15,13 @@ public class AnytypeClient
     private readonly HttpClient _httpClient;
     private static readonly JsonSerializerOptions _serializerOptions = new()
     {
-        PropertyNameCaseInsensitive = true
+        PropertyNameCaseInsensitive = true,
+        Converters =
+        {
+            new JsonStringEnumConverter(
+                JsonNamingPolicy.CamelCase, 
+                allowIntegerValues: false),
+        }
     };
 
     /// <summary>
@@ -41,7 +48,7 @@ public class AnytypeClient
     {
         try
         {
-            var response = await GetSpacesResponseAsync();
+            var response = await GetSpacesDetailedAsync();
             var spaces = response.Spaces;
 
             return spaces ?? [];
@@ -59,7 +66,7 @@ public class AnytypeClient
     /// <exception cref="HttpRequestException">Thrown when the HTTP request fails or returns a non-success status code.</exception>
     /// <exception cref="JsonException">Thrown when the response cannot be parsed into a <see cref="SpacesResponse"/>.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the deserialized response is null or invalid.</exception>
-    public async Task<SpacesResponse> GetSpacesResponseAsync()
+    public async Task<SpacesResponse> GetSpacesDetailedAsync()
     {
         try
         {
@@ -151,6 +158,74 @@ public class AnytypeClient
             }
 
             return wrapper.Space;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new Exception("Error occurred while sending request to Anytype API.", ex);
+        }
+        catch (JsonException ex)
+        {
+            throw new Exception("Error occurred while parsing response from Anytype API.", ex);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Creates a new object within the specified space in Anytype.
+    /// </summary>
+    /// <param name="spaceId">
+    /// The unique identifier of the space where the object will be created.
+    /// </param>
+    public async Task<AnyObject> CreateObject(string spaceId, CreateObjectRequest createObjectRequest)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        ArgumentNullException.ThrowIfNull(createObjectRequest);
+
+        try
+        {
+            var request = new HttpRequestMessage(
+                HttpMethod.Post, 
+                $"{BaseAddress}/v1/spaces/{spaceId}/objects");
+
+            request.Headers.Add("Authorization", $"Bearer {_apiKey}");
+            request.Headers.Add("Anytype-Version", "2025-05-20");
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var json = JsonSerializer.Serialize(createObjectRequest, _serializerOptions);
+
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var statusCode = (int)response.StatusCode;
+                var content = await response.Content.ReadAsStringAsync();
+
+                throw new HttpRequestException(
+                    $"Request to Anytype API failed with status code {statusCode}. Response: {content}",
+                    null,
+                    response.StatusCode);
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var wrapper = JsonSerializer.Deserialize<CreateObjectResponse>(responseBody, _serializerOptions);
+
+            if (wrapper == null || wrapper.Object == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize the created object.");
+            }
+
+            return wrapper.Object;
+
         }
         catch (HttpRequestException ex)
         {

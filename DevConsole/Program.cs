@@ -12,45 +12,105 @@ internal class Program
         var apiKey = GetApiKeyFromConfig();
         var client = new AnytypeClient(apiKey);
 
+
         //
-        // === Demo section: showcasing example API calls using AnytypeClient ===
+        // === Demo section: showcasing example API calls using Anytype.NET ===
         //
 
 
         // Get all spaces
-        await GetAndPrintSpaces(client);
+        await GetSpacesAsync(client);
 
 
-        // Create a new space
-        var name = "AnySpace 3";
-        var description = "This is a space created from the console application.";
-        var space = await CreateSpaceAsync(client, name, description);
+        // Create a new space        
+        var space = await CreateSpaceAsync(client);
 
-        Console.WriteLine("New space created:");
-        Console.WriteLine($"{space.Name}");
-        Console.WriteLine($"Description: {space.Description}");
-        Console.WriteLine($"ID: {space.Id}");
+
+        // Create a new object in the space
+        var createdObject = await CreateObject(client);
     }
 
     /// <summary>
-    /// Creates a new space with the given name and optional description.
+    /// Creates a new page object in a specified space using the Anytype.NET client.
     /// </summary>
-    private static async Task<Space> CreateSpaceAsync(AnytypeClient client, string name, string? description = null)
+    private static async Task<AnyObject> CreateObject(AnytypeClient client)
     {
+        // Replace with your actual space ID
+        var spaceId = string.Empty;
+
+        var createObjectRequest = new CreateObjectRequest
+        {
+            // Set the title of the page
+            Name = "Antares",
+
+            // Set the emoji icon for the page
+            Icon = new Icon
+            {
+                Emoji = "🌟",
+                Format = "emoji"
+            },
+
+            // The body supports Markdown formatting
+            Body = "## Introduction\n\n" +
+               "Antares is the brightest star in the constellation **Scorpius**.\n\n" +
+               "- It is a **red supergiant**, nearing the end of its life.\n" +
+               "- Antares is located approximately **550 light-years** from Earth.\n" +
+               "- Its name means *'rival of Mars'* due to its reddish appearance.\n\n" +
+               "### Fun Fact\n\n" +
+               "Antares is so large that if it replaced the Sun, it would engulf the orbits of Mercury, Venus, Earth, and Mars.\n\n",
+
+            // The type of the object being created
+            TypeKey = "page",
+
+            // Optional metadata properties
+            Properties = new List<Property>
+            {
+                // A short description
+                PropertyFactory.Description("An introductory overview of Antares."),
+
+                // Mark the object as done
+                PropertyFactory.Done(true)
+            }
+        };
+
+        var createdObject = await client.CreateObject(spaceId, createObjectRequest);
+
+        Console.WriteLine("New object created:");
+        Console.WriteLine($"Name: {createdObject.Name}");
+        Console.WriteLine($"ID: {createdObject.Id}");
+
+        return createdObject;
+    }
+
+    /// <summary>
+    /// Creates a new space in Anytype via the Anytype.NET client with a predefined name and description.
+    /// Prints the details of the created space to the console.
+    /// </summary>
+    private static async Task<Space> CreateSpaceAsync(AnytypeClient client)
+    {
+        var name = "C# fandom";
+        var description = "This is a space created using Anytype.NET.";
+
         var request = new CreateSpaceRequest(name)
         {
-            Description = description ?? string.Empty
+            Description = description
         };
 
         var newSpace = await client.CreateSpaceAsync(request);
+
+        Console.WriteLine("New space created:");
+        Console.WriteLine($"{newSpace.Name}");
+        Console.WriteLine($"Description: {newSpace.Description}");
+        Console.WriteLine($"ID: {newSpace.Id}");
 
         return newSpace;
     }
 
     /// <summary>
-    /// Retrieves all available spaces and prints them in the console.
+    /// Retrieves all available spaces from the Anytype API using the Anytype.NET client
+    /// and prints their details to the console.
     /// </summary>
-    private static async Task GetAndPrintSpaces(AnytypeClient client)
+    private static async Task GetSpacesAsync(AnytypeClient client)
     {
         try
         {
@@ -72,6 +132,7 @@ internal class Program
             foreach (var space in spaces)
             {
                 Console.WriteLine($"{space.Name}");
+                Console.WriteLine($"{space.Id}");
             }
         }
         catch (Exception ex)
