@@ -112,33 +112,26 @@ internal class Program
     /// </summary>
     private static async Task GetSpacesAsync(AnytypeClient client)
     {
-        try
-        {
-            var spaces = await client.GetSpacesAsync();
+        var spaces = await client.GetSpacesAsync();
 
-            if (spaces.Count == 0)
-            {
-                Console.WriteLine("No spaces found.");
-            }
-            else if (spaces.Count == 1)
-            {
-                Console.WriteLine("1 space loaded:");
-            }
-            else
-            {
-                Console.WriteLine($"{spaces.Count} spaces loaded:");
-            }
-
-            foreach (var space in spaces)
-            {
-                Console.WriteLine($"{space.Name}");
-                Console.WriteLine($"{space.Id}");
-            }
-        }
-        catch (Exception ex)
+        if (spaces.Count == 0)
         {
-            Console.WriteLine($"An error occurred: {ex.Message}");
+            Console.WriteLine("No spaces found.");
         }
+        else if (spaces.Count == 1)
+        {
+            Console.WriteLine("1 space loaded:");
+        }
+        else
+        {
+            Console.WriteLine($"{spaces.Count} spaces loaded:");
+        }
+
+        foreach (var space in spaces)
+        {
+            Console.WriteLine($"{space.Name}");
+            Console.WriteLine($"{space.Id}");
+        }        
     }
 
     private static string GetApiKeyFromConfig()
