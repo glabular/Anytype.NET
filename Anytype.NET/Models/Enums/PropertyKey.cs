@@ -16,5 +16,7 @@ public enum PropertyKey
 
     LastModifiedBy,
 
+    LastOpenedDate,
+
     Backlinks
 }
