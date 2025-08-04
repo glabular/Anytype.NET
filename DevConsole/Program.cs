@@ -28,6 +28,25 @@ internal class Program
 
         // Create a new object in the space
         var createdObject = await CreateObject(client);
+
+
+        // Retrieve an object by its ID
+        var requestedObject = await GetObjectById(client);
+    }
+
+    private static async Task<AnyObject> GetObjectById(AnytypeClient client)
+    {
+        var request = new GetObjectRequest(
+            // Replace with your actual values
+            spaceId: string.Empty, 
+            objectId: string.Empty);
+
+        var anyObject = await client.GetObjectAsync(request);
+        Console.WriteLine("Object retrieved:");
+        Console.WriteLine($"Name: {anyObject.Name}");
+        Console.WriteLine($"ID: {anyObject.Id}");
+
+        return anyObject;
     }
 
     /// <summary>

@@ -239,4 +239,65 @@ public class AnytypeClient
             throw;
         }
     }
+
+    /// <summary>
+    /// Retrieves a single object from a specified space using the Anytype API.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space containing the object.</param>
+    /// <param name="objectId">The ID of the object to retrieve.</param>
+    /// <returns>The requested <see cref="AnyObject"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="JsonException"/>
+    public async Task<AnyObject> GetObjectAsync(GetObjectRequest getObjectRequest)
+    {
+        ArgumentNullException.ThrowIfNull(getObjectRequest);
+
+        try
+        {
+            var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            $"{BaseAddress}/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}");
+
+            request.Headers.Add("Authorization", $"Bearer {_apiKey}");
+            request.Headers.Add("Anytype-Version", "2025-05-20");
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var statusCode = (int)response.StatusCode;
+                var content = await response.Content.ReadAsStringAsync();
+
+                throw new HttpRequestException(
+                    $"Request to Anytype API failed with status code {statusCode}. Response: {content}",
+                    null,
+                    response.StatusCode);
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var wrapper = JsonSerializer.Deserialize<CreateObjectResponse>(responseBody, _serializerOptions);
+
+            if (wrapper == null || wrapper.Object == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize the retrieved object.");
+            }
+
+            return wrapper.Object;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new Exception("Error occurred while sending request to Anytype API.", ex);
+        }
+        catch (JsonException ex)
+        {
+            throw new Exception("Error occurred while parsing response from Anytype API.", ex);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }
