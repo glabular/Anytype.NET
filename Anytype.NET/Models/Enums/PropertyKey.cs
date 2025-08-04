@@ -10,12 +10,11 @@ public enum PropertyKey
 
     Creator,
 
-    // TODO: Fix naming convention violation!
-    Created_date,
+    CreatedDate,
 
-    Last_modified_date,
+    LastModifiedDate,
 
-    Last_modified_by,
+    LastModifiedBy,
 
     Backlinks
 }

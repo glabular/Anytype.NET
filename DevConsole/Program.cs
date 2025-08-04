@@ -37,7 +37,7 @@ internal class Program
     private static async Task<AnyObject> GetObjectById(AnytypeClient client)
     {
         var request = new ObjectRequest(
-            // Replace with your actual values
+           // Replace with your actual values
             spaceId: string.Empty, 
             objectId: string.Empty);
 

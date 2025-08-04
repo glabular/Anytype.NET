@@ -1,4 +1,6 @@
-﻿using Anytype.NET.Models;
+﻿using Anytype.NET.Converters;
+using Anytype.NET.Models;
+using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
 using System.Net.Http.Headers;
@@ -18,9 +20,7 @@ public class AnytypeClient
         PropertyNameCaseInsensitive = true,
         Converters =
         {
-            new JsonStringEnumConverter(
-                JsonNamingPolicy.CamelCase, 
-                allowIntegerValues: false),
+            new SnakeCaseEnumConverter<PropertyKey>()
         }
     };
 
