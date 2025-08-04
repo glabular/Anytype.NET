@@ -250,15 +250,15 @@ public class AnytypeClient
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject> GetObjectAsync(GetObjectRequest getObjectRequest)
+    public async Task<AnyObject> GetObjectAsync(ObjectRequest getObjectRequest)
     {
         ArgumentNullException.ThrowIfNull(getObjectRequest);
 
         try
         {
             var request = new HttpRequestMessage(
-            HttpMethod.Get,
-            $"{BaseAddress}/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}");
+                HttpMethod.Get,
+                $"{BaseAddress}/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}");
 
             request.Headers.Add("Authorization", $"Bearer {_apiKey}");
             request.Headers.Add("Anytype-Version", "2025-05-20");
@@ -299,5 +299,5 @@ public class AnytypeClient
         {
             throw;
         }
-    }
+    }    
 }

@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models.Requests;
 
-public class GetObjectRequest
+public class ObjectRequest
 {
     /// <summary>
     /// Represents the data required to retrieve an object from a space.
@@ -8,7 +8,7 @@ public class GetObjectRequest
     /// <param name="spaceId">The identifier of the space. Cannot be null, empty, or whitespace.</param>
     /// <param name="objectId">The identifier of the object. Cannot be null, empty, or whitespace.</param>
     /// <exception cref="ArgumentException"/>
-    public GetObjectRequest(string spaceId, string objectId)
+    public ObjectRequest(string spaceId, string objectId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
