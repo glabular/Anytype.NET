@@ -73,7 +73,7 @@ internal class Program
             }
         };
 
-        var createdObject = await client.CreateObject(spaceId, createObjectRequest);
+        var createdObject = await client.CreateObjectAsync(spaceId, createObjectRequest);
 
         Console.WriteLine("New object created:");
         Console.WriteLine($"Name: {createdObject.Name}");

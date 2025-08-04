@@ -179,7 +179,7 @@ public class AnytypeClient
     /// <param name="spaceId">
     /// The unique identifier of the space where the object will be created.
     /// </param>
-    public async Task<AnyObject> CreateObject(string spaceId, CreateObjectRequest createObjectRequest)
+    public async Task<AnyObject> CreateObjectAsync(string spaceId, CreateObjectRequest createObjectRequest)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -225,7 +225,6 @@ public class AnytypeClient
             }
 
             return wrapper.Object;
-
         }
         catch (HttpRequestException ex)
         {
