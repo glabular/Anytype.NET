@@ -217,7 +217,7 @@ public class AnytypeClient
             }
 
             var responseBody = await response.Content.ReadAsStringAsync();
-            var wrapper = JsonSerializer.Deserialize<CreateObjectResponse>(responseBody, _serializerOptions);
+            var wrapper = JsonSerializer.Deserialize<ObjectResponse>(responseBody, _serializerOptions);
 
             if (wrapper == null || wrapper.Object == null)
             {
@@ -278,7 +278,7 @@ public class AnytypeClient
             }
 
             var responseBody = await response.Content.ReadAsStringAsync();
-            var wrapper = JsonSerializer.Deserialize<CreateObjectResponse>(responseBody, _serializerOptions);
+            var wrapper = JsonSerializer.Deserialize<ObjectResponse>(responseBody, _serializerOptions);
 
             if (wrapper == null || wrapper.Object == null)
             {
