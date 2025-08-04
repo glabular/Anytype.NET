@@ -1,5 +1,6 @@
 ﻿using Anytype.NET;
 using Anytype.NET.Models;
+using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
 using Microsoft.Extensions.Configuration;
 
@@ -32,12 +33,46 @@ internal class Program
 
         // Retrieve an object by its ID
         var requestedObject = await GetObjectById(client);
+
+
+        // Update exsisting object
+        var updatedObject = await UpdateObjectAsync(client);
+    }
+
+    private static async Task<AnyObject> UpdateObjectAsync(AnytypeClient client)
+    {
+        var updatedObject = await client.UpdateObjectAsync(
+            // Replace with your actual values
+            spaceId: string.Empty,
+            objectId: string.Empty,
+            new UpdateObjectRequest
+            {
+                Name = "New name",
+                Icon = null,
+                Properties =
+                [
+                    new
+                    {
+                        key = PropertyKey.Done,
+                        checkbox = false
+                    },
+                    new 
+                    {
+                        key = PropertyKey.Description,
+                        text = "This is an updated description for the object."
+                    }
+                ]
+            });
+
+        Console.WriteLine("Object has been successfully updated.");
+
+        return updatedObject;
     }
 
     private static async Task<AnyObject> GetObjectById(AnytypeClient client)
     {
         var request = new ObjectRequest(
-           // Replace with your actual values
+            // Replace with your actual values
             spaceId: string.Empty, 
             objectId: string.Empty);
 

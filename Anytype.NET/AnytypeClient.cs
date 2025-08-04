@@ -299,5 +299,85 @@ public class AnytypeClient
         {
             throw;
         }
-    }    
+    }
+
+    /// <summary>
+    /// Updates an existing object identified by <paramref name="objectId"/> within 
+    /// a specified space identified by <paramref name="spaceId"/> 
+    /// using the Anytype API.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space containing the object to update.</param>
+    /// <param name="objectId">The ID of the object to update.</param>
+    /// <param name="updateObjectRequest">The data to update on the object, including name, icon, and properties.</param>
+    /// <returns>The updated <see cref="AnyObject"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="JsonException"/>
+    public async Task<AnyObject> UpdateObjectAsync(
+        string spaceId,
+        string objectId,
+        UpdateObjectRequest updateObjectRequest)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(objectId)) 
+        {
+            throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
+        }
+
+        ArgumentNullException.ThrowIfNull(updateObjectRequest);
+
+        try
+        {
+            var requestUri = $"{BaseAddress}/v1/spaces/{spaceId}/objects/{objectId}";
+
+
+            var json = JsonSerializer.Serialize(updateObjectRequest, _serializerOptions);
+
+            var request = new HttpRequestMessage(HttpMethod.Patch, requestUri)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            request.Headers.Add("Authorization", $"Bearer {_apiKey}");
+            request.Headers.Add("Anytype-Version", "2025-05-20");
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException(
+                    $"Update failed with status {(int)response.StatusCode}. Response: {content}",
+                    null,
+                    response.StatusCode);
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var wrapper = JsonSerializer.Deserialize<ObjectResponse>(responseBody, _serializerOptions);
+
+            if (wrapper == null || wrapper.Object == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize updated object.");
+            }
+
+            return wrapper.Object;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new Exception("Error occurred while updating the object in Anytype API.", ex);
+        }
+        catch (JsonException ex)
+        {
+            throw new Exception("Error occurred while parsing response from Anytype API.", ex);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }
