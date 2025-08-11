@@ -77,7 +77,7 @@ public class SpacesClient : ClientBase
 
         var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
 
-        var response = await PatchAsync<UpdateSpaceResponse>(relativeUrl, request);
+        var response = await PatchAsync<SpaceResponse>(relativeUrl, request);
 
         return response?.Space;
     }

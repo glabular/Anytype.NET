@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models.Responses;
 
-public class UpdateSpaceResponse
+public class SpaceResponse
 {
     public Space? Space { get; set; }
 }
