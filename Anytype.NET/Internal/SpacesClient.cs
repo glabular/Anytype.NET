@@ -81,4 +81,22 @@ public class SpacesClient : ClientBase
 
         return response?.Space;
     }
+
+    /// <summary>
+    /// Gets a space by its ID.
+    /// </summary>
+    /// <param name="spaceId">The space’s ID.</param>
+    /// <returns>The requested <see cref="Space"/>.</returns>
+    public async Task<Space?> GetSpaceAsync(string spaceId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
+        var response = await GetAsync<SpaceResponse>(relativeUrl);
+
+        return response?.Space;
+    }
 }

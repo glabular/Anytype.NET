@@ -23,7 +23,7 @@ internal class Program
         await GetSpacesAsync(client);
 
 
-        // Create a new space        
+        //Create a new space
         var space = await CreateSpaceAsync(client);
 
 
@@ -38,8 +38,24 @@ internal class Program
         // Update exsisting object
         var updatedObject = await UpdateObjectAsync(client);
 
+
         // Update space
         var updatedSpace = await UpdateSpaceAsync(client);
+
+
+        // Get space by ID
+        var requestedSpace = await GetSpaceByIdAsync(client);
+    }
+
+    private static async Task<Space> GetSpaceByIdAsync(AnytypeClient client)
+    {
+        var space = await client.Spaces.GetSpaceAsync(
+            // Replace with your actual space ID
+            string.Empty);
+
+        Console.WriteLine($"The space with ID {space.Id} successfully retrieved.");
+
+        return space;
     }
 
     private static async Task<Space?> UpdateSpaceAsync(AnytypeClient client)
