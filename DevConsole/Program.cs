@@ -45,6 +45,23 @@ internal class Program
 
         // Get space by ID
         var requestedSpace = await GetSpaceByIdAsync(client);
+
+
+        // Delete object
+        var deletedObject = await DeleteObject(client);
+    }
+
+    private static async Task<AnyObject> DeleteObject(AnytypeClient client)
+    {
+        // Replace with your actual values
+        var spaceId = string.Empty;
+        var objectId = string.Empty; 
+
+        var deletedObject = await client.Objects.DeleteObjectAsync(spaceId, objectId);
+
+        Console.WriteLine($"The object with ID {objectId} in space {spaceId} has been successfully deleted.");
+
+        return deletedObject;
     }
 
     private static async Task<Space> GetSpaceByIdAsync(AnytypeClient client)

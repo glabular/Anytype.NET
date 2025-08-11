@@ -109,4 +109,35 @@ public class ObjectsClient : ClientBase
 
         return response.Object;
     }
+
+    // TODO: Exceptions
+    /// <summary>
+    /// Deletes (archives) an object within a specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space containing the object.</param>
+    /// <param name="objectId">The ID of the object to delete.</param>
+    /// <returns>The archived <see cref="AnyObject"/> after deletion.</returns>
+    public async Task<AnyObject> DeleteObjectAsync(string spaceId, string objectId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(objectId))
+        {
+            throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
+
+        var response = await DeleteAsync<ObjectResponse>(relativeUrl);
+
+        if (response == null || response.Object == null)
+        {
+            throw new InvalidOperationException("Failed to deserialize the deleted object.");
+        }
+
+        return response.Object;
+    }
 }

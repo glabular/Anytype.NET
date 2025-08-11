@@ -76,4 +76,15 @@ public abstract class ClientBase
 
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
+
+    protected async Task<T?> DeleteAsync<T>(string relativeUrl)
+    {
+        using var response = await HttpClient.DeleteAsync(relativeUrl);
+
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        return JsonSerializer.Deserialize<T>(json, SerializerOptions);
+    }
 }
