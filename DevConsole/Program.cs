@@ -41,7 +41,7 @@ internal class Program
 
     private static async Task<AnyObject> UpdateObjectAsync(AnytypeClient client)
     {
-        var updatedObject = await client.UpdateObjectAsync(
+        var updatedObject = await client.Objects.UpdateObjectAsync(
             // Replace with your actual values
             spaceId: string.Empty,
             objectId: string.Empty,
@@ -72,11 +72,11 @@ internal class Program
     private static async Task<AnyObject> GetObjectById(AnytypeClient client)
     {
         var request = new ObjectRequest(
-            // Replace with your actual values
-            spaceId: string.Empty, 
+             // Replace with your actual values
+            spaceId: string.Empty,
             objectId: string.Empty);
 
-        var anyObject = await client.GetObjectAsync(request);
+        var anyObject = await client.Objects.GetObjectAsync(request);
         Console.WriteLine("Object retrieved:");
         Console.WriteLine($"Name: {anyObject.Name}");
         Console.WriteLine($"ID: {anyObject.Id}");
@@ -127,7 +127,7 @@ internal class Program
             }
         };
 
-        var createdObject = await client.CreateObjectAsync(spaceId, createObjectRequest);
+        var createdObject = await client.Objects.CreateObjectAsync(spaceId, createObjectRequest);
 
         Console.WriteLine("New object created:");
         Console.WriteLine($"Name: {createdObject.Name}");
@@ -150,7 +150,7 @@ internal class Program
             Description = description
         };
 
-        var newSpace = await client.CreateSpaceAsync(request);
+        var newSpace = await client.Spaces.CreateSpaceAsync(request);
 
         Console.WriteLine("New space created:");
         Console.WriteLine($"{newSpace.Name}");
@@ -166,7 +166,7 @@ internal class Program
     /// </summary>
     private static async Task GetSpacesAsync(AnytypeClient client)
     {
-        var spaces = await client.GetSpacesAsync();
+        var spaces = await client.Spaces.GetSpacesAsync();
 
         if (spaces.Count == 0)
         {
