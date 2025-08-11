@@ -9,6 +9,7 @@ namespace Anytype.NET.Internal;
 public abstract class ClientBase
 {
     protected const string BaseAddress = "http://localhost:31009";
+    protected const string AnytypeVersion = "2025-05-20";
     private readonly string _apiKey;
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
@@ -30,6 +31,7 @@ public abstract class ClientBase
 
         HttpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", _apiKey);
+        HttpClient.DefaultRequestHeaders.Add("Anytype-Version", AnytypeVersion);
     }
 
     protected async Task<T?> GetAsync<T>(string relativeUrl)
@@ -65,8 +67,6 @@ public abstract class ClientBase
         {
             Content = content
         };
-
-        request.Headers.Add("Anytype-Version", "2025-05-20");
 
         using var response = await HttpClient.SendAsync(request);
 
