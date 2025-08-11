@@ -37,6 +37,26 @@ internal class Program
 
         // Update exsisting object
         var updatedObject = await UpdateObjectAsync(client);
+
+        // Update space
+        var updatedSpace = await UpdateSpaceAsync(client);
+    }
+
+    private static async Task<Space?> UpdateSpaceAsync(AnytypeClient client)
+    {
+        var updateSpaceRequest = new UpdateSpaceRequest("Updated Space Name")
+        {
+            Description = "The local-first wiki"
+        };
+
+        var spaceId = string.Empty; // Replace with your actual space ID
+
+        var space = await client.Spaces.UpdateSpaceAsync(spaceId, updateSpaceRequest);
+
+        Console.WriteLine("The space has been successfully updated.");
+        Console.WriteLine($"The new name: {space.Name}");
+
+        return space;
     }
 
     private static async Task<AnyObject> UpdateObjectAsync(AnytypeClient client)

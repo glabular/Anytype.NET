@@ -14,7 +14,7 @@ public class SpacesClient : ClientBase
     /// <summary>
     /// Retrieves a simplified list of all accessible spaces.
     /// </summary>
-    /// <returns>A list of <see cref="Space"/> objects (or empty list if none are found).</returns>
+    /// <returns>A list of <see cref="Space"/> objects.</returns>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"></exception>
     /// <exception cref="InvalidOperationException"/>
@@ -56,6 +56,28 @@ public class SpacesClient : ClientBase
 
         var response = await PostAsync<CreateSpaceResponse>(RelativeSpacesUrl, request) 
             ?? throw new InvalidOperationException("Failed to create space, response was null.");
+
+        return response?.Space;
+    }
+
+    /// <summary>
+    /// Updates the name and/or description of an existing space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space to update.</param>
+    /// <param name="request">The updated name and/or description of the space.</param>
+    /// <returns>The updated <see cref="Space"/>.</returns>
+    public async Task<Space?> UpdateSpaceAsync(string spaceId, UpdateSpaceRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request);
+
+        var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
+
+        var response = await PatchAsync<UpdateSpaceResponse>(relativeUrl, request);
 
         return response?.Space;
     }
