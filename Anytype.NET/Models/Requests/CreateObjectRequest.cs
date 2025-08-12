@@ -17,7 +17,8 @@ public class CreateObjectRequest
     /// Icon for the object.
     /// </summary>
     [JsonPropertyName("icon")]
-    public Icon Icon { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Icon? Icon { get; set; }
 
     /// <summary>
     /// The body content of the object.

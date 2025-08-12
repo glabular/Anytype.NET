@@ -30,7 +30,7 @@ public class ApiObjectType
     /// <summary>
     /// The icon of the object, or null if the object has no icon.
     /// </summary>
-    public Icon Icon { get; set; }
+    public Icon? Icon { get; set; }
 
     /// <summary>
     /// Whether the type is archived.

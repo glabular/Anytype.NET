@@ -23,7 +23,7 @@ public class AnyObject
     /// <summary>
     /// The icon of the object, or null if the object has no icon
     /// </summary>
-    public Icon Icon { get; set; }
+    public Icon? Icon { get; set; }
 
     /// <summary>
     /// Whether the object is archived.
