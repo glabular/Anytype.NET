@@ -2,7 +2,10 @@
 
 namespace Anytype.NET.Models;
 
-public class SpacesPagination
+/// <summary>
+/// Metadata for paginated API responses, including limits, offsets, and total counts.
+/// </summary>
+public class PaginationMetadata
 {
     /// <summary>
     /// The total number of items available for the endpoint.

@@ -17,5 +17,5 @@ public class SpacesResponse
     /// Pagination metadata associated with the response, such as total items, offset, and limit.
     /// </summary>
     [JsonPropertyName("pagination")]
-    public SpacesPagination? Pagination { get; set; }
+    public PaginationMetadata? Pagination { get; set; }
 }
