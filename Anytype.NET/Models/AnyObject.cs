@@ -48,7 +48,7 @@ public class AnyObject
     /// <summary>
     /// The type of the object, or null if the type has been deleted.
     /// </summary>
-    public ApiObjectType Type { get; set; }
+    public ApiObjectType? Type { get; set; }
 
     /// <summary>
     /// The properties of the object.
