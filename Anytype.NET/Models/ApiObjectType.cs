@@ -1,5 +1,6 @@
 ﻿namespace Anytype.NET.Models;
 
+// TODO: Think on better class naming.
 public class ApiObjectType
 {
     /// <summary>
@@ -42,9 +43,8 @@ public class ApiObjectType
     /// </summary>
     public string Layout { get; set; }
 
-    // TODO: not sure about this type, it could be a list.
     /// <summary>
     /// The properties linked to the type.
     /// </summary>
-    public object Properties { get; set; }
+    public List<ApiProperty> Properties { get; set; }
 }
