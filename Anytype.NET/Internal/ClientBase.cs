@@ -16,7 +16,8 @@ public abstract class ClientBase
         PropertyNameCaseInsensitive = true,
         Converters =
         {
-            new SnakeCaseEnumConverter<PropertyKey>()
+            new SnakeCaseEnumConverter<PropertyKey>(),
+            new IconConverter()
         }
     };
     protected readonly HttpClient HttpClient;

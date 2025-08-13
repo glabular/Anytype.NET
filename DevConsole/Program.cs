@@ -5,6 +5,7 @@ using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
 using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace DevConsole;
 
@@ -25,7 +26,7 @@ internal class Program
         await GetSpacesAsync(client);
 
 
-        //Create a new space
+        // Create a new space
         var space = await CreateSpaceAsync(client);
 
 
@@ -33,7 +34,7 @@ internal class Program
         var createdObject = await CreateObject(client);
 
 
-        // Retrieve an object by its ID
+        // Get object by ID
         var requestedObject = await GetObjectById(client);
 
 
@@ -272,11 +273,7 @@ internal class Program
             Name = "Antares",
 
             // Set the emoji icon for the page
-            Icon = new Icon
-            {
-                Emoji = "🌟",
-                Format = "emoji"
-            },
+            Icon = new EmojiIcon("🌟"),
 
             // The body supports Markdown formatting
             Body = "## Introduction\n\n" +
