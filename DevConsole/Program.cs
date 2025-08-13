@@ -59,6 +59,22 @@ internal class Program
 
         // List members
         await ListMembersAsync(client);
+
+
+        // Get member by ID
+        var anytypeMember = await GetAnytypeMember(client);
+    }
+
+    private static async Task<AnyMember> GetAnytypeMember(AnytypeClient client)
+    {
+        // Replace with your actual values
+        var member = await client.Members.GetByIdAsync(
+            spaceId: string.Empty,
+            memberId: string.Empty);
+
+        Console.WriteLine($"The member with ID {member.Id} successfully retrieved.");
+
+        return member;
     }
 
     private static async Task ListMembersAsync(AnytypeClient client)

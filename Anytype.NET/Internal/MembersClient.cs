@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Anytype.NET.Models;
 using Anytype.NET.Models.Responses;
 
 namespace Anytype.NET.Internal;
@@ -37,5 +38,35 @@ public class MembersClient : ClientBase
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response;
+    }
+
+    /// <summary>
+    /// Retrieves a specific member by their ID from the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space containing the member.</param>
+    /// <param name="memberId">The unique ID of the member to retrieve.</param>
+    /// <returns>The requested <see cref="AnyMember"/>.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    /// <exception cref="JsonException"></exception>
+    public async Task<AnyMember> GetByIdAsync(string spaceId, string memberId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(memberId))
+        {
+            throw new ArgumentException("Member ID cannot be null or whitespace.", nameof(memberId));
+        }
+
+        var relativeUrl = $"v1/spaces/{spaceId}/members/{memberId}";
+
+        var response = await GetAsync<GetMemberResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Member;
     }
 }
