@@ -1,4 +1,5 @@
 ﻿using Anytype.NET;
+using Anytype.NET.Internal;
 using Anytype.NET.Models;
 using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
@@ -54,6 +55,57 @@ internal class Program
 
         // List objects
         await ListObjectsAsync(client);
+
+
+        // List members
+        await ListMembersAsync(client);
+    }
+
+    private static async Task ListMembersAsync(AnytypeClient client)
+    {
+        // Replace with your actual space ID
+        var spaceId = string.Empty;
+        var offset = 0;
+        var limit = 5;
+        var hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await client.Members.ListMembersAsync(spaceId, offset, limit);
+
+            Console.WriteLine($"Retrieved {response.Members.Count} members out of total {response.Pagination.Total} (offset {offset}).\n");
+
+            foreach (var member in response.Members)
+            {
+                Console.WriteLine($"- {member.Name} (ID: {member.Id}, Role: {member.Role}, Status: {member.Status})");
+            }
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("More members are available. Do you want to load more? (y/n): ");
+
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Stopping further loading of members.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("All possible members from the space have been loaded.");
+            }
+        }
     }
 
     private static async Task ListObjectsAsync(AnytypeClient client)

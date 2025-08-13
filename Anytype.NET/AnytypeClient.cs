@@ -19,6 +19,7 @@ public class AnytypeClient
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         Spaces = new SpacesClient(_apiKey);
         Objects = new ObjectsClient(_apiKey);
+        Members = new MembersClient(_apiKey);
     }
 
     public SpacesClient Spaces { get; }
