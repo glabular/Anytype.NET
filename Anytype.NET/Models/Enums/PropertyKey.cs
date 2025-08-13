@@ -18,5 +18,15 @@ public enum PropertyKey
 
     LastOpenedDate,
 
-    Backlinks
+    Backlinks,
+
+    Tag,
+
+    LinkedProjects,
+
+    Status,
+
+    AddedDate, 
+
+    Source
 }

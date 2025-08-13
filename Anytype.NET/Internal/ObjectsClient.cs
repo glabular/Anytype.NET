@@ -140,4 +140,38 @@ public class ObjectsClient : ClientBase
 
         return response.Object;
     }
+
+    /// <summary>
+    /// Retrieves a paginated list of objects in a given space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space to list objects from.</param>
+    /// <param name="offset">The number of items to skip before collecting the result set. Default is 0.</param>
+    /// <param name="limit">The number of items to return. Max 1000. Default is 100.</param>
+    /// <returns>
+    /// A <see cref="ListObjectsResponse"/> containing the retrieved objects and associated pagination metadata.
+    /// </returns>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
+    public async Task<ListObjectsResponse> ListObjectsAsync(string spaceId, int offset = 0, int limit = 100)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (limit > 1000)
+        {
+            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/objects?offset={offset}&limit={limit}";
+
+        var response = await GetAsync<ListObjectsResponse>(relativeUrl) 
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response;
+    }
 }

@@ -2,6 +2,7 @@
 using Anytype.NET.Models;
 using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
+using Anytype.NET.Models.Responses;
 using Microsoft.Extensions.Configuration;
 
 namespace DevConsole;
@@ -49,6 +50,58 @@ internal class Program
 
         // Delete object
         var deletedObject = await DeleteObject(client);
+
+
+        // List objects
+        await ListObjectsAsync(client);
+    }
+
+    private static async Task ListObjectsAsync(AnytypeClient client)
+    {
+        // Replace with your actual space ID
+        var spaceId = string.Empty;
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await client.Objects.ListObjectsAsync(spaceId, offset, limit);
+
+            Console.WriteLine($"Retrieved {response.Objects.Count} objects out of total {response.Pagination.Total} (offset {offset}).");
+
+            foreach (var obj in response.Objects)
+            {
+                Console.WriteLine($"- {obj.Name} (ID: {obj.Id})");
+            }
+
+            Console.WriteLine();
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("More objects are available. Do you want to load more? (y/n): ");
+
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Stopping further loading of objects.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("All available objects from the space have been loaded.");
+            }
+        }
     }
 
     private static async Task<AnyObject> DeleteObject(AnytypeClient client)
