@@ -24,4 +24,6 @@ public class AnytypeClient
     public SpacesClient Spaces { get; }
 
     public ObjectsClient Objects { get; }
+
+    public MembersClient Members { get; }
 }
