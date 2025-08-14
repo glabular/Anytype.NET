@@ -251,7 +251,7 @@ internal class Program
             spaceId: string.Empty,
             objectId: string.Empty);
 
-        var anyObject = await client.Objects.GetObjectAsync(request);
+        var anyObject = await client.Objects.GetByIdAsync(request);
         Console.WriteLine("Object retrieved:");
         Console.WriteLine($"Name: {anyObject.Name}");
         Console.WriteLine($"ID: {anyObject.Id}");

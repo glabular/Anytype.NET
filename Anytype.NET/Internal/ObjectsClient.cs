@@ -47,19 +47,25 @@ public sealed class ObjectsClient : ClientBase
     /// <summary>
     /// Retrieves a single object from a specified space using the Anytype API.
     /// </summary>
-    /// <param name="spaceId">The ID of the space containing the object.</param>
-    /// <param name="objectId">The ID of the object to retrieve.</param>
+    /// <param name="getObjectRequest">The request containing SpaceId and ObjectId.</param>
+    /// <param name="format">The format to return the object body in. Default is "md".</param>
     /// <returns>The requested <see cref="AnyObject"/>.</returns>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject> GetObjectAsync(ObjectRequest getObjectRequest)
+    public async Task<AnyObject> GetByIdAsync(ObjectRequest getObjectRequest, string? format = null)
     {
         ArgumentNullException.ThrowIfNull(getObjectRequest);
 
-        var response = await GetAsync<ObjectResponse>(
-            $"/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}");
+        var relativeUrl = $"/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}";
+
+        if (!string.IsNullOrWhiteSpace(format))
+        {
+            relativeUrl += $"?format={format}";
+        }
+
+        var response = await GetAsync<ObjectResponse>(relativeUrl);
 
         if (response == null || response.Object == null)
         {
