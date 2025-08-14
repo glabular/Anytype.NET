@@ -64,7 +64,58 @@ internal class Program
 
         // Get member by ID
         var anytypeMember = await GetAnytypeMember(client);
+
+
+        // List types
+        await ListTypesAsync(client);
     }
+
+    private static async Task ListTypesAsync(AnytypeClient client)
+    {
+        // Replace with your actual space ID
+        var spaceId = string.Empty;
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await client.Types.ListAsync(spaceId, offset, limit);
+
+            Console.WriteLine($"Retrieved {response.Data.Count} types out of total {response.Pagination.Total} (offset {offset}).\n");
+
+            foreach (var type in response.Data)
+            {
+                Console.WriteLine($"- {type.Name} (ID: {type.Id}, Key: {type.Key}, Archived: {type.Archived})");
+            }
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("\nMore types are available. Do you want to load more? (y/n): ");
+
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("\nStopping further loading of types.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nAll available types from the space have been loaded.");
+            }
+        }
+    }
+
 
     private static async Task<AnyMember> GetAnytypeMember(AnytypeClient client)
     {
