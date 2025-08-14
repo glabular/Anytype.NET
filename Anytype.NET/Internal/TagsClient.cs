@@ -9,7 +9,7 @@ public sealed class TagsClient : ClientBase
 {
     public TagsClient(string apiKey) : base(apiKey) { }
 
-    public async Task<ListTagsResponse> ListTagsAsync(string spaceId, string propertyId)
+    public async Task<ListTagsResponse> ListAsync(string spaceId, string propertyId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {

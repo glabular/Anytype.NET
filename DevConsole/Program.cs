@@ -88,7 +88,7 @@ internal class Program
 
         while (hasMore)
         {
-            var response = await client.Members.ListMembersAsync(spaceId, offset, limit);
+            var response = await client.Members.ListAsync(spaceId, offset, limit);
 
             Console.WriteLine($"Retrieved {response.Members.Count} members out of total {response.Pagination.Total} (offset {offset}).\n");
 
@@ -135,7 +135,7 @@ internal class Program
 
         while (hasMore)
         {
-            var response = await client.Objects.ListObjectsAsync(spaceId, offset, limit);
+            var response = await client.Objects.ListAsync(spaceId, offset, limit);
 
             Console.WriteLine($"Retrieved {response.Objects.Count} objects out of total {response.Pagination.Total} (offset {offset}).");
 
@@ -179,7 +179,7 @@ internal class Program
         var spaceId = string.Empty;
         var objectId = string.Empty; 
 
-        var deletedObject = await client.Objects.DeleteObjectAsync(spaceId, objectId);
+        var deletedObject = await client.Objects.DeleteAsync(spaceId, objectId);
 
         Console.WriteLine($"The object with ID {objectId} in space {spaceId} has been successfully deleted.");
 
@@ -188,7 +188,7 @@ internal class Program
 
     private static async Task<Space> GetSpaceByIdAsync(AnytypeClient client)
     {
-        var space = await client.Spaces.GetSpaceAsync(
+        var space = await client.Spaces.GetByIdAsync(
             // Replace with your actual space ID
             string.Empty);
 
@@ -206,7 +206,7 @@ internal class Program
 
         var spaceId = string.Empty; // Replace with your actual space ID
 
-        var space = await client.Spaces.UpdateSpaceAsync(spaceId, updateSpaceRequest);
+        var space = await client.Spaces.UpdateAsync(spaceId, updateSpaceRequest);
 
         Console.WriteLine("The space has been successfully updated.");
         Console.WriteLine($"The new name: {space.Name}");
@@ -216,7 +216,7 @@ internal class Program
 
     private static async Task<AnyObject> UpdateObjectAsync(AnytypeClient client)
     {
-        var updatedObject = await client.Objects.UpdateObjectAsync(
+        var updatedObject = await client.Objects.UpdateAsync(
             // Replace with your actual values
             spaceId: string.Empty,
             objectId: string.Empty,
@@ -298,7 +298,7 @@ internal class Program
             }
         };
 
-        var createdObject = await client.Objects.CreateObjectAsync(spaceId, createObjectRequest);
+        var createdObject = await client.Objects.CreateAsync(spaceId, createObjectRequest);
 
         Console.WriteLine("New object created:");
         Console.WriteLine($"Name: {createdObject.Name}");
@@ -321,7 +321,7 @@ internal class Program
             Description = description
         };
 
-        var newSpace = await client.Spaces.CreateSpaceAsync(request);
+        var newSpace = await client.Spaces.CreateAsync(request);
 
         Console.WriteLine("New space created:");
         Console.WriteLine($"{newSpace.Name}");
@@ -337,7 +337,7 @@ internal class Program
     /// </summary>
     private static async Task GetSpacesAsync(AnytypeClient client)
     {
-        var spaces = await client.Spaces.GetSpacesAsync();
+        var spaces = await client.Spaces.GetAllAsync();
 
         if (spaces.Count == 0)
         {

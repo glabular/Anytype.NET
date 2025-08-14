@@ -25,7 +25,7 @@ public sealed class ObjectsClient : ClientBase
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject> CreateObjectAsync(string spaceId, CreateObjectRequest createObjectRequest)
+    public async Task<AnyObject> CreateAsync(string spaceId, CreateObjectRequest createObjectRequest)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -88,7 +88,7 @@ public sealed class ObjectsClient : ClientBase
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject> UpdateObjectAsync(
+    public async Task<AnyObject> UpdateAsync(
         string spaceId,
         string objectId,
         UpdateObjectRequest updateObjectRequest)
@@ -123,7 +123,7 @@ public sealed class ObjectsClient : ClientBase
     /// <param name="spaceId">The ID of the space containing the object.</param>
     /// <param name="objectId">The ID of the object to delete.</param>
     /// <returns>The archived <see cref="AnyObject"/> after deletion.</returns>
-    public async Task<AnyObject> DeleteObjectAsync(string spaceId, string objectId)
+    public async Task<AnyObject> DeleteAsync(string spaceId, string objectId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -161,7 +161,7 @@ public sealed class ObjectsClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<ListObjectsResponse> ListObjectsAsync(string spaceId, int offset = 0, int limit = 100)
+    public async Task<ListObjectsResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {

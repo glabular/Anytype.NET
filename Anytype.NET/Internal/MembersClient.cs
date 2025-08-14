@@ -20,7 +20,7 @@ public sealed class MembersClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<ListMembersResponse> ListMembersAsync(string spaceId, int offset = 0, int limit = 100)
+    public async Task<ListMembersResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {

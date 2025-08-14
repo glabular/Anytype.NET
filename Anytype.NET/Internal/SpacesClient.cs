@@ -18,7 +18,7 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"></exception>
     /// <exception cref="InvalidOperationException"/>
-    public async Task<List<Space>?> GetSpacesAsync()
+    public async Task<List<Space>?> GetAllAsync()
     {
         var response = await GetAsync<SpacesResponse>(RelativeSpacesUrl);
 
@@ -32,7 +32,7 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="HttpRequestException">Thrown when the HTTP request fails or returns a non-success status code.</exception>
     /// <exception cref="JsonException">Thrown when the response cannot be parsed into a <see cref="SpacesResponse"/>.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the deserialized response is null or invalid.</exception>
-    public async Task<SpacesResponse?> GetSpacesDetailedAsync()
+    public async Task<SpacesResponse?> GetAllDetailedAsync()
     {
         return await GetAsync<SpacesResponse>(RelativeSpacesUrl);
     }
@@ -50,7 +50,7 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task<Space?> CreateSpaceAsync(CreateSpaceRequest request)
+    public async Task<Space?> CreateAsync(CreateSpaceRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -66,7 +66,7 @@ public sealed class SpacesClient : ClientBase
     /// <param name="spaceId">The ID of the space to update.</param>
     /// <param name="request">The updated name and/or description of the space.</param>
     /// <returns>The updated <see cref="Space"/>.</returns>
-    public async Task<Space?> UpdateSpaceAsync(string spaceId, UpdateSpaceRequest request)
+    public async Task<Space?> UpdateAsync(string spaceId, UpdateSpaceRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -87,7 +87,7 @@ public sealed class SpacesClient : ClientBase
     /// </summary>
     /// <param name="spaceId">The space’s ID.</param>
     /// <returns>The requested <see cref="Space"/>.</returns>
-    public async Task<Space?> GetSpaceAsync(string spaceId)
+    public async Task<Space?> GetByIdAsync(string spaceId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
