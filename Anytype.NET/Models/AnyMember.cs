@@ -5,7 +5,7 @@ namespace Anytype.NET.Models;
 /// <summary>
 /// Represents a member of an Anytype space.
 /// </summary>
-public class AnyMember
+public sealed class AnyMember
 {
     /// <summary>
     /// The global name of the member in the network.

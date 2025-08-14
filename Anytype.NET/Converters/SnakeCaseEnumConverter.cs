@@ -7,7 +7,7 @@ namespace Anytype.NET.Converters;
 /// A custom JSON converter that maps enum values from snake_case JSON to PascalCase C# enum names, and vice versa.
 /// </summary>
 /// <typeparam name="T">The enum type this converter handles.</typeparam>
-public class SnakeCaseEnumConverter<T> : JsonConverter<T> where T : struct, Enum
+internal sealed class SnakeCaseEnumConverter<T> : JsonConverter<T> where T : struct, Enum
 {
     /// <summary>
     /// Deserializes a snake_case string from JSON into a PascalCase C# enum value.

@@ -1,7 +1,7 @@
 ﻿namespace Anytype.NET.Models;
 
 // TODO: Think on better class naming.
-public class ApiProperty
+public sealed class ApiProperty
 {
     /// <summary>
     /// The format of the property used for filtering.

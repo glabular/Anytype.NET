@@ -5,7 +5,7 @@ namespace Anytype.NET;
 /// <summary>
 /// The main client for interacting with the Anytype API.
 /// </summary>
-public class AnytypeClient
+public sealed class AnytypeClient
 {
     private readonly string _apiKey;
 

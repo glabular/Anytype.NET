@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Converters;
 
-public sealed class IconConverter : JsonConverter<Icon>
+internal sealed class IconConverter : JsonConverter<Icon>
 {
     public override Icon? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

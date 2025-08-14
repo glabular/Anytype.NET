@@ -5,7 +5,7 @@ namespace Anytype.NET.Models.Responses;
 /// <summary>
 /// Represents the response returned from the Anytype API when requesting a list of spaces.
 /// </summary>
-public class SpacesResponse
+public sealed class SpacesResponse
 {
     /// <summary>
     /// A list of <see cref="Space"/> objects returned in the response.

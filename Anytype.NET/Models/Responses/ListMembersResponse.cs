@@ -2,7 +2,7 @@
 
 namespace Anytype.NET.Models.Responses;
 
-public class ListMembersResponse
+public sealed class ListMembersResponse
 {
     [JsonPropertyName("data")]
     public List<AnyMember> Members { get; set; }

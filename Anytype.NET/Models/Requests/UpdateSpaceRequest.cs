@@ -6,7 +6,7 @@
 /// <remarks>
 /// The request body should contain the new name and/or description in JSON format.
 /// </remarks>
-public class UpdateSpaceRequest
+public sealed class UpdateSpaceRequest
 {
     public UpdateSpaceRequest(string name)
     {

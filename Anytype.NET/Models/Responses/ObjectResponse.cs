@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a standard response wrapper containing an <see cref="AnyObject"/> returned by the Anytype API.
 /// </summary>
-public class ObjectResponse
+public sealed class ObjectResponse
 {
     /// <summary>
     /// The <see cref="AnyObject"/> contained within the response body.

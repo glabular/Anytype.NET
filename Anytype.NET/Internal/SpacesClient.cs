@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Anytype.NET.Internal;
 
-public class SpacesClient : ClientBase
+public sealed class SpacesClient : ClientBase
 {
     private const string RelativeSpacesUrl = "/v1/spaces";
 

@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents an object that was successfully created through the API.
 /// </summary>
-public class AnyObject
+public sealed class AnyObject
 {
     /// <summary>
     /// The data model of the object.

@@ -8,7 +8,7 @@ namespace Anytype.NET.Internal;
 /// <summary>
 /// Provides methods to interact with Anytype objects.
 /// </summary>
-public class ObjectsClient : ClientBase
+public sealed class ObjectsClient : ClientBase
 {
     public ObjectsClient(string apiKey) : base(apiKey) { }
 

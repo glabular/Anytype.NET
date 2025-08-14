@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models.Requests;
 
-public class ObjectRequest
+public sealed class ObjectRequest
 {
     /// <summary>
     /// Represents the data required to retrieve an object from a space.

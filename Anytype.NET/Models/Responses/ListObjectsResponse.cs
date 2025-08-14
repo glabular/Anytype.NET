@@ -2,7 +2,7 @@
 
 namespace Anytype.NET.Models.Responses;
 
-public class ListObjectsResponse
+public sealed class ListObjectsResponse
 {
     /// <summary>
     /// A list of <see cref="AnyObject"/> objects returned in the response.

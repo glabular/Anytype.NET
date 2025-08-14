@@ -6,7 +6,7 @@ namespace Anytype.NET.Models;
 /// <summary>
 /// Represents a property associated with an object in Anytype.
 /// </summary>
-public class Property
+public sealed class Property
 {
     /// <summary>
     /// The key identifying the property.

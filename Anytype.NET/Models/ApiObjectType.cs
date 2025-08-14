@@ -1,7 +1,7 @@
 ﻿namespace Anytype.NET.Models;
 
 // TODO: Think on better class naming.
-public class ApiObjectType
+public sealed class ApiObjectType
 {
     /// <summary>
     /// The data model of the object.

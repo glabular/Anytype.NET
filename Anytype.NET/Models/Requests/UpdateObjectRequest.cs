@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the payload to update an existing object in Anytype.
 /// </summary>
-public class UpdateObjectRequest
+public sealed class UpdateObjectRequest
 {
     /// <summary>
     /// The name (title) of the object.

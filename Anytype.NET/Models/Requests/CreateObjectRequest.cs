@@ -5,7 +5,7 @@ namespace Anytype.NET.Models.Requests;
 /// <summary>
 /// Represents a request to create a new object in Anytype.
 /// </summary>
-public class CreateObjectRequest
+public sealed class CreateObjectRequest
 {
     /// <summary>
     /// The name of the new object.

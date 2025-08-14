@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the data required to create a new space.
 /// </summary>
-public class CreateSpaceRequest
+public sealed class CreateSpaceRequest
 {
     public CreateSpaceRequest(string name)
     {

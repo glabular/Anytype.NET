@@ -6,7 +6,7 @@ namespace Anytype.NET.Models;
 /// <summary>
 /// Represents a Space in Anytype.
 /// </summary>
-public class Space
+public sealed class Space
 {
     /// <summary>
     /// The data model of the object.

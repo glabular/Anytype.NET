@@ -4,7 +4,7 @@ using Anytype.NET.Models.Responses;
 
 namespace Anytype.NET.Internal;
 
-public class MembersClient : ClientBase
+public sealed class MembersClient : ClientBase
 {
     public MembersClient(string apiKey) : base(apiKey) { }
 
