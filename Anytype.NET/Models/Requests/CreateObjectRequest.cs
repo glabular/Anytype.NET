@@ -37,4 +37,10 @@ public sealed class CreateObjectRequest
     /// </summary>
     [JsonPropertyName("properties")]
     public List<Property> Properties { get; set; } = [];
+
+    /// <summary>
+    /// The id of the template to use.
+    /// </summary>
+    [JsonPropertyName("template_id")]
+    public string TemplateId { get; set; }
 }
