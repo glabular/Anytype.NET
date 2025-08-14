@@ -1,7 +1,9 @@
 ﻿namespace Anytype.NET.Models;
 
-// TODO: Think on better class naming.
-public sealed class ApiObjectType
+/// <summary>
+/// Represents a type in Anytype.
+/// </summary>
+public sealed class AnyType
 {
     /// <summary>
     /// The data model of the object.
@@ -46,5 +48,5 @@ public sealed class ApiObjectType
     /// <summary>
     /// The properties linked to the type.
     /// </summary>
-    public List<ApiProperty> Properties { get; set; }
+    public List<TypeProperty> Properties { get; set; }
 }
