@@ -68,6 +68,40 @@ internal class Program
 
         // List types
         await ListTypesAsync(client);
+
+
+        // Create type
+        var newType = await CreateType(client);
+    }
+
+    private static async Task<AnyType> CreateType(AnytypeClient client)
+    {
+        // Replace with your actual space ID
+        var spaceId = string.Empty;
+
+        var createRequest = new CreateTypeRequest
+        {
+            Icon = new EmojiIcon("📄"),
+            Key = "some_user_defined_key",
+            Layout = "basic",
+            Name = "Page",
+            PluralName = "Pages",
+            Properties = new List<CreateTypePropertyRequest>
+            {
+                new CreateTypePropertyRequest
+                {
+                    Format = "text",
+                    Key = "last_modified_date",
+                    Name = "Last modified date"
+                }
+            }
+        };
+
+        var newType = await client.Types.CreateAsync(spaceId, createRequest);
+
+        Console.WriteLine($"Created new type with ID {newType.Id} and name {newType.Name}.");
+        
+        return newType;
     }
 
     private static async Task ListTypesAsync(AnytypeClient client)
@@ -115,7 +149,6 @@ internal class Program
             }
         }
     }
-
 
     private static async Task<AnyMember> GetAnytypeMember(AnytypeClient client)
     {
@@ -316,7 +349,7 @@ internal class Program
     private static async Task<AnyObject> CreateObject(AnytypeClient client)
     {
         // Replace with your actual space ID
-        var spaceId = string.Empty;
+        var spaceId = "bafyreiblczqho7jfsjzm4ivepznrlhdtzfhn6p3hloul7hgpx3ujlsezmm.2ihte4dv7mk6z";
 
         var createObjectRequest = new CreateObjectRequest
         {

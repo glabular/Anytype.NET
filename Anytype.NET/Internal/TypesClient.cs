@@ -1,4 +1,6 @@
-﻿using Anytype.NET.Models.Responses;
+﻿using Anytype.NET.Models;
+using Anytype.NET.Models.Requests;
+using Anytype.NET.Models.Responses;
 using System.Text.Json;
 
 namespace Anytype.NET.Internal;
@@ -42,5 +44,31 @@ public sealed class TypesClient : ClientBase
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response;
+    }
+
+    /// <summary>
+    /// Creates a new type in the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space in which to create the type.</param>
+    /// <param name="request">The details of the type to create.</param>
+    /// <returns>The created <see cref="AnyType"/>.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    /// <exception cref="JsonException"></exception>
+    public async Task<AnyType> CreateAsync(string spaceId, CreateTypeRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request, nameof(request));
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/types";
+
+        var response = await PostAsync<CreateTypeResponse>(relativeUrl, request);
+
+        return response?.Type;
     }
 }

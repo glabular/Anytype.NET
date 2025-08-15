@@ -46,7 +46,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [ ] Update tag
 ### Types
 - [x] List types
-- [ ] Create type
+- [x] Create type
 - [ ] Delete type
 - [ ] Get type
 - [ ] Update type
