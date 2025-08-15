@@ -72,6 +72,23 @@ internal class Program
 
         // Create type
         var newType = await CreateType(client);
+
+
+        // Delete type
+        var deletedType = await DeleteTypeAsync(client);
+    }
+
+    private static async Task<AnyType> DeleteTypeAsync(AnytypeClient client)
+    {
+        // Replace with your actual values
+        var spaceId = string.Empty;
+        var typeId = string.Empty;
+
+        var deletedType = await client.Types.DeleteAsync(spaceId, typeId);
+
+        Console.WriteLine($"The type with ID {deletedType.Id} in space {spaceId} has been successfully deleted.");
+        
+        return deletedType;
     }
 
     private static async Task<AnyType> CreateType(AnytypeClient client)

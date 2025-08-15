@@ -71,4 +71,32 @@ public sealed class TypesClient : ClientBase
 
         return response?.Type;
     }
+
+    /// <summary>
+    /// Deletes (archives) a type in the specified space by marking it as archived.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space containing the type.</param>
+    /// <param name="typeId">The ID of the type to delete (archive).</param>
+    /// <returns>The <see cref="AnyType"/> after it has been archived.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    /// <exception cref="JsonException"></exception>
+    public async Task<AnyType> DeleteAsync(string spaceId, string typeId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(typeId))
+        {
+            throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+
+        var response = await DeleteAsync<TypeResponse>(relativeUrl);
+
+        return response.Type;
+    }
 }
