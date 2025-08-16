@@ -34,8 +34,8 @@ public abstract class ClientBase
     protected async Task<T?> GetAsync<T>(string relativeUrl)
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl);
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+
+        AddDefaultHeaders(request);
 
         using var response = await HttpClient.SendAsync(request);
 
@@ -55,8 +55,7 @@ public abstract class ClientBase
             Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
         };
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+        AddDefaultHeaders(request);
 
         using var response = await HttpClient.SendAsync(request);
 
@@ -76,8 +75,7 @@ public abstract class ClientBase
             Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
         };
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+        AddDefaultHeaders(request);
 
         using var response = await HttpClient.SendAsync(request);
 
@@ -92,8 +90,7 @@ public abstract class ClientBase
     {
         using var request = new HttpRequestMessage(HttpMethod.Delete, relativeUrl);
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+        AddDefaultHeaders(request);
 
         using var response = await HttpClient.SendAsync(request);
 
@@ -102,5 +99,11 @@ public abstract class ClientBase
         var json = await response.Content.ReadAsStringAsync();
 
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
+    }
+
+    private void AddDefaultHeaders(HttpRequestMessage request)
+    {
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        request.Headers.Add("Anytype-Version", AnytypeVersion);
     }
 }
