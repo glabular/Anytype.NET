@@ -1,6 +1,7 @@
 ﻿using Anytype.NET.Converters;
 using Anytype.NET.Models.Enums;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -20,24 +21,23 @@ public abstract class ClientBase
             new IconConverter()
         }
     };
-    protected readonly HttpClient HttpClient;
+    protected static readonly HttpClient HttpClient = new()
+    {
+        BaseAddress = new Uri(BaseAddress)
+    };
 
     protected ClientBase(string apiKey)
     {
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
-        HttpClient = new HttpClient
-        {
-            BaseAddress = new Uri(BaseAddress)
-        };
-
-        HttpClient.DefaultRequestHeaders.Authorization = 
-            new AuthenticationHeaderValue("Bearer", _apiKey);
-        HttpClient.DefaultRequestHeaders.Add("Anytype-Version", AnytypeVersion);
     }
 
     protected async Task<T?> GetAsync<T>(string relativeUrl)
     {
-        using var response = await HttpClient.GetAsync(relativeUrl);
+        using var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        request.Headers.Add("Anytype-Version", AnytypeVersion);
+
+        using var response = await HttpClient.SendAsync(request);
 
         response.EnsureSuccessStatusCode();
 
@@ -49,8 +49,16 @@ public abstract class ClientBase
     protected async Task<T?> PostAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
-        using var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-        var response = await HttpClient.PostAsync(relativeUrl, content);
+
+        using var request = new HttpRequestMessage(HttpMethod.Post, relativeUrl)
+        {
+            Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
+        };
+
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        request.Headers.Add("Anytype-Version", AnytypeVersion);
+
+        using var response = await HttpClient.SendAsync(request);
 
         response.EnsureSuccessStatusCode();
 
@@ -62,12 +70,14 @@ public abstract class ClientBase
     protected async Task<T?> PatchAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
-        using var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
         using var request = new HttpRequestMessage(HttpMethod.Patch, relativeUrl)
         {
-            Content = content
+            Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
         };
+
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        request.Headers.Add("Anytype-Version", AnytypeVersion);
 
         using var response = await HttpClient.SendAsync(request);
 
@@ -80,7 +90,12 @@ public abstract class ClientBase
 
     protected async Task<T?> DeleteAsync<T>(string relativeUrl)
     {
-        using var response = await HttpClient.DeleteAsync(relativeUrl);
+        using var request = new HttpRequestMessage(HttpMethod.Delete, relativeUrl);
+
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        request.Headers.Add("Anytype-Version", AnytypeVersion);
+
+        using var response = await HttpClient.SendAsync(request);
 
         response.EnsureSuccessStatusCode();
 
