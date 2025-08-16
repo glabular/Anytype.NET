@@ -86,16 +86,16 @@ public class DemoRunner
 
     private async Task<AnyType> CreateTypeAsync()
     {
-        var createRequest = new CreateTypeRequest
+        var createRequest = new TypeRequest
         {
             Icon = new EmojiIcon("📄"),
             Key = "some_user_defined_key",
             Layout = "basic",
             Name = "Page",
             PluralName = "Pages",
-            Properties = new List<CreateTypePropertyRequest>
+            Properties = new List<TypePropertyRequest>
             {
-                new CreateTypePropertyRequest
+                new TypePropertyRequest
                 {
                     Format = "text",
                     Key = "last_modified_date",

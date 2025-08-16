@@ -56,7 +56,7 @@ public sealed class TypesClient : ClientBase
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
-    public async Task<AnyType> CreateAsync(string spaceId, CreateTypeRequest request)
+    public async Task<AnyType> CreateAsync(string spaceId, TypeRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -67,7 +67,7 @@ public sealed class TypesClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/types";
 
-        var response = await PostAsync<CreateTypeResponse>(relativeUrl, request);
+        var response = await PostAsync<TypeResponse>(relativeUrl, request);
 
         return response?.Type;
     }

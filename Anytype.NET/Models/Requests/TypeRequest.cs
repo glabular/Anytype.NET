@@ -2,7 +2,7 @@
 
 namespace Anytype.NET.Models.Requests;
 
-public sealed class CreateTypeRequest
+public sealed class TypeRequest
 {
     /// <summary>
     /// The icon of the type (nullable).
@@ -40,5 +40,5 @@ public sealed class CreateTypeRequest
     /// ⚠ Experimental and subject to change.
     /// </summary>
     [JsonPropertyName("properties")]
-    public List<CreateTypePropertyRequest> Properties { get; set; }
+    public List<TypePropertyRequest> Properties { get; set; }
 }

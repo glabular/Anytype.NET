@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models.Requests;
 
-public sealed class CreateTypePropertyRequest
+public sealed class TypePropertyRequest
 {
     /// <summary>
     /// The format of the property used for filtering.
