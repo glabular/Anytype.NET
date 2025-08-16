@@ -1,11 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
 /// <summary>
 /// An icon represented by a Unicode emoji.
 /// </summary>
-public sealed class EmojiIcon : Icon
+public sealed class EmojiIcon : IEmojiIcon
 {
     public EmojiIcon(string emoji)
     {
@@ -18,4 +19,7 @@ public sealed class EmojiIcon : Icon
     /// </summary>
     [JsonPropertyName("emoji")]
     public string Emoji { get; set; }
+
+    [JsonPropertyName("format")]
+    public string Format { get; set; }
 }

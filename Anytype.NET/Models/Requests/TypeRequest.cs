@@ -1,14 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models.Requests;
 
 public sealed class TypeRequest
 {
     /// <summary>
-    /// The icon of the type (nullable).
+    /// The icon of the type.
     /// </summary>
     [JsonPropertyName("icon")]
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// The key of the type.

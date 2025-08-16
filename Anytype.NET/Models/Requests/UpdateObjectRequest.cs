@@ -1,4 +1,6 @@
-﻿namespace Anytype.NET.Models.Requests;
+﻿using Anytype.NET.Interfaces;
+
+namespace Anytype.NET.Models.Requests;
 
 /// <summary>
 /// Represents the payload to update an existing object in Anytype.
@@ -13,7 +15,7 @@ public sealed class UpdateObjectRequest
     /// <summary>
     /// The icon of the object.
     /// </summary>
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// A list of properties to set for the object.

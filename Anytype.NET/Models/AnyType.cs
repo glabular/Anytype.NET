@@ -1,4 +1,6 @@
-﻿namespace Anytype.NET.Models;
+﻿using Anytype.NET.Interfaces;
+
+namespace Anytype.NET.Models;
 
 /// <summary>
 /// Represents a type in Anytype.
@@ -33,7 +35,7 @@ public sealed class AnyType
     /// <summary>
     /// The icon of the object, or null if the object has no icon.
     /// </summary>
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// Whether the type is archived.

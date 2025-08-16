@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models.Requests;
 
@@ -18,7 +19,7 @@ public sealed class CreateObjectRequest
     /// </summary>
     [JsonPropertyName("icon")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Icon? Icon { get; set; }
+    public IIcon Icon { get; set; }
 
     /// <summary>
     /// The body content of the object.

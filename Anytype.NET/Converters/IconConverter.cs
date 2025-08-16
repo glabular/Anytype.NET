@@ -1,12 +1,13 @@
-﻿using Anytype.NET.Models;
+﻿using Anytype.NET.Interfaces;
+using Anytype.NET.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Converters;
 
-internal sealed class IconConverter : JsonConverter<Icon>
+internal sealed class IconConverter : JsonConverter<IIcon>
 {
-    public override Icon? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IIcon? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         using var jsonDoc = JsonDocument.ParseValue(ref reader);
         var root = jsonDoc.RootElement;
@@ -27,7 +28,7 @@ internal sealed class IconConverter : JsonConverter<Icon>
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Icon value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IIcon value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(writer, (object)value, value.GetType(), options);
     }

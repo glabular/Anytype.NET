@@ -1,4 +1,6 @@
-﻿namespace Anytype.NET.Models;
+﻿using Anytype.NET.Interfaces;
+
+namespace Anytype.NET.Models;
 
 public sealed class Template
 {
@@ -10,7 +12,7 @@ public sealed class Template
     /// <summary>
     /// The icon of the object.
     /// </summary>
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// The id of the object.

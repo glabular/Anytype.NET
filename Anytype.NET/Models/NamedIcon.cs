@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
@@ -11,7 +12,7 @@ namespace Anytype.NET.Models;
 /// <remarks> 
 /// Warning: Using NamedIcon may not work as expected yet. Only EmojiIcon and FileIcon are fully supported at this time.
 /// </remarks>
-public sealed class NamedIcon : Icon
+public sealed class NamedIcon : INamedIcon
 {
     public NamedIcon(string name, string color)
     {
@@ -31,4 +32,7 @@ public sealed class NamedIcon : Icon
     /// </summary>
     [JsonPropertyName("color")]
     public string Color { get; set; }
+
+    [JsonPropertyName("format")]
+    public string Format { get; set; }
 }

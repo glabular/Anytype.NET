@@ -1,4 +1,5 @@
 ﻿using Anytype.NET.Converters;
+using Anytype.NET.Interfaces;
 using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
@@ -29,9 +30,9 @@ public sealed class Space
     /// <summary>
     /// The icon associated with the space. May be null if no icon is set.
     /// </summary>
-    [JsonPropertyName("icon")]
+    //[JsonPropertyName("icon")]
     [JsonConverter(typeof(IconConverter))]
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// The description of the space.

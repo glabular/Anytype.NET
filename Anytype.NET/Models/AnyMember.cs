@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
@@ -17,7 +18,7 @@ public sealed class AnyMember
     /// The icon of the object.
     /// </summary>
     [JsonPropertyName("icon")]
-    public Icon? Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// The profile object id of the member.

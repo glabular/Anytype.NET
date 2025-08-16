@@ -1,4 +1,7 @@
-﻿namespace Anytype.NET.Models;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
+
+namespace Anytype.NET.Models;
 
 /// <summary>
 /// Represents an object that was successfully created through the API.
@@ -23,7 +26,8 @@ public sealed class AnyObject
     /// <summary>
     /// The icon of the object, or null if the object has no icon
     /// </summary>
-    public Icon? Icon { get; set; }
+    [JsonPropertyName("icon")]
+    public IIcon Icon { get; set; }
 
     /// <summary>
     /// Whether the object is archived.

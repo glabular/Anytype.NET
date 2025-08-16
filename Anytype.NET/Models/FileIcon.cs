@@ -1,11 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Anytype.NET.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
 /// <summary>
 /// An icon represented by a file reference.
 /// </summary>
-public sealed class FileIcon : Icon
+public sealed class FileIcon : IFileIcon
 {
     public FileIcon(string file)
     {
@@ -21,4 +22,7 @@ public sealed class FileIcon : Icon
     /// </remarks>
     [JsonPropertyName("file")]
     public string File { get; set; }
+
+    [JsonPropertyName("format")]
+    public string Format { get ; set ; }
 }
