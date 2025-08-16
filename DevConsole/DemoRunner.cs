@@ -54,9 +54,19 @@ public class DemoRunner
 
     private async Task DemoTypesAsync()
     {
+        var type = await GetTypeByIdAsync();
         await ListTypesAsync();
         var newType = await CreateTypeAsync();
         var deletedType = await DeleteTypeAsync();
+    }
+
+    private async Task<AnyType> GetTypeByIdAsync()
+    {
+        var type = await _client.Types.GetByIdAsync(SpaceId, TypeId);
+
+        Console.WriteLine($"Retrieved type with ID {type.Id}, Name: {type.Name}, Key: {type.Key}, Archived: {type.Archived}.");
+        
+        return type;
     }
 
     private async Task DemoMembersAsync()

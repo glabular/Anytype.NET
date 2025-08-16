@@ -99,4 +99,32 @@ public sealed class TypesClient : ClientBase
 
         return response.Type;
     }
+
+    /// <summary>
+    /// Retrieves specific type by its ID within the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space from which to retrieve the type.</param>
+    /// <param name="typeId">The ID of the type to retrieve.</param>
+    /// <returns>The detailed <see cref="AnyType"/> information for the specified type.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    /// <exception cref="JsonException"></exception>
+    public async Task<AnyType> GetByIdAsync(string spaceId, string typeId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(typeId))
+        {
+            throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+
+        var response = await GetAsync<TypeResponse>(relativeUrl);
+
+        return response.Type;
+    }
 }

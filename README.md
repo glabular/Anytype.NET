@@ -48,7 +48,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] List types
 - [x] Create type
 - [x] Delete type
-- [ ] Get type
+- [x] Get type
 - [ ] Update type
 ### Templates
 - [ ] List templates
