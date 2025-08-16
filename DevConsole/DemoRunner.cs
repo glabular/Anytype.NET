@@ -33,6 +33,7 @@ public class DemoRunner
         //await DemoObjectsAsync();
         //await DemoTypesAsync();
         //await DemoMembersAsync();
+        //await DemoTemplatesAsync();
     }
 
     private async Task DemoSpacesAsync()
@@ -59,6 +60,53 @@ public class DemoRunner
         var updatedType = await UpdateTypeByIdAsync();
         var deletedType = await DeleteTypeAsync();
         await ListTypesAsync();
+    }
+
+    private async Task DemoTemplatesAsync()
+    {
+        await ListTemplatesAsync();
+    }
+
+    private async Task ListTemplatesAsync()
+    {
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await _client.Templates.ListAsync(SpaceId, TypeId, offset, limit);
+
+            Console.WriteLine($"Retrieved {response.Data.Count} templates out of total {response.Pagination.Total} (offset {offset}).\n");
+            
+            foreach (var template in response.Data)
+            {
+                Console.WriteLine($"- {template.Name} (ID: {template.Id}, Archived: {template.Archived})");
+            }
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("\nMore templates are available. Do you want to load more? (y/n): ");
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("\nStopping further loading of templates.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nAll available templates from the type have been loaded.");
+            }
+        }
     }
 
     private async Task<AnyType> UpdateTypeByIdAsync()
