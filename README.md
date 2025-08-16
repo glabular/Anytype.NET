@@ -49,7 +49,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Create type
 - [x] Delete type
 - [x] Get type
-- [ ] Update type
+- [x] Update type
 ### Templates
 - [ ] List templates
 - [ ] Get template

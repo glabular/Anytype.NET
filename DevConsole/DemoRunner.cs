@@ -54,10 +54,37 @@ public class DemoRunner
 
     private async Task DemoTypesAsync()
     {
-        var type = await GetTypeByIdAsync();
-        await ListTypesAsync();
         var newType = await CreateTypeAsync();
+        var type = await GetTypeByIdAsync();
+        var updatedType = await UpdateTypeByIdAsync();
         var deletedType = await DeleteTypeAsync();
+        await ListTypesAsync();
+    }
+
+    private async Task<AnyType> UpdateTypeByIdAsync()
+    {
+        var updateRequest = new TypeRequest
+        {
+            Icon = new EmojiIcon("📄"),
+            Key = "your_key",
+            Layout = "basic",
+            Name = "Updated Page",
+            PluralName = "Updated Pages",
+            Properties = new List<TypePropertyRequest>
+            {
+                new TypePropertyRequest
+                {
+                    Format = "text",
+                    Key = "last_modified_date",
+                    Name = "Last modified date"
+                }
+            }
+        };
+
+        var updatedType = await _client.Types.UpdateAsync(SpaceId, TypeId, updateRequest);
+        Console.WriteLine($"Updated type with ID {updatedType.Id} and name {updatedType.Name}.");
+
+        return updatedType;
     }
 
     private async Task<AnyType> GetTypeByIdAsync()

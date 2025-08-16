@@ -127,4 +127,36 @@ public sealed class TypesClient : ClientBase
 
         return response.Type;
     }
+
+    /// <summary>
+    /// Updates an existing type in the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space in which the type exists.</param>
+    /// <param name="typeId">The ID of the type to update.</param>
+    /// <param name="request">The details of the type to update.</param>
+    /// <returns>The updated <see cref="AnyType"/>.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    /// <exception cref="JsonException"></exception>
+    public async Task<AnyType> UpdateAsync(string spaceId, string typeId, TypeRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(typeId))
+        {
+            throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request, nameof(request));
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+
+        var response = await PatchAsync<TypeResponse>(relativeUrl, request);
+
+        return response?.Type;
+    }
 }
