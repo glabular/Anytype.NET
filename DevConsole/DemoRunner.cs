@@ -13,6 +13,7 @@ public class DemoRunner
     private const string ObjectId = "";
     private const string MemberId = "";
     private const string TypeId = "";
+    private const string TemplateId = "";
 
     public DemoRunner(AnytypeClient client)
     {
@@ -65,6 +66,15 @@ public class DemoRunner
     private async Task DemoTemplatesAsync()
     {
         await ListTemplatesAsync();
+        var template = await GetTemplateByIdAsync();
+    }
+
+    private async Task<Template> GetTemplateByIdAsync()
+    {
+        var template = await _client.Templates.GetByIdAsync(SpaceId, TypeId, TemplateId);
+        Console.WriteLine($"Retrieved template with ID {template.Id}, Name: {template.Name}, Archived: {template.Archived}.");
+        
+        return template;
     }
 
     private async Task ListTemplatesAsync()

@@ -52,4 +52,4 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Update type
 ### Templates
 - [x] List templates
-- [ ] Get template
+- [x] Get template
