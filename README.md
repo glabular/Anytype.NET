@@ -40,7 +40,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Update property
 ### Tags
 - [x] List tags
-- [ ] Create tag
+- [x] Create tag
 - [ ] Delete tag
 - [ ] Get tag
 - [ ] Update tag

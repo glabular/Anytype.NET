@@ -75,15 +75,30 @@ public class DemoRunner
     private async Task DemoPropertiesAsync()
     {
         await ListPropertiesAsync();
-        //var newProperty = await CreatePropertyAsync();
-        //var property = await GetPropertyByIdAsync();
-        //var deletedProperty = await DeletePropertyAsync();
-        //var updatedProperty = await UpdatePropertyAsync();
+        var newProperty = await CreatePropertyAsync();
+        var property = await GetPropertyByIdAsync();
+        var deletedProperty = await DeletePropertyAsync();
+        var updatedProperty = await UpdatePropertyAsync();
     }
 
     private async Task DemoTagsAsync()
     {
         await ListTagsAsync();
+        var newTag = await CreateTagAsync();
+    }
+
+    private async Task<Tag> CreateTagAsync()
+    {
+        var createTagRequest = new CreateTagRequest
+        {
+            Name = "In progress",
+            Color = "yellow"
+        };
+
+        var newTag = await _client.Tags.CreateAsync(SpaceId, PropertyId, createTagRequest);
+        Console.WriteLine($"Created new tag with ID {newTag.Id}, Key: {newTag.Key}, Name: {newTag.Name}, Color: {newTag.Color}.");
+
+        return newTag;
     }
 
     private async Task ListTagsAsync()

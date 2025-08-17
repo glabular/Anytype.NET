@@ -39,4 +39,35 @@ public sealed class TagsClient : ClientBase
 
         return response;
     }
+
+    /// <summary>
+    /// Creates a new tag for the specified property in the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space to create the tag in.</param>
+    /// <param name="propertyId">The ID of the property to create the tag for.</param>
+    /// <param name="request">The tag creation data including name and color.</param>
+    /// <returns>The created <see cref="Tag"/>.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<Tag> CreateAsync(string spaceId, string propertyId, CreateTagRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request);
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
+
+        var response = await PostAsync<TagResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Tag;
+    }
 }
