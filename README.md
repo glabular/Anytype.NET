@@ -37,7 +37,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Create property
 - [x] Delete property
 - [x] Get property
-- [] Update property
+- [x] Update property
 ### Tags
 - [x] List tags
 - [ ] Create tag

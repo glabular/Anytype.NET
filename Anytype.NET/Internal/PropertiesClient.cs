@@ -104,7 +104,7 @@ public sealed class PropertiesClient : ClientBase
     /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
     /// <param name="spaceId">The ID of the space to which the property belongs.</param>
     /// <param name="propertyId">The ID of the property to delete.</param>
-    /// <returns>The archived <see cref="Property"/>.</returns>
+    /// <returns>The deleted (archived) <see cref="TypeProperty"/>.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<TypeProperty> DeleteAsync(string spaceId, string propertyId)
@@ -122,6 +122,38 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
 
         var response = await DeleteAsync<PropertyResponse>(relativeUrl) 
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Property;
+    }
+
+    /// <summary>
+    /// Updates an existing property in the specified space.
+    /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <param name="spaceId">The ID of the space to which the property belongs.</param>
+    /// <param name="propertyId">The ID of the property to update.</param>
+    /// <param name="request">The update details.</param>
+    /// <returns>The updated <see cref="TypeProperty"/>.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<TypeProperty> UpdateAsync(string spaceId, string propertyId, UpdatePropertyRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request);
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+
+        var response = await PatchAsync<PropertyResponse>(relativeUrl, request) 
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response.Property;

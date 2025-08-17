@@ -77,6 +77,25 @@ public class DemoRunner
         var newProperty = await CreatePropertyAsync();
         var property = await GetPropertyByIdAsync();
         var deletedProperty = await DeletePropertyAsync();
+        var updatedProperty = await UpdatePropertyAsync();
+    }
+
+    private async Task<TypeProperty> UpdatePropertyAsync()
+    {
+        var oldProperty = await _client.Properties.GetByIdAsync(SpaceId, PropertyId);
+
+        var updateRequest = new UpdatePropertyRequest
+        {
+            Key = "property_key",
+            Name = "Updated Last Modified Date"
+        };
+
+        var updatedProperty = await _client.Properties.UpdateAsync(SpaceId, PropertyId, updateRequest);
+
+        Console.WriteLine($"Old property - ID: {oldProperty.Id}, Key: {oldProperty.Key}, Name: {oldProperty.Name}.");
+        Console.WriteLine($"Updated property - ID: {updatedProperty.Id}, Key: {updatedProperty.Key}, Name: {updatedProperty.Name}.");
+
+        return updatedProperty;
     }
 
     private async Task<TypeProperty> DeletePropertyAsync()
