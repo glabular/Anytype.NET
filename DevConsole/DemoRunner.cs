@@ -76,6 +76,16 @@ public class DemoRunner
         await ListPropertiesAsync();
         var newProperty = await CreatePropertyAsync();
         var property = await GetPropertyByIdAsync();
+        var deletedProperty = await DeletePropertyAsync();
+    }
+
+    private async Task<TypeProperty> DeletePropertyAsync()
+    {
+        var deletedProperty = await _client.Properties.DeleteAsync(SpaceId, PropertyId);
+        Console.WriteLine("Deleted (archived) property with:");
+        Console.WriteLine($"ID: {deletedProperty.Id}, Key: {deletedProperty.Key}, Name: {deletedProperty.Name}.");
+
+        return deletedProperty;
     }
 
     private async Task<TypeProperty> GetPropertyByIdAsync()

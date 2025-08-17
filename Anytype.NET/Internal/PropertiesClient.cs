@@ -97,4 +97,33 @@ public sealed class PropertiesClient : ClientBase
 
         return response.Property;
     }
+
+    /// <summary>
+    /// Deletes (archives) a property by marking it as archived.
+    /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <param name="spaceId">The ID of the space to which the property belongs.</param>
+    /// <param name="propertyId">The ID of the property to delete.</param>
+    /// <returns>The archived <see cref="Property"/>.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<TypeProperty> DeleteAsync(string spaceId, string propertyId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+
+        var response = await DeleteAsync<PropertyResponse>(relativeUrl) 
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Property;
+    }
 }
