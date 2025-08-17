@@ -22,6 +22,9 @@ public sealed class AnytypeClient
         Members = new MembersClient(_apiKey);
         Types = new TypesClient(_apiKey);
         Templates = new TemplatesClient(_apiKey);
+        Tags = new TagsClient(_apiKey);
+        Properties = new PropertiesClient(_apiKey);
+
     }
 
     public SpacesClient Spaces { get; }
@@ -33,4 +36,8 @@ public sealed class AnytypeClient
     public TypesClient Types { get; set; }
 
     public TemplatesClient Templates { get; set; }
+
+    public TagsClient Tags { get; set; }
+
+    public PropertiesClient Properties { get; set; }
 }
