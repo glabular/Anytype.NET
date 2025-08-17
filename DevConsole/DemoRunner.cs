@@ -37,6 +37,7 @@ public class DemoRunner
         //await DemoMembersAsync();
         //await DemoTemplatesAsync();
         //await DemoPropertiesAsync();
+        //await DemoTagsAsync();
     }
 
     private async Task DemoSpacesAsync()
@@ -74,10 +75,54 @@ public class DemoRunner
     private async Task DemoPropertiesAsync()
     {
         await ListPropertiesAsync();
-        var newProperty = await CreatePropertyAsync();
-        var property = await GetPropertyByIdAsync();
-        var deletedProperty = await DeletePropertyAsync();
-        var updatedProperty = await UpdatePropertyAsync();
+        //var newProperty = await CreatePropertyAsync();
+        //var property = await GetPropertyByIdAsync();
+        //var deletedProperty = await DeletePropertyAsync();
+        //var updatedProperty = await UpdatePropertyAsync();
+    }
+
+    private async Task DemoTagsAsync()
+    {
+        await ListTagsAsync();
+    }
+
+    private async Task ListTagsAsync()
+    {
+        bool hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await _client.Tags.ListAsync(SpaceId, PropertyId);
+            Console.WriteLine($"Retrieved {response.Tags.Count} tags out of total {response.Pagination.Total}.\n");
+
+            foreach (var tag in response.Tags)
+            {
+                Console.WriteLine($"- {tag.Name} (ID: {tag.Id}, Color: {tag.Color})");
+            }
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("\nMore tags are available. Do you want to load more? (y/n): ");
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("\nStopping further loading of tags.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nAll available tags have been loaded.");
+            }
+        }
     }
 
     private async Task<TypeProperty> UpdatePropertyAsync()

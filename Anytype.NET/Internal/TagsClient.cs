@@ -31,7 +31,8 @@ public sealed class TagsClient : ClientBase
             throw new ArgumentNullException(nameof(propertyId));
         }
 
-        var relativeUrl = $"/v1/spaces{spaceId}/properties/{propertyId}/tags";
+        // NB: According to the official API docs, offset and limit parameters are not specified for this endpoint.
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
 
         var response = await GetAsync<ListTagsResponse>(relativeUrl)
             ?? throw new InvalidOperationException("The API returned an empty response.");
