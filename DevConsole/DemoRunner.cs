@@ -15,6 +15,7 @@ public class DemoRunner
     private const string TypeId = "";
     private const string TemplateId = "";
     private const string PropertyId = "";
+    private const string TagId = "";
 
     public DemoRunner(AnytypeClient client)
     {
@@ -85,6 +86,15 @@ public class DemoRunner
     {
         await ListTagsAsync();
         var newTag = await CreateTagAsync();
+        var tag = await GetTagByIdAsync();
+    }
+
+    private async Task<Tag> GetTagByIdAsync()
+    {
+        var tag = await _client.Tags.GetByIdAsync(SpaceId, PropertyId, TagId);
+        Console.WriteLine($"Retrieved tag with ID {tag.Id}, Key: {tag.Key}, Name: {tag.Name}, Color: {tag.Color}.");
+        
+        return tag;
     }
 
     private async Task<Tag> CreateTagAsync()
