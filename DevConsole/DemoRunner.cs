@@ -2,6 +2,7 @@
 using Anytype.NET.Models;
 using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
+using System.Collections.Generic;
 
 namespace DevConsole;
 
@@ -35,6 +36,7 @@ public class DemoRunner
         //await DemoTypesAsync();
         //await DemoMembersAsync();
         //await DemoTemplatesAsync();
+        //await DemoPropertiesAsync();
     }
 
     private async Task DemoSpacesAsync()
@@ -67,6 +69,51 @@ public class DemoRunner
     {
         await ListTemplatesAsync();
         var template = await GetTemplateByIdAsync();
+    }
+
+    private async Task DemoPropertiesAsync()
+    {
+        await ListPropertiesAsync();
+    }
+
+    private async Task ListPropertiesAsync()
+    {
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
+
+        while (hasMore)
+        {
+            var response = await _client.Properties.ListAsync(SpaceId, offset, limit);
+            Console.WriteLine($"Retrieved {response.Properties.Count} properties out of total {response.Pagination.Total} (offset {offset}).\n");
+
+            foreach (var property in response.Properties)
+            {
+                Console.WriteLine($"- {property.Name} (ID: {property.Id}, Format: {property.Format})");
+            }
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("\nMore properties are available. Do you want to load more? (y/n): ");
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("\nStopping further loading of properties.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nAll available properties from the space have been loaded.");
+            }
+        }
     }
 
     private async Task<Template> GetTemplateByIdAsync()
