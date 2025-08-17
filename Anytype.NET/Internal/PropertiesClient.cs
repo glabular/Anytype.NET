@@ -69,5 +69,32 @@ public sealed class PropertiesClient : ClientBase
         return response.Property;
     }
 
+    /// <summary>
+    /// Gets a property by its ID.
+    /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <param name="spaceId">The ID of the space to which the property belongs; must be retrieved from ListSpaces endpoint.</param>
+    /// <param name="propertyId">The ID of the property to retrieve; must be retrieved from ListProperties endpoint or obtained from response context.</param>
+    /// <returns>The detailed <see cref="TypeProperty"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="spaceId"/> or <paramref name="propertyId"/> is null or whitespace.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if the API returns an empty response.</exception>
+    public async Task<TypeProperty> GetByIdAsync(string spaceId, string propertyId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
 
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+
+        var response = await GetAsync<PropertyResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Property;
+    }
 }

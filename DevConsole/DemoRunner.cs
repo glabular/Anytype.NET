@@ -14,6 +14,7 @@ public class DemoRunner
     private const string MemberId = "";
     private const string TypeId = "";
     private const string TemplateId = "";
+    private const string PropertyId = "";
 
     public DemoRunner(AnytypeClient client)
     {
@@ -74,6 +75,16 @@ public class DemoRunner
     {
         await ListPropertiesAsync();
         var newProperty = await CreatePropertyAsync();
+        var property = await GetPropertyByIdAsync();
+    }
+
+    private async Task<TypeProperty> GetPropertyByIdAsync()
+    {
+        var property = await _client.Properties.GetByIdAsync(SpaceId, PropertyId);
+
+        Console.WriteLine($"Retrieved property with ID {property.Id}, Name: {property.Name}, Key: {property.Key}.");
+
+        return property;
     }
 
     private async Task<TypeProperty> CreatePropertyAsync()
