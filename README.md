@@ -33,8 +33,8 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Update object
 ### Properties
 ⚠ Warning: Properties are experimental and may change in the next update. ⚠ 
-- [] List properties
-- [] Create property
+- [x] List properties
+- [x] Create property
 - [] Delete property
 - [] Get property
 - [] Update property

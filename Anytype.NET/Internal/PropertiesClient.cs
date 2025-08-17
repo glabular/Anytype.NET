@@ -42,4 +42,32 @@ public sealed class PropertiesClient : ClientBase
 
         return response;
     }
+
+    /// <summary>
+    /// Creates a new property in the specified space.
+    /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <param name="spaceId">The ID of the space to create the property in; must be retrieved from ListSpaces endpoint.</param>
+    /// <param name="request">The property creation details including format and name.</param>
+    /// <returns>The created <see cref="TypeProperty"/> with full property data.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="HttpRequestException"></exception>
+    public async Task<TypeProperty> CreateAsync(string spaceId, CreatePropertyRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request);
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties";
+
+        var response = await PostAsync<PropertyResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Property;
+    }
+
+
 }

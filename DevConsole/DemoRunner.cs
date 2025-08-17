@@ -2,7 +2,6 @@
 using Anytype.NET.Models;
 using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
-using System.Collections.Generic;
 
 namespace DevConsole;
 
@@ -74,6 +73,22 @@ public class DemoRunner
     private async Task DemoPropertiesAsync()
     {
         await ListPropertiesAsync();
+        var newProperty = await CreatePropertyAsync();
+    }
+
+    private async Task<TypeProperty> CreatePropertyAsync()
+    {
+        var createPropertyRequest = new CreatePropertyRequest
+        {
+            Format = "text",
+            Key = "some_user_defined_property_key",
+            Name = "Testing date"
+        };
+
+        var createdProperty = await _client.Properties.CreateAsync(SpaceId, createPropertyRequest);
+        Console.WriteLine($"Created new property with ID {createdProperty.Id}, Key: {createdProperty.Key}, Name: {createdProperty.Name}.");
+        
+        return createdProperty;
     }
 
     private async Task ListPropertiesAsync()
@@ -91,6 +106,7 @@ public class DemoRunner
             {
                 Console.WriteLine($"- {property.Name} (ID: {property.Id}, Format: {property.Format})");
             }
+
             hasMore = response.Pagination.HasMore;
 
             if (hasMore)
@@ -98,6 +114,7 @@ public class DemoRunner
                 Console.WriteLine("\nMore properties are available. Do you want to load more? (y/n): ");
                 var keyInfo = Console.ReadKey(intercept: true);
                 var keyChar = char.ToLower(keyInfo.KeyChar);
+
                 if (keyChar == 'y')
                 {
                     offset += limit;
