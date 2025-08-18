@@ -88,6 +88,15 @@ public class DemoRunner
         var newTag = await CreateTagAsync();
         var tag = await GetTagByIdAsync();
         var updatedTag = await UpdateTagAsync();
+        var deletedTag = await DeleteTagAsync();
+    }
+
+    private async Task<Tag> DeleteTagAsync()
+    {
+        var deletedTag = await _client.Tags.DeleteAsync(SpaceId, PropertyId, TagId);
+        Console.WriteLine($"Deleted (archived) tag with ID {deletedTag.Id}, Key: {deletedTag.Key}, Name: {deletedTag.Name}.");
+        
+        return deletedTag;
     }
 
     private async Task<Tag> UpdateTagAsync()

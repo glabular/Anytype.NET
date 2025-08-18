@@ -41,7 +41,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 ### Tags
 - [x] List tags
 - [x] Create tag
-- [ ] Delete tag
+- [x] Delete tag
 - [x] Get tag
 - [x] Update tag
 ### Types

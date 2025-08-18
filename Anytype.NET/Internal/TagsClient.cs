@@ -10,9 +10,7 @@ public sealed class TagsClient : ClientBase
     public TagsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a paginated list of tags available for a specific property within a space.
-    /// Each tag record includes its unique identifier, name, and color.
-    /// This endpoint supports pagination through offset and limit parameters.
+    /// Retrieves a paginated list of tags.
     /// </summary>
     /// <param name="spaceId">The ID of the space to list tags for; must be retrieved from ListSpaces endpoint.</param>
     /// <param name="propertyId">The ID of the property to list tags for; must be retrieved from ListProperties endpoint or obtained from response context.</param>
@@ -41,7 +39,7 @@ public sealed class TagsClient : ClientBase
     }
 
     /// <summary>
-    /// Creates a new tag for the specified property in the specified space.
+    /// Creates a new tag.
     /// </summary>
     /// <param name="spaceId">The ID of the space to create the tag in.</param>
     /// <param name="propertyId">The ID of the property to create the tag for.</param>
@@ -72,7 +70,7 @@ public sealed class TagsClient : ClientBase
     }
 
     /// <summary>
-    /// Gets a tag by its ID for the specified property in the specified space.
+    /// Gets a tag by its ID.
     /// </summary>
     /// <param name="spaceId">The ID of the space to retrieve the tag from.</param>
     /// <param name="propertyId">The ID of the property to retrieve the tag for.</param>
@@ -142,6 +140,40 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
 
         var response = await PatchAsync<TagResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Tag;
+    }
+
+    /// <summary>
+    /// Deletes (archives) a tag.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space to delete the tag from.</param>
+    /// <param name="propertyId">The ID of the property to delete the tag for.</param>
+    /// <param name="tagId">The ID of the tag to delete.</param>
+    /// <returns>The deleted (archived) <see cref="Tag"/>.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<Tag> DeleteAsync(string spaceId, string propertyId, string tagId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        if (string.IsNullOrWhiteSpace(tagId))
+        {
+            throw new ArgumentNullException(nameof(tagId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
+
+        var response = await DeleteAsync<TagResponse>(relativeUrl)
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response.Tag;
