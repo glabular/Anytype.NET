@@ -148,7 +148,6 @@ public class DemoRunner
         Console.WriteLine();
     }
 
-
     private async Task<Tag> DeleteTagAsync()
     {
         var deletedTag = await _client.Tags.DeleteAsync(SpaceId, PropertyId, TagId);
