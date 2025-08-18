@@ -119,6 +119,8 @@ public class DemoRunner
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
+
+        Console.WriteLine();
     }
 
     private async Task SearchObjectsAcrossSpacesAsync()
@@ -137,10 +139,13 @@ public class DemoRunner
         var searchResponse = await _client.Search.AcrossSpacesAsync(searchRequest, offset: 0, limit: 100);
 
         Console.WriteLine($"Total results: {searchResponse.Pagination.Total}");
+
         foreach (var item in searchResponse.Data)
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
+
+        Console.WriteLine();
     }
 
 

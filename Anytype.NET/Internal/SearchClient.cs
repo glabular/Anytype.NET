@@ -21,24 +21,9 @@ public sealed class SearchClient : ClientBase
         int offset = 0,
         int limit = 100)
     {
-        if (limit > 1000)
-        {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
-        }
-
-        ArgumentNullException.ThrowIfNull(request);
-
-        if (string.IsNullOrWhiteSpace(request.Query))
-        {
-            throw new ArgumentException(nameof(request.Query));
-        }
-
         var relativeUrl = $"/v1/search?offset={offset}&limit={limit}";
 
-        var response = await PostAsync<SearchResponse>(relativeUrl, request)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
-
-        return response;
+        return await ExecuteSearchAsync(relativeUrl, request, limit);
     }
 
     /// <summary>
@@ -49,7 +34,7 @@ public sealed class SearchClient : ClientBase
     /// <param name="offset">Number of items to skip for pagination (default 0).</param>
     /// <param name="limit">Pagination limit (max 1000).</param>
     /// <returns>A <see cref="SearchResponse"/> containing matching objects and pagination metadata.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<SearchResponse> InSpaceAsync(
         string spaceId,
@@ -59,22 +44,30 @@ public sealed class SearchClient : ClientBase
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
-            throw new ArgumentNullException(nameof(spaceId));
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }        
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/search?offset={offset}&limit={limit}";
+
+        return await ExecuteSearchAsync(relativeUrl, request, limit);
+    }
+
+    // TODO: Maybe check the offset for positive value only.
+    private async Task<SearchResponse> ExecuteSearchAsync(string relativeUrl, SearchRequest request, int limit)
+    {
+        const int MaxLimit = 1000;
+
+        if (limit > MaxLimit)
+        {
+            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
         ArgumentNullException.ThrowIfNull(request);
 
         if (string.IsNullOrWhiteSpace(request.Query))
         {
-            throw new ArgumentException(nameof(request.Query));
+            throw new ArgumentException("Query cannot be null or whitespace.", nameof(request));
         }
-
-        if (limit > 1000)
-        {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
-        }
-
-        var relativeUrl = $"/v1/spaces/{spaceId}/search?offset={offset}&limit={limit}";
 
         var response = await PostAsync<SearchResponse>(relativeUrl, request)
             ?? throw new InvalidOperationException("The API returned an empty response.");
