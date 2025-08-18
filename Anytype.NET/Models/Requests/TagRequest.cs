@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models.Requests;
 
-public sealed class CreateTagRequest
+public sealed class TagRequest
 {
     /// <summary>
     /// The name of the tag.

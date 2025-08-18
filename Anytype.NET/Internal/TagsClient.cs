@@ -49,7 +49,7 @@ public sealed class TagsClient : ClientBase
     /// <returns>The created <see cref="Tag"/>.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task<Tag> CreateAsync(string spaceId, string propertyId, CreateTagRequest request)
+    public async Task<Tag> CreateAsync(string spaceId, string propertyId, TagRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -105,6 +105,43 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
 
         var response = await GetAsync<TagResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response.Tag;
+    }
+
+    /// <summary>
+    /// Updates the tag for the specified property in the specified space.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space to update the tag in.</param>
+    /// <param name="propertyId">The ID of the property to update the tag for.</param>
+    /// <param name="tagId">The ID of the tag to update.</param>
+    /// <param name="request">The tag update request payload.</param>
+    /// <returns>The updated <see cref="Tag"/> instance.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<Tag> UpdateAsync(string spaceId, string propertyId, string tagId, TagRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentNullException(nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(propertyId))
+        {
+            throw new ArgumentNullException(nameof(propertyId));
+        }
+
+        if (string.IsNullOrWhiteSpace(tagId))
+        {
+            throw new ArgumentNullException(nameof(tagId));
+        }
+
+        ArgumentNullException.ThrowIfNull(request);
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
+
+        var response = await PatchAsync<TagResponse>(relativeUrl, request)
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response.Tag;

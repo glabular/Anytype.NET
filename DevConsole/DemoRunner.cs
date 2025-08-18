@@ -87,6 +87,25 @@ public class DemoRunner
         await ListTagsAsync();
         var newTag = await CreateTagAsync();
         var tag = await GetTagByIdAsync();
+        var updatedTag = await UpdateTagAsync();
+    }
+
+    private async Task<Tag> UpdateTagAsync()
+    {
+        var oldTag = await _client.Tags.GetByIdAsync(SpaceId, PropertyId, TagId);
+
+        var updateRequest = new TagRequest
+        {
+            Name = "Updated test in progress",
+            Color = "yellow"
+        };
+
+        var updatedTag = await _client.Tags.UpdateAsync(SpaceId, PropertyId, TagId, updateRequest);
+        
+        Console.WriteLine($"Old tag - ID: {oldTag.Id}, Key: {oldTag.Key}, Name: {oldTag.Name}, Color: {oldTag.Color}.");
+        Console.WriteLine($"Updated tag - ID: {updatedTag.Id}, Key: {updatedTag.Key}, Name: {updatedTag.Name}, Color: {updatedTag.Color}.");
+
+        return updatedTag;
     }
 
     private async Task<Tag> GetTagByIdAsync()
@@ -99,7 +118,7 @@ public class DemoRunner
 
     private async Task<Tag> CreateTagAsync()
     {
-        var createTagRequest = new CreateTagRequest
+        var createTagRequest = new TagRequest
         {
             Name = "In progress",
             Color = "yellow"
