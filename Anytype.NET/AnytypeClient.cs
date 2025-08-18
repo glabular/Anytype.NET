@@ -24,7 +24,7 @@ public sealed class AnytypeClient
         Templates = new TemplatesClient(_apiKey);
         Tags = new TagsClient(_apiKey);
         Properties = new PropertiesClient(_apiKey);
-
+        Search = new SearchClient(_apiKey);
     }
 
     public SpacesClient Spaces { get; }
@@ -40,4 +40,6 @@ public sealed class AnytypeClient
     public TagsClient Tags { get; set; }
 
     public PropertiesClient Properties { get; set; }
+
+    public SearchClient Search { get; set; }
 }

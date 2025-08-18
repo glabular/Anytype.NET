@@ -39,8 +39,9 @@ public class DemoRunner
         //await DemoTemplatesAsync();
         //await DemoPropertiesAsync();
         //await DemoTagsAsync();
+        await DemoSearchAsync();
     }
-
+    
     private async Task DemoSpacesAsync()
     {
         await GetSpacesAsync();
@@ -90,6 +91,34 @@ public class DemoRunner
         var updatedTag = await UpdateTagAsync();
         var deletedTag = await DeleteTagAsync();
     }
+
+    private async Task DemoSearchAsync()
+    {
+        await SearchObjectsAcrossSpacesAsync();
+    }
+
+    private async Task SearchObjectsAcrossSpacesAsync()
+    {
+        var searchRequest = new SearchRequest
+        {
+            Query = "test",
+            Types = ["page", "task", "bookmark"],
+            Sort = new SortOptions
+            {
+                Direction = "asc",
+                PropertyKey = "last_modified_date"
+            }
+        };
+
+        var searchResponse = await _client.Search.SearchAsync(searchRequest, offset: 0, limit: 100);
+
+        Console.WriteLine($"Total results: {searchResponse.Pagination.Total}");
+        foreach (var item in searchResponse.Data)
+        {
+            Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
+        }
+    }
+
 
     private async Task<Tag> DeleteTagAsync()
     {
