@@ -1,6 +1,6 @@
 ﻿namespace Anytype.NET.Models;
 
-public sealed class TemplateProperty
+public sealed class ObjectProperty
 {
     /// <summary>
     /// The format of the property used for filtering.

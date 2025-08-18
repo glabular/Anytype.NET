@@ -2,7 +2,7 @@
 
 namespace Anytype.NET.Models;
 
-public sealed class Template
+public sealed class SearchItem
 {
     /// <summary>
     /// Whether the object is archived.
@@ -10,7 +10,7 @@ public sealed class Template
     public bool Archived { get; set; }
 
     /// <summary>
-    /// The icon of the object.
+    /// The icon of the object, or null if the object has no icon.
     /// </summary>
     public IIcon? Icon { get; set; }
 
@@ -23,11 +23,6 @@ public sealed class Template
     /// The layout of the object.
     /// </summary>
     public string Layout { get; set; }
-
-    /// <summary>
-    /// The markdown body of the object.
-    /// </summary>
-    public string Markdown { get; set; }
 
     /// <summary>
     /// The name of the object.
@@ -47,7 +42,7 @@ public sealed class Template
     /// <summary>
     /// The snippet of the object.
     /// </summary>
-    /// <remarks>Especially important for notes as they don't have a name.</remarks>
+    /// <remarks>Especially important for notes as they don't have a name.</remarks>    
     public string Snippet { get; set; }
 
     /// <summary>

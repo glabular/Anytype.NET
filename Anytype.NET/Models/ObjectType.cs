@@ -2,7 +2,7 @@
 
 namespace Anytype.NET.Models;
 
-public sealed class TemplateType
+public sealed class ObjectType
 {
     /// <summary>
     /// Whether the type is archived.
@@ -49,5 +49,5 @@ public sealed class TemplateType
     /// <summary>
     /// The properties linked to the type.
     /// </summary>
-    public List<TemplateProperty> Properties { get; set; }    
+    public List<ObjectProperty> Properties { get; set; }    
 }
