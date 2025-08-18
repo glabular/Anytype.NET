@@ -39,7 +39,7 @@ public class DemoRunner
         //await DemoTemplatesAsync();
         //await DemoPropertiesAsync();
         //await DemoTagsAsync();
-        await DemoSearchAsync();
+        //await DemoSearchAsync();
     }
     
     private async Task DemoSpacesAsync()
@@ -95,6 +95,30 @@ public class DemoRunner
     private async Task DemoSearchAsync()
     {
         await SearchObjectsAcrossSpacesAsync();
+        await SearchObjectsWithinSpaceAsync();
+    }
+
+    private async Task SearchObjectsWithinSpaceAsync()
+    {
+        var searchRequest = new SearchRequest
+        {
+            Query = "any",
+            Types = ["page", "task", "bookmark"],
+            Sort = new SortOptions
+            {
+                Direction = "desc",
+                PropertyKey = "last_modified_date"
+            }
+        };
+
+        var searchResponse = await _client.Search.InSpaceAsync(SpaceId, searchRequest, offset: 0, limit: 100);
+
+        Console.WriteLine($"Total results in space {SpaceId}: {searchResponse.Pagination.Total}");
+
+        foreach (var item in searchResponse.Data)
+        {
+            Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
+        }
     }
 
     private async Task SearchObjectsAcrossSpacesAsync()
@@ -110,7 +134,7 @@ public class DemoRunner
             }
         };
 
-        var searchResponse = await _client.Search.SearchAsync(searchRequest, offset: 0, limit: 100);
+        var searchResponse = await _client.Search.AcrossSpacesAsync(searchRequest, offset: 0, limit: 100);
 
         Console.WriteLine($"Total results: {searchResponse.Pagination.Total}");
         foreach (var item in searchResponse.Data)

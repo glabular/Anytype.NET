@@ -10,8 +10,8 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [ ] Create API Key
 - [ ] Create Challenge
 ### Search
-- [ ] Search objects across all spaces
-- [ ] Search objects within a space
+- [x] Search objects across all spaces
+- [x] Search objects within a space
 ### Spaces
 - [x] List spaces
 - [x] Create space
