@@ -2,6 +2,7 @@
 using Anytype.NET.Models;
 using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
+using System.Collections.Generic;
 
 namespace DevConsole;
 
@@ -16,6 +17,7 @@ public class DemoRunner
     private const string TemplateId = "";
     private const string PropertyId = "";
     private const string TagId = "";
+    private const string ListId = "";
 
     public DemoRunner(AnytypeClient client)
     {
@@ -40,8 +42,9 @@ public class DemoRunner
         //await DemoPropertiesAsync();
         //await DemoTagsAsync();
         //await DemoSearchAsync();
-    }
-    
+        //await DemoListsAsync();
+    }   
+
     private async Task DemoSpacesAsync()
     {
         await GetSpacesAsync();
@@ -96,6 +99,26 @@ public class DemoRunner
     {
         await SearchObjectsAcrossSpacesAsync();
         await SearchObjectsWithinSpaceAsync();
+    }
+
+    private async Task DemoListsAsync()
+    {
+        await GetListViewsAsync();
+    }
+
+    private async Task GetListViewsAsync()
+    {
+        var response = await _client.Lists.GetListViewsAsync(SpaceId, ListId, offset: 0, limit: 100);
+
+        Console.WriteLine($"Total views for list {ListId}: {response.Pagination.Total}");
+
+        foreach (var view in response.Data)
+        {
+            Console.WriteLine($"- View ID: {view.Id}, Name: {view.Name}, Layout: {view.Layout}, " +
+                              $"Filters: {view.Filters?.Count ?? 0}, Sorts: {view.Sorts?.Count ?? 0}");
+        }
+
+        Console.WriteLine();
     }
 
     private async Task SearchObjectsWithinSpaceAsync()

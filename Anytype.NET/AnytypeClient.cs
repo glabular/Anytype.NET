@@ -25,6 +25,7 @@ public sealed class AnytypeClient
         Tags = new TagsClient(_apiKey);
         Properties = new PropertiesClient(_apiKey);
         Search = new SearchClient(_apiKey);
+        Lists = new ListsClient(_apiKey);
     }
 
     public SpacesClient Spaces { get; }
@@ -42,4 +43,6 @@ public sealed class AnytypeClient
     public PropertiesClient Properties { get; set; }
 
     public SearchClient Search { get; set; }
+
+    public ListsClient Lists { get; set; }
 }
