@@ -18,6 +18,7 @@ public class DemoRunner
     private const string PropertyId = "";
     private const string TagId = "";
     private const string ListId = "";
+    private const string ViewId = "";
 
     public DemoRunner(AnytypeClient client)
     {
@@ -104,6 +105,25 @@ public class DemoRunner
     private async Task DemoListsAsync()
     {
         await GetListViewsAsync();
+        await GetListObjectsAsync();
+    }
+
+    private async Task GetListObjectsAsync()
+    {
+        var objectsResponse = await _client.Lists.GetListObjectsAsync(SpaceId, ListId, ViewId, offset: 0, limit: 100);
+
+        Console.WriteLine($"Total objects in view {ViewId}: {objectsResponse.Pagination.Total}");
+
+        foreach (var obj in objectsResponse.Objects)
+        {
+            Console.WriteLine($"- Object ID: {obj.Id}");
+            Console.WriteLine($"  Name: {obj.Name ?? "(no name)"}");
+            Console.WriteLine($"  Object Type: {obj.Object}");
+            Console.WriteLine($"  Space ID: {obj.SpaceId}");
+            Console.WriteLine($"  Archived: {(obj.Archived ? "Yes" : "No")}");
+        }
+
+        Console.WriteLine();
     }
 
     private async Task GetListViewsAsync()
@@ -667,12 +687,12 @@ public class DemoRunner
             [
                 new
                 {
-                    key = PropertyKey.Done,
+                    key = "done",
                     checkbox = false
                 },
                 new
                 {
-                    key = PropertyKey.Description,
+                    key = "description",
                     text = "This is an updated description for the object."
                 }
             ]
@@ -728,14 +748,19 @@ public class DemoRunner
             TypeKey = "page",
 
             // Optional metadata properties
-            Properties = new List<Property>
-            {
-                // A short description
-                PropertyFactory.Description("An introductory overview of Antares."),
-
-                // Mark the object as done
-                PropertyFactory.Done(true)
-            }
+            Properties =
+            [
+                new
+                {
+                    key = "done",
+                    checkbox = false
+                },
+                new
+                {
+                    key = "description",
+                    text = "This is an updated description for the object."
+                }
+            ]
         };
 
         var createdObject = await _client.Objects.CreateAsync(SpaceId, createObjectRequest);

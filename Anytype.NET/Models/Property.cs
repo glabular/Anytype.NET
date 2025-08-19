@@ -12,7 +12,7 @@ public sealed class Property
     /// The key identifying the property.
     /// </summary>
     [JsonPropertyName("key")]
-    public PropertyKey Key { get; set; }
+    public string Key { get; set; }
 
     /// <summary>
     /// The unique ID of the property.

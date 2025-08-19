@@ -20,8 +20,8 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 ### Lists
 - [ ] Add objects to list
 - [ ] Remove object from list
-- [ ] Get list views
-- [ ] Get objects in list
+- [x] Get list views
+- [x] Get objects in list
 ### Members
 - [x] List members
 - [x] Get member

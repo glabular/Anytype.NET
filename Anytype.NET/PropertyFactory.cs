@@ -14,14 +14,14 @@ namespace Anytype.NET;
 /// </remarks>
 public static class PropertyFactory
 {
-    public static Property Description(string text)
-    {
-        return new Property { Key = PropertyKey.Description, Text = text };
-    }
+    //public static Property Description(string text)
+    //{
+    //    return new Property { Key = PropertyKey.Description, Text = text };
+    //}
 
-    public static Property Done(bool value)
-    {
-        return new Property { Key = PropertyKey.Done, Checkbox = value };
-    }
+    //public static Property Done(bool value)
+    //{
+    //    return new Property { Key = PropertyKey.Done, Checkbox = value };
+    //}
 }
 

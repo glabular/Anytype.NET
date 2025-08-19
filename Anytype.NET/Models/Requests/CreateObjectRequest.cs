@@ -37,7 +37,7 @@ public sealed class CreateObjectRequest
     /// A list of properties that define object attributes and connections.
     /// </summary>
     [JsonPropertyName("properties")]
-    public List<Property> Properties { get; set; } = [];
+    public object[] Properties { get; set; } = [];
 
     /// <summary>
     /// The id of the template to use.
