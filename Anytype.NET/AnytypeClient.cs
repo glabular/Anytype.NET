@@ -34,15 +34,15 @@ public sealed class AnytypeClient
 
     public MembersClient Members { get; }
 
-    public TypesClient Types { get; set; }
+    public TypesClient Types { get; }
 
-    public TemplatesClient Templates { get; set; }
+    public TemplatesClient Templates { get; }
 
-    public TagsClient Tags { get; set; }
+    public TagsClient Tags { get; }
 
-    public PropertiesClient Properties { get; set; }
+    public PropertiesClient Properties { get; }
 
-    public SearchClient Search { get; set; }
+    public SearchClient Search { get; }
 
-    public ListsClient Lists { get; set; }
+    public ListsClient Lists { get; }
 }
