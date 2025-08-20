@@ -107,6 +107,13 @@ public class DemoRunner
         await GetListViewsAsync();
         await GetListObjectsAsync();
         await AddObjectsToListAsync();
+        await DeleteObjectFromListAsync();
+    }
+
+    private async Task DeleteObjectFromListAsync()
+    {
+        var result = await _client.Lists.RemoveObjectFromListAsync(SpaceId, ListId, ObjectId);
+        Console.WriteLine($"Remove object response: {result}");
     }
 
     private async Task AddObjectsToListAsync()

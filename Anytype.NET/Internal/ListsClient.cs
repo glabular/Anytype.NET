@@ -115,5 +115,40 @@ public sealed class ListsClient : ClientBase
         return response;
     }
 
+    /// <summary>
+    /// Removes a given object from the specified collection list.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space the list belongs to.</param>
+    /// <param name="listId">The ID of the list (collection) to remove the object from.</param>
+    /// <param name="objectId">The ID of the object to remove from the list.</param>
+    /// <returns>A confirmation message from the API.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<string> RemoveObjectFromListAsync(
+        string spaceId,
+        string listId,
+        string objectId)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null, empty, or whitespace.", nameof(spaceId));
+        }
 
+        if (string.IsNullOrWhiteSpace(listId))
+        {
+            throw new ArgumentException("List ID cannot be null, empty, or whitespace.", nameof(listId));
+        }
+
+        if (string.IsNullOrWhiteSpace(objectId))
+        {
+            throw new ArgumentException("Object ID cannot be null, empty, or whitespace.", nameof(objectId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects/{objectId}";
+
+        var response = await DeleteAsync<string>(relativeUrl)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response;
+    }
 }

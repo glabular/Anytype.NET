@@ -6,9 +6,6 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 
 ## Supported Endpoints
 
-### Auth
-- [ ] Create API Key
-- [ ] Create Challenge
 ### Search
 - [x] Search objects across all spaces
 - [x] Search objects within a space
@@ -19,7 +16,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Update space
 ### Lists
 - [x] Add objects to list
-- [ ] Remove object from list
+- [x] Remove object from list
 - [x] Get list views
 - [x] Get objects in list
 ### Members
