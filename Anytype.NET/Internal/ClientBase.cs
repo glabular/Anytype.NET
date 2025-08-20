@@ -17,7 +17,6 @@ public abstract class ClientBase
         PropertyNameCaseInsensitive = true,
         Converters =
         {
-            new SnakeCaseEnumConverter<PropertyKey>(),
             new IconConverter()
         }
     };
