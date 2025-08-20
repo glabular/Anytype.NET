@@ -18,7 +18,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 - [x] Get space
 - [x] Update space
 ### Lists
-- [ ] Add objects to list
+- [x] Add objects to list
 - [ ] Remove object from list
 - [x] Get list views
 - [x] Get objects in list

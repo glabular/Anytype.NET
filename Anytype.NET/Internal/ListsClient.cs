@@ -80,4 +80,41 @@ public sealed class ListsClient : ClientBase
 
         return response;
     }
+
+    /// <summary>
+    /// Adds one or more objects to a specific collection list.
+    /// </summary>
+    /// <param name="spaceId">The ID of the space the list belongs to.</param>
+    /// <param name="listId">The ID of the list (collection) to add objects to.</param>
+    /// <param name="objectIds">The list of object IDs to add to the list.</param>
+    /// <returns>A confirmation message from the API.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    public async Task<string> AddObjectsToListAsync(
+        string spaceId,
+        string listId,
+        List<string> objectIds)
+    {
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null, empty, or whitespace.", nameof(spaceId));
+        }
+
+        if (string.IsNullOrWhiteSpace(listId))
+        {
+            throw new ArgumentException("List ID cannot be null, empty, or whitespace.", nameof(listId));
+        }
+
+        if (objectIds == null || objectIds.Count == 0)
+        {
+            throw new ArgumentException("Object IDs list cannot be null or empty.", nameof(objectIds));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects";
+        var payload = new { objects = objectIds };
+        var response = await PostAsync<string>(relativeUrl, payload)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response;
+    }
 }

@@ -106,6 +106,19 @@ public class DemoRunner
     {
         await GetListViewsAsync();
         await GetListObjectsAsync();
+        await AddObjectsToListAsync();
+    }
+
+    private async Task AddObjectsToListAsync()
+    {
+        var objectIds = new List<string>
+        {
+            // Provide your IDs here:
+
+        };
+
+        var result = await _client.Lists.AddObjectsToListAsync(SpaceId, ListId, objectIds);
+        Console.WriteLine($"Add objects response: {result}");
     }
 
     private async Task GetListObjectsAsync()
@@ -730,7 +743,7 @@ public class DemoRunner
         var createObjectRequest = new CreateObjectRequest
         {
             // Set the title of the page
-            Name = "Antares",
+            Name = "listingtesting",
 
             // Set the emoji icon for the page
             Icon = new EmojiIcon("🌟"),
