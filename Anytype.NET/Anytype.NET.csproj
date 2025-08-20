@@ -4,6 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<PackageId>Anytype.NET</PackageId>
+	<Version>1.0.0</Version>
+	<Authors>glu_max</Authors>
+	<Product>Anytype.NET</Product>
+	<Description>Anytype.NET is an unofficial .NET client library for accessing the Anytype API.</Description>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<RepositoryUrl>https://github.com/glabular/Anytype.NET</RepositoryUrl>
   </PropertyGroup>
 
+	<ItemGroup>
+		<None Include="LICENSE.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
 </Project>

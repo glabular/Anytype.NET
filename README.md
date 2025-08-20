@@ -1,6 +1,6 @@
 # Anytype API for .NET
 
-**Anytype\.NET** is a strongly-typed .NET client for the Anytype API. 
+**Anytype\.NET** is an unofficial .NET client library for accessing the Anytype API. 
 It simplifies interaction with the API by taking care of HTTP calls, request/response handling, and JSON parsing — letting you focus on building features.
 With it, you can easily create, retrieve, update, and manage Anytype objects directly in your applications.
 
