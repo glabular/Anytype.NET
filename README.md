@@ -54,6 +54,9 @@ The snippet above lists all available spaces and prints their names and IDs in t
 | Templates    | List • Get |
 | ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
 
+> [!IMPORTANT]
+> The Anytype desktop app must be running for the API to function.
+
 ---
 
 ## Contributing
