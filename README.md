@@ -19,6 +19,7 @@ var client = new AnytypeClient("your-api-key");
 ```
 > [!TIP]
 > **How to get an API key?**
+>
 > The simplest way to generate an API key is through the Anytype desktop client (available in v0.46.6 or later):
 >- Open the Anytype desktop app
 >- Go to Settings
