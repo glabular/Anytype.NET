@@ -29,15 +29,22 @@ var client = new AnytypeClient("your-api-key");
 
 3. Usage example
 ```csharp
-var spaces = await client.Spaces.GetAllAsync();
+var name = "C# fandom";
+var description = "This is a space created using Anytype.NET.";
 
-foreach (var space in spaces)
+var request = new CreateSpaceRequest(name)
 {
-    Console.WriteLine(space.Name);
-	Console.WriteLine(space.Id);
-}
+    Description = description
+};
+
+var newSpace = await _client.Spaces.CreateAsync(request);
+
+Console.WriteLine("New space created:");
+Console.WriteLine(newSpace.Name);
+Console.WriteLine($"Description: {newSpace.Description}");
+Console.WriteLine($"ID: {newSpace.Id}");
 ```
-The snippet above lists all available spaces and prints their names and IDs in the console.
+The snippet above creates a new space and prints its name, description, and ID in the console.
 
 
 ## Supported Endpoints
@@ -53,6 +60,7 @@ The snippet above lists all available spaces and prints their names and IDs in t
 | Types        | List • Create • Delete • Get • Update |
 | Templates    | List • Get |
 | ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
+
 
 > [!IMPORTANT]
 > The Anytype desktop app must be running for the API to function.
