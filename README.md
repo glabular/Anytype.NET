@@ -61,11 +61,10 @@ The snippet above creates a new space and prints its name, description, and ID i
 | Templates    | List • Get |
 | ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
 
+---
 
 > [!IMPORTANT]
 > The Anytype desktop app must be running for the API to function.
-
----
 
 ## Contributing
 
