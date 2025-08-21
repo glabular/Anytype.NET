@@ -8,7 +8,7 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 # Getting Started
 
 1. Install via NuGet:
-```
+```csharp
 dotnet add package Anytype.NET
 ```
 2. Create a client
@@ -19,7 +19,7 @@ var client = new AnytypeClient("your-api-key");
 ```
 > [!TIP]
 > **How to get an API key?**
->The simplest way to generate an API key is through the Anytype desktop client (available in v0.46.6 or later):
+> The simplest way to generate an API key is through the Anytype desktop client (available in v0.46.6 or later):
 >- Open the Anytype desktop app
 >- Go to Settings
 >- Navigate to the API Keys section
