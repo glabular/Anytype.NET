@@ -30,14 +30,14 @@ var client = new AnytypeClient("your-api-key");
 3. Usage example
 ```csharp
 var name = "C# fandom";
-var description = "This is a space created using Anytype.NET.";
+var description = "This is a space created using Anytype.NET";
 
 var request = new CreateSpaceRequest(name)
 {
     Description = description
 };
 
-var newSpace = await _client.Spaces.CreateAsync(request);
+var newSpace = await client.Spaces.CreateAsync(request);
 
 Console.WriteLine("New space created:");
 Console.WriteLine(newSpace.Name);
