@@ -822,25 +822,47 @@ public class DemoRunner
     /// </summary>
     private async Task GetSpacesAsync()
     {
-        var spaces = await _client.Spaces.GetAllAsync();
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
 
-        if (spaces.Count == 0)
+        while (hasMore)
         {
-            Console.WriteLine("No spaces found.");
-        }
-        else if (spaces.Count == 1)
-        {
-            Console.WriteLine("1 space loaded:");
-        }
-        else
-        {
-            Console.WriteLine($"{spaces.Count} spaces loaded:");
-        }
+            var response = await _client.Spaces.ListAsync(offset, limit);
 
-        foreach (var space in spaces)
-        {
-            Console.WriteLine($"{space.Name}");
-            Console.WriteLine($"{space.Id}");
+            Console.WriteLine($"Retrieved {response.Spaces.Count} spaces out of total {response.Pagination.Total} (offset {offset}).");
+
+            foreach (var space in response.Spaces)
+            {
+                Console.WriteLine($"- {space.Name} (ID: {space.Id})");
+            }
+
+            Console.WriteLine();
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("More spaces are available. Do you want to load more? (y/n): ");
+
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Stopping further loading of spaces.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("All available spaces have been loaded.");
+            }
         }
     }
 }

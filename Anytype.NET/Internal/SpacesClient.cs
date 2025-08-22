@@ -12,30 +12,28 @@ public sealed class SpacesClient : ClientBase
     public SpacesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a simplified list of all accessible spaces.
-    /// </summary>
-    /// <returns>A list of <see cref="Space"/> objects.</returns>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"></exception>
-    /// <exception cref="InvalidOperationException"/>
-    public async Task<List<Space>?> GetAllAsync()
-    {
-        var response = await GetAsync<SpacesResponse>(RelativeSpacesUrl);
-
-        return response?.Spaces;
-    }
-
-    /// <summary>
     /// Gets a list of spaces.
     /// </summary>
+    /// <param name="offset">The number of items to skip before starting to collect the result set (default: 0).</param>
+    /// <param name="limit">The number of items to return (default: 100, maximum: 1000).</param>
     /// <returns>A <see cref="SpacesResponse"/> containing the spaces and pagination metadata.</returns>
-    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<SpacesResponse?> GetAllDetailedAsync()
+    public async Task<SpacesResponse?> ListAsync(int offset = 0, int limit = 100)
     {
-        return await GetAsync<SpacesResponse>(RelativeSpacesUrl);
+        if (limit > 1000)
+        {
+            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+        }
+
+        var relativeUrl = $"{RelativeSpacesUrl}?offset={offset}&limit={limit}";
+
+        var response = await GetAsync<SpacesResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("The API returned an empty response.");
+
+        return response;
     }
 
     /// <summary>
