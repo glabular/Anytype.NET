@@ -10,13 +10,15 @@ public sealed class TagsClient : ClientBase
     public TagsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a paginated list of tags.
+    /// Gets a list of tags.
     /// </summary>
-    /// <param name="spaceId">The ID of the space to list tags for; must be retrieved from ListSpaces endpoint.</param>
-    /// <param name="propertyId">The ID of the property to list tags for; must be retrieved from ListProperties endpoint or obtained from response context.</param>
+    /// <param name="spaceId">The ID of the space to list tags for.</param>
+    /// <param name="propertyId">The ID of the property to list tags for.</param>
     /// <returns>A <see cref="ListTagsResponse"/> containing the tags and pagination metadata.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="spaceId"/> or <paramref name="propertyId"/> is null or whitespace.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if the API returns an empty response.</exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<ListTagsResponse> ListAsync(string spaceId, string propertyId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -43,10 +45,12 @@ public sealed class TagsClient : ClientBase
     /// </summary>
     /// <param name="spaceId">The ID of the space to create the tag in.</param>
     /// <param name="propertyId">The ID of the property to create the tag for.</param>
-    /// <param name="request">The tag creation data including name and color.</param>
+    /// <param name="request">The tag creation data.</param>
     /// <returns>The created <see cref="Tag"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Tag> CreateAsync(string spaceId, string propertyId, TagRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -70,14 +74,16 @@ public sealed class TagsClient : ClientBase
     }
 
     /// <summary>
-    /// Gets a tag by its ID.
+    /// Gets a tag by ID.
     /// </summary>
     /// <param name="spaceId">The ID of the space to retrieve the tag from.</param>
     /// <param name="propertyId">The ID of the property to retrieve the tag for.</param>
     /// <param name="tagId">The ID of the tag to retrieve.</param>
     /// <returns>The retrieved <see cref="Tag"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Tag> GetByIdAsync(string spaceId, string propertyId, string tagId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -109,15 +115,17 @@ public sealed class TagsClient : ClientBase
     }
 
     /// <summary>
-    /// Updates the tag for the specified property in the specified space.
+    /// Updates the tag.
     /// </summary>
     /// <param name="spaceId">The ID of the space to update the tag in.</param>
     /// <param name="propertyId">The ID of the property to update the tag for.</param>
     /// <param name="tagId">The ID of the tag to update.</param>
-    /// <param name="request">The tag update request payload.</param>
+    /// <param name="request">The update details.</param>
     /// <returns>The updated <see cref="Tag"/> instance.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Tag> UpdateAsync(string spaceId, string propertyId, string tagId, TagRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -146,14 +154,16 @@ public sealed class TagsClient : ClientBase
     }
 
     /// <summary>
-    /// Deletes (archives) a tag.
+    /// Deletes (archives) the tag.
     /// </summary>
     /// <param name="spaceId">The ID of the space to delete the tag from.</param>
     /// <param name="propertyId">The ID of the property to delete the tag for.</param>
     /// <param name="tagId">The ID of the tag to delete.</param>
     /// <returns>The deleted (archived) <see cref="Tag"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Tag> DeleteAsync(string spaceId, string propertyId, string tagId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))

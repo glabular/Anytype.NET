@@ -7,16 +7,18 @@ public sealed class ListsClient : ClientBase
     public ListsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Gets a paginated list of views for a specific list (collection or set) within a space.
+    /// Get a list of views for a specific list (collection or set).
     /// </summary>
     /// <param name="spaceId">The ID of the space the list belongs to.</param>
     /// <param name="listId">The ID of the list (collection or set).</param>
     /// <param name="offset">Number of items to skip for pagination (default 0).</param>
     /// <param name="limit">Number of items to return (default 100).</param>
-    /// <returns>A response containing the list views and pagination metadata.</returns>
+    /// <returns>A <see cref="ListViewsResponse"/> containing the list views and pagination metadata.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task<ListViewsResponse> GetListViewsAsync(
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
+    public async Task<ListViewsResponse> ListViewsAsync(
         string spaceId,
         string listId,
         int offset = 0,
@@ -41,17 +43,19 @@ public sealed class ListsClient : ClientBase
     }
 
     /// <summary>
-    /// Gets a paginated list of objects associated with a specific list and view within a space.
+    /// Gets the objects for a specific list and view.
     /// </summary>
     /// <param name="spaceId">The ID of the space the list belongs to.</param>
     /// <param name="listId">The ID of the list (collection or set).</param>
     /// <param name="viewId">The ID of the view for filtering and sorting; if null, all objects are returned.</param>
     /// <param name="offset">Number of items to skip for pagination (default 0).</param>
     /// <param name="limit">Number of items to return (default 100).</param>
-    /// <returns>A response containing pagination data and list objects as AnyObject instances.</returns>
+    /// <returns>A <see cref="ListObjectsResponse"/> response containing a list of objects in the list and pagination metadata.</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task<ListObjectsResponse> GetListObjectsAsync(
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
+    public async Task<ListObjectsResponse> ListObjectsAsync(
         string spaceId,
         string listId,
         string? viewId,
@@ -87,6 +91,8 @@ public sealed class ListsClient : ClientBase
     /// <returns>A confirmation message from the API.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<string> AddObjectsToListAsync(
         string spaceId,
         string listId,
@@ -124,6 +130,8 @@ public sealed class ListsClient : ClientBase
     /// <returns>A confirmation message from the API.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<string> RemoveObjectFromListAsync(
         string spaceId,
         string listId,

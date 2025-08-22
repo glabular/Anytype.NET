@@ -130,7 +130,7 @@ public class DemoRunner
 
     private async Task GetListObjectsAsync()
     {
-        var objectsResponse = await _client.Lists.GetListObjectsAsync(SpaceId, ListId, ViewId, offset: 0, limit: 100);
+        var objectsResponse = await _client.Lists.ListObjectsAsync(SpaceId, ListId, ViewId, offset: 0, limit: 100);
 
         Console.WriteLine($"Total objects in view {ViewId}: {objectsResponse.Pagination.Total}");
 
@@ -148,7 +148,7 @@ public class DemoRunner
 
     private async Task GetListViewsAsync()
     {
-        var response = await _client.Lists.GetListViewsAsync(SpaceId, ListId, offset: 0, limit: 100);
+        var response = await _client.Lists.ListViewsAsync(SpaceId, ListId, offset: 0, limit: 100);
 
         Console.WriteLine($"Total views for list {ListId}: {response.Pagination.Total}");
 
@@ -742,9 +742,6 @@ public class DemoRunner
         return anyObject;
     }
 
-    /// <summary>
-    /// Creates a new page object in a specified space using the Anytype.NET client.
-    /// </summary>
     private async Task<AnyObject> CreateObjectAsync()
     {
         var createObjectRequest = new CreateObjectRequest
@@ -792,10 +789,6 @@ public class DemoRunner
         return createdObject;
     }
 
-    /// <summary>
-    /// Creates a new space in Anytype via the Anytype.NET client with a predefined name and description.
-    /// Prints the details of the created space to the console.
-    /// </summary>
     private async Task<Space> CreateSpaceAsync()
     {
         var name = "C# fandom";
@@ -809,38 +802,56 @@ public class DemoRunner
         var newSpace = await _client.Spaces.CreateAsync(request);
 
         Console.WriteLine("New space created:");
-        Console.WriteLine($"{newSpace.Name}");
+        Console.WriteLine(newSpace.Name);
         Console.WriteLine($"Description: {newSpace.Description}");
         Console.WriteLine($"ID: {newSpace.Id}");
 
         return newSpace;
     }
 
-    /// <summary>
-    /// Retrieves all available spaces from the Anytype API using the Anytype.NET client
-    /// and prints their details to the console.
-    /// </summary>
     private async Task GetSpacesAsync()
     {
-        var spaces = await _client.Spaces.GetAllAsync();
+        var offset = 0;
+        var limit = 10;
+        var hasMore = true;
 
-        if (spaces.Count == 0)
+        while (hasMore)
         {
-            Console.WriteLine("No spaces found.");
-        }
-        else if (spaces.Count == 1)
-        {
-            Console.WriteLine("1 space loaded:");
-        }
-        else
-        {
-            Console.WriteLine($"{spaces.Count} spaces loaded:");
-        }
+            var response = await _client.Spaces.ListAsync(offset, limit);
 
-        foreach (var space in spaces)
-        {
-            Console.WriteLine($"{space.Name}");
-            Console.WriteLine($"{space.Id}");
+            Console.WriteLine($"Retrieved {response.Spaces.Count} spaces out of total {response.Pagination.Total} (offset {offset}).");
+
+            foreach (var space in response.Spaces)
+            {
+                Console.WriteLine($"- {space.Name} (ID: {space.Id})");
+            }
+
+            Console.WriteLine();
+
+            hasMore = response.Pagination.HasMore;
+
+            if (hasMore)
+            {
+                Console.WriteLine("More spaces are available. Do you want to load more? (y/n): ");
+
+                var keyInfo = Console.ReadKey(intercept: true);
+                var keyChar = char.ToLower(keyInfo.KeyChar);
+
+                if (keyChar == 'y')
+                {
+                    offset += limit;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Stopping further loading of spaces.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("All available spaces have been loaded.");
+            }
         }
     }
 }

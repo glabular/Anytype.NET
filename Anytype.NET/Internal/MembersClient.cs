@@ -9,12 +9,12 @@ public sealed class MembersClient : ClientBase
     public MembersClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a paginated list of members in the specified space.
+    /// Gets a list of members in the specified space.
     /// </summary>
     /// <param name="spaceId">The space ID to list members for.</param>
     /// <param name="offset">Number of items to skip before collecting the result set (default 0).</param>
     /// <param name="limit">Number of items to return (max 1000, default 100).</param>
-    /// <returns>A <see cref="ListMembersResponse"/> with members and pagination info.</returns>
+    /// <returns>A <see cref="ListMembersResponse"/> containing the members and pagination metadata.</returns>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
     /// <exception cref="InvalidOperationException"/>
@@ -41,10 +41,10 @@ public sealed class MembersClient : ClientBase
     }
 
     /// <summary>
-    /// Retrieves a specific member by their ID from the specified space.
+    /// Gets a member by ID.
     /// </summary>
     /// <param name="spaceId">The ID of the space containing the member.</param>
-    /// <param name="memberId">The unique ID of the member to retrieve.</param>
+    /// <param name="memberId">The ID of the member to retrieve.</param>
     /// <returns>The requested <see cref="AnyMember"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="InvalidOperationException"></exception>

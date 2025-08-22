@@ -5,15 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<PackageId>Anytype.NET</PackageId>
-	<Version>1.0.0</Version>
+	<Version>2.0.0</Version>
 	<Authors>glu_max</Authors>
 	<Product>Anytype.NET</Product>
 	<Description>Anytype.NET is an unofficial .NET client library for accessing the Anytype API.</Description>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<RepositoryUrl>https://github.com/glabular/Anytype.NET</RepositoryUrl>
   </PropertyGroup>
 
 	<ItemGroup>
 		<None Include="LICENSE.txt" Pack="true" PackagePath="" />
+		<None Include="README.md" Pack="true" PackagePath=""/>
 	</ItemGroup>
+	
 </Project>
