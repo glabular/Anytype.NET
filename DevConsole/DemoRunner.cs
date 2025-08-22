@@ -802,7 +802,7 @@ public class DemoRunner
         var newSpace = await _client.Spaces.CreateAsync(request);
 
         Console.WriteLine("New space created:");
-        Console.WriteLine($"{newSpace.Name}");
+        Console.WriteLine(newSpace.Name);
         Console.WriteLine($"Description: {newSpace.Description}");
         Console.WriteLine($"ID: {newSpace.Id}");
 
