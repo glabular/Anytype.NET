@@ -130,7 +130,7 @@ public class DemoRunner
 
     private async Task GetListObjectsAsync()
     {
-        var objectsResponse = await _client.Lists.GetListObjectsAsync(SpaceId, ListId, ViewId, offset: 0, limit: 100);
+        var objectsResponse = await _client.Lists.ListObjectsAsync(SpaceId, ListId, ViewId, offset: 0, limit: 100);
 
         Console.WriteLine($"Total objects in view {ViewId}: {objectsResponse.Pagination.Total}");
 
@@ -148,7 +148,7 @@ public class DemoRunner
 
     private async Task GetListViewsAsync()
     {
-        var response = await _client.Lists.GetListViewsAsync(SpaceId, ListId, offset: 0, limit: 100);
+        var response = await _client.Lists.ListViewsAsync(SpaceId, ListId, offset: 0, limit: 100);
 
         Console.WriteLine($"Total views for list {ListId}: {response.Pagination.Total}");
 

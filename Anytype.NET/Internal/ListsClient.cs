@@ -18,7 +18,7 @@ public sealed class ListsClient : ClientBase
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<ListViewsResponse> GetListViewsAsync(
+    public async Task<ListViewsResponse> ListViewsAsync(
         string spaceId,
         string listId,
         int offset = 0,
@@ -55,7 +55,7 @@ public sealed class ListsClient : ClientBase
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<ListObjectsResponse> GetListObjectsAsync(
+    public async Task<ListObjectsResponse> ListObjectsAsync(
         string spaceId,
         string listId,
         string? viewId,
