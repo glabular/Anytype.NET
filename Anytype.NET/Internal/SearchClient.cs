@@ -8,14 +8,16 @@ public sealed class SearchClient : ClientBase
     public SearchClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Executes a global search across all spaces accessible to the authenticated user.
+    /// Executes a global search across all spaces.
     /// </summary>
     /// <returns>A <see cref="SearchResponse"/> containing matching objects and pagination metadata.</returns>
     /// <param name="request">The search criteria.</param>
     /// <param name="limit">Pagination limit (max 1000).</param>
     /// <param name="offset">Number of items to skip for pagination (default 0).</param>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<SearchResponse> AcrossSpacesAsync(
         SearchRequest request,
         int offset = 0,
@@ -34,8 +36,10 @@ public sealed class SearchClient : ClientBase
     /// <param name="offset">Number of items to skip for pagination (default 0).</param>
     /// <param name="limit">Pagination limit (max 1000).</param>
     /// <returns>A <see cref="SearchResponse"/> containing matching objects and pagination metadata.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<SearchResponse> InSpaceAsync(
         string spaceId,
         SearchRequest request,

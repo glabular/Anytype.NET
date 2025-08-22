@@ -13,13 +13,13 @@ public sealed class ObjectsClient : ClientBase
     public ObjectsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Creates a new object within the specified space in Anytype.
+    /// Creates a new object.
     /// </summary>
     /// <param name="spaceId">
-    /// The unique identifier of the space where the object will be created.
+    /// The ID of the space where the object will be created.
     /// </param>
     /// <param name="createObjectRequest">The data required to create the object.</param>
-    /// <returns>The newly created <see cref="AnyObject"/>.</returns>
+    /// <returns>The created <see cref="AnyObject"/>.</returns>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="HttpRequestException"/>
@@ -45,7 +45,7 @@ public sealed class ObjectsClient : ClientBase
     }
 
     /// <summary>
-    /// Retrieves a single object from a specified space using the Anytype API.
+    /// Gets an object.
     /// </summary>
     /// <param name="getObjectRequest">The request containing SpaceId and ObjectId.</param>
     /// <param name="format">The format to return the object body in. Default is "md".</param>
@@ -76,13 +76,11 @@ public sealed class ObjectsClient : ClientBase
     }
 
     /// <summary>
-    /// Updates an existing object identified by <paramref name="objectId"/> within 
-    /// a specified space identified by <paramref name="spaceId"/> 
-    /// using the Anytype API.
+    /// Updates the object.
     /// </summary>
     /// <param name="spaceId">The ID of the space containing the object to update.</param>
     /// <param name="objectId">The ID of the object to update.</param>
-    /// <param name="updateObjectRequest">The data to update on the object, including name, icon, and properties.</param>
+    /// <param name="updateObjectRequest">The data to update on the object.</param>
     /// <returns>The updated <see cref="AnyObject"/>.</returns>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="HttpRequestException"/>
@@ -116,13 +114,16 @@ public sealed class ObjectsClient : ClientBase
         return response.Object;
     }
 
-    // TODO: Exceptions
     /// <summary>
-    /// Deletes (archives) an object within a specified space.
+    /// Deletes (archives) the object.
     /// </summary>
     /// <param name="spaceId">The ID of the space containing the object.</param>
     /// <param name="objectId">The ID of the object to delete.</param>
-    /// <returns>The archived <see cref="AnyObject"/> after deletion.</returns>
+    /// <returns>The deleted (archived) <see cref="AnyObject"/>.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<AnyObject> DeleteAsync(string spaceId, string objectId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -148,13 +149,13 @@ public sealed class ObjectsClient : ClientBase
     }
 
     /// <summary>
-    /// Retrieves a paginated list of objects in a given space.
+    /// Gets list of objects in a given space.
     /// </summary>
     /// <param name="spaceId">The ID of the space to list objects from.</param>
     /// <param name="offset">The number of items to skip before collecting the result set. Default is 0.</param>
     /// <param name="limit">The number of items to return. Max 1000. Default is 100.</param>
     /// <returns>
-    /// A <see cref="ListObjectsResponse"/> containing the retrieved objects and associated pagination metadata.
+    /// A <see cref="ListObjectsResponse"/> containing the objects and pagination metadata.
     /// </returns>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>

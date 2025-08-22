@@ -26,12 +26,13 @@ public sealed class SpacesClient : ClientBase
     }
 
     /// <summary>
-    /// Retrieves detailed space data.
+    /// Gets a list of spaces.
     /// </summary>
-    /// <returns>A <see cref="SpacesResponse"/> containing the list of Spaces and additional response data.</returns>
-    /// <exception cref="HttpRequestException">Thrown when the HTTP request fails or returns a non-success status code.</exception>
-    /// <exception cref="JsonException">Thrown when the response cannot be parsed into a <see cref="SpacesResponse"/>.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the deserialized response is null or invalid.</exception>
+    /// <returns>A <see cref="SpacesResponse"/> containing the spaces and pagination metadata.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<SpacesResponse?> GetAllDetailedAsync()
     {
         return await GetAsync<SpacesResponse>(RelativeSpacesUrl);
@@ -40,16 +41,12 @@ public sealed class SpacesClient : ClientBase
     /// <summary>
     /// Creates a new space.
     /// </summary>
-    /// <param name="createSpaceRequest">
-    /// An object containing the name and description of the space to create.
-    /// </param>
-    /// <returns>
-    /// The newly created <see cref="Space"/>.
-    /// </returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
-    /// <exception cref="JsonException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <param name="request">The space creation data.</param>
+    /// <returns>The created <see cref="Space"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Space?> CreateAsync(CreateSpaceRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -61,11 +58,15 @@ public sealed class SpacesClient : ClientBase
     }
 
     /// <summary>
-    /// Updates the name and/or description of an existing space.
+    /// Updates the space.
     /// </summary>
     /// <param name="spaceId">The ID of the space to update.</param>
-    /// <param name="request">The updated name and/or description of the space.</param>
+    /// <param name="request">The update details.</param>
     /// <returns>The updated <see cref="Space"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Space?> UpdateAsync(string spaceId, UpdateSpaceRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -83,10 +84,14 @@ public sealed class SpacesClient : ClientBase
     }
 
     /// <summary>
-    /// Gets a space by its ID.
+    /// Gets a space by ID.
     /// </summary>
     /// <param name="spaceId">The space’s ID.</param>
-    /// <returns>The requested <see cref="Space"/>.</returns>
+    /// <returns>The retrieved <see cref="Space"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<Space?> GetByIdAsync(string spaceId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))

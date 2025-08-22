@@ -14,15 +14,17 @@ public sealed class PropertiesClient : ClientBase
     public PropertiesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a paginated list of properties available within a specific space.
+    /// Gets a list of properties.
     /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.</remarks>
     /// <param name="spaceId">The ID of the space to list properties for.</param>
     /// <param name="offset">The number of items to skip before starting to collect the result set. Default is 0.</param>
     /// <param name="limit">The number of items to return. Max 1000. Default is 100.</param>
     /// <returns>A <see cref="ListPropertiesResponse"/> containing the list of properties and pagination metadata.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<ListPropertiesResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -44,14 +46,16 @@ public sealed class PropertiesClient : ClientBase
     }
 
     /// <summary>
-    /// Creates a new property in the specified space.
+    /// Creates a new property.
     /// </summary>
-    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
-    /// <param name="spaceId">The ID of the space to create the property in; must be retrieved from ListSpaces endpoint.</param>
-    /// <param name="request">The property creation details including format and name.</param>
-    /// <returns>The created <see cref="TypeProperty"/> with full property data.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.</remarks>
+    /// <param name="spaceId">The ID of the space to create the property in.</param>
+    /// <param name="request">The property creation details.</param>
+    /// <returns>The created <see cref="TypeProperty"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<TypeProperty> CreateAsync(string spaceId, CreatePropertyRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -70,14 +74,16 @@ public sealed class PropertiesClient : ClientBase
     }
 
     /// <summary>
-    /// Gets a property by its ID.
+    /// Gets a property by ID.
     /// </summary>
-    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
-    /// <param name="spaceId">The ID of the space to which the property belongs; must be retrieved from ListSpaces endpoint.</param>
-    /// <param name="propertyId">The ID of the property to retrieve; must be retrieved from ListProperties endpoint or obtained from response context.</param>
-    /// <returns>The detailed <see cref="TypeProperty"/>.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="spaceId"/> or <paramref name="propertyId"/> is null or whitespace.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if the API returns an empty response.</exception>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.</remarks>
+    /// <param name="spaceId">The ID of the space to which the property belongs.</param>
+    /// <param name="propertyId">The ID of the property to retrieve.</param>
+    /// <returns>The retrieved <see cref="TypeProperty"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<TypeProperty> GetByIdAsync(string spaceId, string propertyId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -99,14 +105,16 @@ public sealed class PropertiesClient : ClientBase
     }
 
     /// <summary>
-    /// Deletes (archives) a property by marking it as archived.
+    /// Deletes (archives) the property.
     /// </summary>
-    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.</remarks>
     /// <param name="spaceId">The ID of the space to which the property belongs.</param>
     /// <param name="propertyId">The ID of the property to delete.</param>
     /// <returns>The deleted (archived) <see cref="TypeProperty"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<TypeProperty> DeleteAsync(string spaceId, string propertyId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -128,15 +136,17 @@ public sealed class PropertiesClient : ClientBase
     }
 
     /// <summary>
-    /// Updates an existing property in the specified space.
+    /// Updates the property.
     /// </summary>
-    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.</remarks>
     /// <param name="spaceId">The ID of the space to which the property belongs.</param>
     /// <param name="propertyId">The ID of the property to update.</param>
     /// <param name="request">The update details.</param>
     /// <returns>The updated <see cref="TypeProperty"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<TypeProperty> UpdateAsync(string spaceId, string propertyId, UpdatePropertyRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))

@@ -13,13 +13,13 @@ public sealed class TypesClient : ClientBase
     public TypesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
-    /// Retrieves a paginated list of types available within the specified space.
+    /// Gets a list of types.
     /// </summary>
     /// <param name="spaceId">The ID of the space to list types from.</param>
     /// <param name="offset">The number of items to skip before collecting the result set. Default is 0.</param>
     /// <param name="limit">The number of items to return. Max 1000. Default is 100.</param>
     /// <returns>
-    /// A <see cref="ListTypeResponse"/> containing the retrieved types and associated pagination metadata.
+    /// A <see cref="ListTypeResponse"/> containing the types and pagination metadata.
     /// </returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -47,10 +47,10 @@ public sealed class TypesClient : ClientBase
     }
 
     /// <summary>
-    /// Creates a new type in the specified space.
+    /// Creates a new type.
     /// </summary>
-    /// <param name="spaceId">The ID of the space in which to create the type.</param>
-    /// <param name="request">The details of the type to create.</param>
+    /// <param name="spaceId">The ID of the space to create the type in.</param>
+    /// <param name="request">The type creation data.</param>
     /// <returns>The created <see cref="AnyType"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentNullException"></exception>
@@ -73,14 +73,15 @@ public sealed class TypesClient : ClientBase
     }
 
     /// <summary>
-    /// Deletes (archives) a type in the specified space by marking it as archived.
+    /// Deletes (archives) the type.
     /// </summary>
     /// <param name="spaceId">The ID of the space containing the type.</param>
-    /// <param name="typeId">The ID of the type to delete (archive).</param>
-    /// <returns>The <see cref="AnyType"/> after it has been archived.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
-    /// <exception cref="JsonException"></exception>
+    /// <param name="typeId">The ID of the type to delete.</param>
+    /// <returns>The deleted (archived) <see cref="AnyType"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<AnyType> DeleteAsync(string spaceId, string typeId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -101,14 +102,15 @@ public sealed class TypesClient : ClientBase
     }
 
     /// <summary>
-    /// Retrieves specific type by its ID within the specified space.
+    /// Get type by ID.
     /// </summary>
-    /// <param name="spaceId">The ID of the space from which to retrieve the type.</param>
+    /// <param name="spaceId">The ID of the space to retrieve the type from.</param>
     /// <param name="typeId">The ID of the type to retrieve.</param>
-    /// <returns>The detailed <see cref="AnyType"/> information for the specified type.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
-    /// <exception cref="JsonException"></exception>
+    /// <returns>The retrieved <see cref="AnyType"/>.</returns>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    /// <exception cref="HttpRequestException"/>
+    /// <exception cref="JsonException"/>
     public async Task<AnyType> GetByIdAsync(string spaceId, string typeId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -129,11 +131,11 @@ public sealed class TypesClient : ClientBase
     }
 
     /// <summary>
-    /// Updates an existing type in the specified space.
+    /// Updates the type.
     /// </summary>
-    /// <param name="spaceId">The ID of the space in which the type exists.</param>
+    /// <param name="spaceId">The ID of the space to update the type in.</param>
     /// <param name="typeId">The ID of the type to update.</param>
-    /// <param name="request">The details of the type to update.</param>
+    /// <param name="request">The update details.</param>
     /// <returns>The updated <see cref="AnyType"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentNullException"></exception>
