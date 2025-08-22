@@ -742,9 +742,6 @@ public class DemoRunner
         return anyObject;
     }
 
-    /// <summary>
-    /// Creates a new page object in a specified space using the Anytype.NET client.
-    /// </summary>
     private async Task<AnyObject> CreateObjectAsync()
     {
         var createObjectRequest = new CreateObjectRequest
@@ -792,10 +789,6 @@ public class DemoRunner
         return createdObject;
     }
 
-    /// <summary>
-    /// Creates a new space in Anytype via the Anytype.NET client with a predefined name and description.
-    /// Prints the details of the created space to the console.
-    /// </summary>
     private async Task<Space> CreateSpaceAsync()
     {
         var name = "C# fandom";
@@ -816,10 +809,6 @@ public class DemoRunner
         return newSpace;
     }
 
-    /// <summary>
-    /// Retrieves all available spaces from the Anytype API using the Anytype.NET client
-    /// and prints their details to the console.
-    /// </summary>
     private async Task GetSpacesAsync()
     {
         var offset = 0;
