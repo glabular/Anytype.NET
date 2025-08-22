@@ -8,11 +8,11 @@ With it, you can easily create, retrieve, update, and manage Anytype objects dir
 # Getting Started
 
 1. Install via NuGet:
-```csharp
+```
 dotnet add package Anytype.NET
 ```
 2. Create a client
-```
+```csharp
 using Anytype.NET;
 
 var client = new AnytypeClient("your-api-key");
