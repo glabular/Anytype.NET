@@ -8,16 +8,6 @@
 /// </remarks>
 public sealed class UpdateSpaceRequest
 {
-    public UpdateSpaceRequest(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Space name cannot be null, empty, or whitespace.", nameof(name));
-        }
-
-        Name = name;
-    }
-
     /// <summary>
     /// The name of the space.
     /// </summary>

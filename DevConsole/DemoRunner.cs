@@ -684,8 +684,9 @@ public class DemoRunner
 
     private async Task<Space?> UpdateSpaceAsync()
     {
-        var updateSpaceRequest = new UpdateSpaceRequest("Updated Space Name")
+        var updateSpaceRequest = new UpdateSpaceRequest()
         {
+            Name = "Updated Space Name",
             Description = "The local-first wiki"
         };
 
