@@ -41,7 +41,7 @@ public sealed class TemplatesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}/templates?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListTemplatesResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve templates, response was null.");
 
         return response;
     }
@@ -57,7 +57,7 @@ public sealed class TemplatesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Template> GetByIdAsync(string spaceId, string typeId, string templateId)
+    public async Task<Template?> GetByIdAsync(string spaceId, string typeId, string templateId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -77,7 +77,7 @@ public sealed class TemplatesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}/templates/{templateId}";
 
         var response = await GetAsync<GetTemplateResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get template, response was null.");
 
         return response.Template;
     }

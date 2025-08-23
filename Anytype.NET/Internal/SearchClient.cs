@@ -74,7 +74,7 @@ public sealed class SearchClient : ClientBase
         }
 
         var response = await PostAsync<SearchResponse>(relativeUrl, request)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to execute search, response was null.");
 
         return response;
     }

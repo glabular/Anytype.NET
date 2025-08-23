@@ -35,7 +35,7 @@ public sealed class MembersClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/members?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListMembersResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get members, response was null.");
 
         return response;
     }
@@ -50,7 +50,7 @@ public sealed class MembersClient : ClientBase
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
-    public async Task<AnyMember> GetByIdAsync(string spaceId, string memberId)
+    public async Task<AnyMember?> GetByIdAsync(string spaceId, string memberId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -65,7 +65,7 @@ public sealed class MembersClient : ClientBase
         var relativeUrl = $"v1/spaces/{spaceId}/members/{memberId}";
 
         var response = await GetAsync<GetMemberResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get member, response was null.");
 
         return response.Member;
     }

@@ -21,7 +21,7 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<SpacesResponse?> ListAsync(int offset = 0, int limit = 100)
+    public async Task<SpacesResponse> ListAsync(int offset = 0, int limit = 100)
     {
         if (limit > 1000)
         {
@@ -31,7 +31,7 @@ public sealed class SpacesClient : ClientBase
         var relativeUrl = $"{RelativeSpacesUrl}?offset={offset}&limit={limit}";
 
         var response = await GetAsync<SpacesResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve spaces, response was null.");
 
         return response;
     }
@@ -45,14 +45,15 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Space?> CreateAsync(CreateSpaceRequest request)
+    public async Task<Space> CreateAsync(CreateSpaceRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         var response = await PostAsync<CreateSpaceResponse>(RelativeSpacesUrl, request) 
             ?? throw new InvalidOperationException("Failed to create space, response was null.");
 
-        return response?.Space;
+        return response.Space
+            ?? throw new InvalidOperationException("Failed to create space, API did not return a valid space.");
     }
 
     /// <summary>
@@ -65,7 +66,7 @@ public sealed class SpacesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Space?> UpdateAsync(string spaceId, UpdateSpaceRequest request)
+    public async Task<Space> UpdateAsync(string spaceId, UpdateSpaceRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -76,9 +77,11 @@ public sealed class SpacesClient : ClientBase
 
         var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
 
-        var response = await PatchAsync<SpaceResponse>(relativeUrl, request);
+        var response = await PatchAsync<SpaceResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("Failed to update space, response was null.");
 
-        return response?.Space;
+        return response.Space
+            ?? throw new InvalidOperationException("Failed to update space, API did not return a valid space.");
     }
 
     /// <summary>
@@ -98,8 +101,10 @@ public sealed class SpacesClient : ClientBase
         }
 
         var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
-        var response = await GetAsync<SpaceResponse>(relativeUrl);
+        var response = await GetAsync<SpaceResponse>(relativeUrl) 
+            ?? throw new InvalidOperationException("Failed to get space, response was null.");
 
-        return response?.Space;
+        // TODO: Check what returns if space not found and handle accordingly
+        return response.Space;
     }
 }

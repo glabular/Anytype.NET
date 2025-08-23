@@ -35,7 +35,7 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
 
         var response = await GetAsync<ListTagsResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve tags, response was null");
 
         return response;
     }
@@ -68,9 +68,10 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
 
         var response = await PostAsync<TagResponse>(relativeUrl, request)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to create tag, response was null.");
 
-        return response.Tag;
+        return response.Tag
+            ?? throw new InvalidOperationException("Failed to create tag, API did not return a valid tag.");
     }
 
     /// <summary>
@@ -84,7 +85,7 @@ public sealed class TagsClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Tag> GetByIdAsync(string spaceId, string propertyId, string tagId)
+    public async Task<Tag?> GetByIdAsync(string spaceId, string propertyId, string tagId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -109,7 +110,7 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
 
         var response = await GetAsync<TagResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get tag, response was null.");
 
         return response.Tag;
     }
@@ -148,9 +149,10 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
 
         var response = await PatchAsync<TagResponse>(relativeUrl, request)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to update tag, response was null.");
 
-        return response.Tag;
+        return response.Tag
+            ?? throw new InvalidOperationException("Failed to update tag, API did not return a valid tag.");
     }
 
     /// <summary>
@@ -184,8 +186,9 @@ public sealed class TagsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
 
         var response = await DeleteAsync<TagResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to delete tag, response was null.");
 
-        return response.Tag;
+        return response.Tag 
+            ?? throw new InvalidOperationException("Failed to delete tag, API did not return a valid tag.");
     }
 }

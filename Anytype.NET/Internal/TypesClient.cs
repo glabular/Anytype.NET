@@ -41,7 +41,7 @@ public sealed class TypesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/types?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListTypeResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve types, response was null.");
 
         return response;
     }
@@ -67,9 +67,11 @@ public sealed class TypesClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/types";
 
-        var response = await PostAsync<TypeResponse>(relativeUrl, request);
+        var response = await PostAsync<TypeResponse>(relativeUrl, request) 
+            ?? throw new InvalidOperationException("Failed to create type, response was null.");
 
-        return response?.Type;
+        return response.Type
+            ?? throw new InvalidOperationException("Failed to create type, API did not return a valid type.");
     }
 
     /// <summary>
@@ -96,9 +98,11 @@ public sealed class TypesClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
 
-        var response = await DeleteAsync<TypeResponse>(relativeUrl);
+        var response = await DeleteAsync<TypeResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to delete type, response was null.");
 
-        return response.Type;
+        return response.Type
+            ?? throw new InvalidOperationException("Failed to delete type, API did not return a valid type.");
     }
 
     /// <summary>
@@ -111,7 +115,7 @@ public sealed class TypesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyType> GetByIdAsync(string spaceId, string typeId)
+    public async Task<AnyType?> GetByIdAsync(string spaceId, string typeId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -125,7 +129,8 @@ public sealed class TypesClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
 
-        var response = await GetAsync<TypeResponse>(relativeUrl);
+        var response = await GetAsync<TypeResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to get type, response was null.");
 
         return response.Type;
     }
@@ -157,8 +162,10 @@ public sealed class TypesClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
 
-        var response = await PatchAsync<TypeResponse>(relativeUrl, request);
+        var response = await PatchAsync<TypeResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("Failed to update type, response was null.");
 
-        return response?.Type;
+        return response.Type
+            ?? throw new InvalidOperationException("Failed to update type, API did not return a valid type.");
     }
 }

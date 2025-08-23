@@ -34,14 +34,11 @@ public sealed class ObjectsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(createObjectRequest);
 
-        var response = await PostAsync<ObjectResponse>($"/v1/spaces/{spaceId}/objects", createObjectRequest);
+        var response = await PostAsync<ObjectResponse>($"/v1/spaces/{spaceId}/objects", createObjectRequest)
+            ?? throw new InvalidOperationException("Failed to create object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the created object.");
-        }
-
-        return response.Object;
+        return response.Object
+            ?? throw new InvalidOperationException("Failed to create object, API did not return a valid object.");        
     }
 
     /// <summary>
@@ -54,7 +51,7 @@ public sealed class ObjectsClient : ClientBase
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject> GetByIdAsync(ObjectRequest getObjectRequest, string? format = null)
+    public async Task<AnyObject?> GetByIdAsync(ObjectRequest getObjectRequest, string? format = null)
     {
         ArgumentNullException.ThrowIfNull(getObjectRequest);
 
@@ -65,12 +62,8 @@ public sealed class ObjectsClient : ClientBase
             relativeUrl += $"?format={format}";
         }
 
-        var response = await GetAsync<ObjectResponse>(relativeUrl);
-
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the retrieved object.");
-        }
+        var response = await GetAsync<ObjectResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to get object, response was null.");
 
         return response.Object;
     }
@@ -104,14 +97,11 @@ public sealed class ObjectsClient : ClientBase
         ArgumentNullException.ThrowIfNull(updateObjectRequest);
 
         var response = await PatchAsync<ObjectResponse>(
-            $"/v1/spaces/{spaceId}/objects/{objectId}", updateObjectRequest);
+            $"/v1/spaces/{spaceId}/objects/{objectId}", updateObjectRequest)
+            ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the updated object.");
-        }
-
-        return response.Object;
+        return response.Object
+            ?? throw new InvalidOperationException("Failed to update object, API did not return a valid object.");
     }
 
     /// <summary>
@@ -138,14 +128,11 @@ public sealed class ObjectsClient : ClientBase
 
         var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
 
-        var response = await DeleteAsync<ObjectResponse>(relativeUrl);
+        var response = await DeleteAsync<ObjectResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the deleted object.");
-        }
-
-        return response.Object;
+        return response.Object
+            ?? throw new InvalidOperationException("Failed to delete object, API did not return a valid object.");
     }
 
     /// <summary>

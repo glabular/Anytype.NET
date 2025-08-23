@@ -37,7 +37,7 @@ public sealed class ListsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/views?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListViewsResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve views, response was null.");
 
         return response;
     }
@@ -77,7 +77,7 @@ public sealed class ListsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/views/{viewSegment}/objects?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListObjectsResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve objects, response was null.");
 
         return response;
     }
@@ -116,7 +116,7 @@ public sealed class ListsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects";
         var payload = new { objects = objectIds };
         var response = await PostAsync<string>(relativeUrl, payload)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to add objects, response was null.");
 
         return response;
     }
@@ -155,7 +155,7 @@ public sealed class ListsClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects/{objectId}";
 
         var response = await DeleteAsync<string>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to remove object, response was null.");
 
         return response;
     }

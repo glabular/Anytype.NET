@@ -40,7 +40,7 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListPropertiesResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve properties, response was null.");
 
         return response;
     }
@@ -68,9 +68,10 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties";
 
         var response = await PostAsync<PropertyResponse>(relativeUrl, request)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to create property, response was null.");
 
-        return response.Property;
+        return response.Property
+            ?? throw new InvalidOperationException("Failed to create property, API did not return a valid property.");
     }
 
     /// <summary>
@@ -84,7 +85,7 @@ public sealed class PropertiesClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<TypeProperty> GetByIdAsync(string spaceId, string propertyId)
+    public async Task<TypeProperty?> GetByIdAsync(string spaceId, string propertyId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -99,7 +100,7 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
 
         var response = await GetAsync<PropertyResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get property, response was null.");
 
         return response.Property;
     }
@@ -130,9 +131,10 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
 
         var response = await DeleteAsync<PropertyResponse>(relativeUrl) 
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to delete property, response was null.");
 
-        return response.Property;
+        return response.Property
+            ?? throw new InvalidOperationException("Failed to delete property, API did not return a valid property.");
     }
 
     /// <summary>
@@ -164,8 +166,9 @@ public sealed class PropertiesClient : ClientBase
         var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
 
         var response = await PatchAsync<PropertyResponse>(relativeUrl, request) 
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to update property, response was null.");
 
-        return response.Property;
+        return response.Property
+            ?? throw new InvalidOperationException("Failed to update property, API did not return a valid property.");
     }
 }
