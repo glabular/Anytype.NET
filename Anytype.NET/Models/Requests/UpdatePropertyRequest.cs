@@ -6,10 +6,10 @@ public sealed class UpdatePropertyRequest
     /// The key to set for the property.
     /// </summary>
     /// <remarks>Should be snake_case.</remarks>
-    public string Key { get; set; }
+    public string? Key { get; set; }
 
     /// <summary>
     /// The name to set for the property.
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }

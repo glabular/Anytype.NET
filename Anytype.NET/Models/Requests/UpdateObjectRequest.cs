@@ -10,7 +10,7 @@ public sealed class UpdateObjectRequest
     /// <summary>
     /// The name (title) of the object.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// The icon of the object.
@@ -23,5 +23,5 @@ public sealed class UpdateObjectRequest
     /// <remarks>
     /// ⚠ Experimental: Subject to change in future Anytype API updates. ⚠
     /// </remarks>
-    public object[] Properties { get; set; }
+    public object[]? Properties { get; set; }
 }
