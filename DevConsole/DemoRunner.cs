@@ -443,7 +443,7 @@ public class DemoRunner
 
     private async Task<AnyType> UpdateTypeByIdAsync()
     {
-        var updateRequest = new TypeRequest
+        var updateRequest = new UpdateTypeRequest
         {
             Icon = new EmojiIcon("📄"),
             Key = "your_key",
@@ -493,7 +493,7 @@ public class DemoRunner
 
     private async Task<AnyType> CreateTypeAsync()
     {
-        var createRequest = new TypeRequest
+        var createRequest = new CreateTypeRequest
         {
             Icon = new EmojiIcon("📄"),
             Key = "some_user_defined_key",

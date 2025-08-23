@@ -5,15 +5,15 @@ public sealed class TypePropertyRequest
     /// <summary>
     /// The format of the property used for filtering.
     /// </summary>
-    public string Format { get; set; }
+    public required string Format { get; set; }
 
     /// <summary>
     /// The key of the property.
     /// </summary>
-    public string Key { get; set; }
+    public required string Key { get; set; }
 
     /// <summary>
     /// The name of the property.
     /// </summary>
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }

@@ -56,7 +56,7 @@ public sealed class TypesClient : ClientBase
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
-    public async Task<AnyType> CreateAsync(string spaceId, TypeRequest request)
+    public async Task<AnyType> CreateAsync(string spaceId, CreateTypeRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -146,7 +146,7 @@ public sealed class TypesClient : ClientBase
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
-    public async Task<AnyType> UpdateAsync(string spaceId, string typeId, TypeRequest request)
+    public async Task<AnyType> UpdateAsync(string spaceId, string typeId, UpdateTypeRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
