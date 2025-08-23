@@ -16,5 +16,6 @@ public sealed class ListTagsResponse
     /// <summary>
     /// The pagination metadata for the response.
     /// </summary>
+    [JsonPropertyName("pagination")]
     public PaginationMetadata? Pagination { get; set; }
 }

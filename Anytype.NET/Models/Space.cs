@@ -30,7 +30,7 @@ public sealed class Space
     /// <summary>
     /// The icon associated with the space. May be null if no icon is set.
     /// </summary>
-    //[JsonPropertyName("icon")]
+    [JsonPropertyName("icon")]
     [JsonConverter(typeof(IconConverter))]
     public IIcon? Icon { get; set; }
 

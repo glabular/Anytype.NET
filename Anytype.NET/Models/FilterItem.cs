@@ -7,6 +7,7 @@ public sealed class FilterItem
     /// <summary>
     /// The id of the filter.
     /// </summary>
+    [JsonPropertyName("id")]
     public string Id { get; set; }
 
     /// <summary>
@@ -18,15 +19,18 @@ public sealed class FilterItem
     /// <summary>
     /// The format of the property used for filtering.
     /// </summary>
+    [JsonPropertyName("format")]
     public string Format { get; set; }
 
     /// <summary>
     /// The filter condition.
     /// </summary>
+    [JsonPropertyName("condition")]
     public string Condition { get; set; } // TODO: Make enum
 
     /// <summary>
     /// The value used for filtering.
     /// </summary>
+    [JsonPropertyName("value")]
     public object Value { get; set; }
 }

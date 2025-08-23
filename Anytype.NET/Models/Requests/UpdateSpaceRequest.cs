@@ -1,4 +1,6 @@
-﻿namespace Anytype.NET.Models.Requests;
+﻿using System.Text.Json.Serialization;
+
+namespace Anytype.NET.Models.Requests;
 
 /// <summary>
 /// Represents the data required to update an existing space.
@@ -11,10 +13,12 @@ public sealed class UpdateSpaceRequest
     /// <summary>
     /// The name of the space.
     /// </summary>
+    [JsonPropertyName("name")]
     public string? Name { get; set; }
 
     /// <summary>
     /// The description of the space.
     /// </summary>
+    [JsonPropertyName("description")]
     public string? Description { get; set; }
 }
