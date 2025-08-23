@@ -223,7 +223,7 @@ public class DemoRunner
     {
         var oldTag = await _client.Tags.GetByIdAsync(SpaceId, PropertyId, TagId);
 
-        var updateRequest = new TagRequest
+        var updateRequest = new UpdateTagRequest
         {
             Name = "Updated test in progress",
             Color = "yellow"
@@ -247,7 +247,7 @@ public class DemoRunner
 
     private async Task<Tag> CreateTagAsync()
     {
-        var createTagRequest = new TagRequest
+        var createTagRequest = new CreateTagRequest
         {
             Name = "In progress",
             Color = "yellow"

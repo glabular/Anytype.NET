@@ -51,7 +51,7 @@ public sealed class TagsClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Tag> CreateAsync(string spaceId, string propertyId, TagRequest request)
+    public async Task<Tag> CreateAsync(string spaceId, string propertyId, CreateTagRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -127,7 +127,7 @@ public sealed class TagsClient : ClientBase
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="JsonException"/>
-    public async Task<Tag> UpdateAsync(string spaceId, string propertyId, string tagId, TagRequest request)
+    public async Task<Tag> UpdateAsync(string spaceId, string propertyId, string tagId, UpdateTagRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
