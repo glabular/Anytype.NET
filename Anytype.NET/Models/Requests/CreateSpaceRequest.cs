@@ -5,17 +5,7 @@
 /// </summary>
 public sealed class CreateSpaceRequest
 {
-    public CreateSpaceRequest(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Space name cannot be null, empty, or whitespace.", nameof(name));
-        }
-
-        Name = name;
-    }
-
-    public string Name { get; }
+    public required string Name { get; set;  }
 
     public string? Description { get; set; }
 }
