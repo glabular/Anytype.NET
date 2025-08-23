@@ -13,7 +13,7 @@ public sealed class Space
     /// The data model of the object.
     /// </summary>
     [JsonPropertyName("object")]
-    public string? ObjectType { get; set; }
+    public string? Object { get; set; }
 
     /// <summary>
     /// The unique identifier of the space.
