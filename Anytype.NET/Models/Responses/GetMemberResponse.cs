@@ -2,5 +2,5 @@
 
 public sealed class GetMemberResponse
 {
-    public AnyMember Member { get; set; }
+    public AnyMember? Member { get; set; }
 }

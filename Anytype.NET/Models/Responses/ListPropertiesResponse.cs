@@ -8,10 +8,10 @@ public sealed class ListPropertiesResponse
     /// The list of properties in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<TypeProperty> Properties { get; set; }
+    public List<TypeProperty>? Properties { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.
     /// </summary>
-    public PaginationMetadata Pagination { get; set; }
+    public PaginationMetadata? Pagination { get; set; }
 }

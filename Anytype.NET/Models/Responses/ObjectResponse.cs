@@ -8,5 +8,5 @@ public sealed class ObjectResponse
     /// <summary>
     /// The <see cref="AnyObject"/> contained within the response body.
     /// </summary>
-    public AnyObject Object { get; set; }
+    public AnyObject? Object { get; set; }
 }

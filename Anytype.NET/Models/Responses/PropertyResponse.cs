@@ -5,5 +5,5 @@ namespace Anytype.NET.Models.Responses;
 public sealed class PropertyResponse
 {
     [JsonPropertyName("property")]
-    public TypeProperty Property { get; set; }
+    public TypeProperty? Property { get; set; }
 }

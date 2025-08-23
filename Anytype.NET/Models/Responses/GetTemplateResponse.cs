@@ -2,5 +2,5 @@
 
 public sealed class GetTemplateResponse
 {
-    public Template Template { get; set; }
+    public Template? Template { get; set; }
 }

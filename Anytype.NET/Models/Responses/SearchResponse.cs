@@ -2,7 +2,7 @@
 
 public sealed class SearchResponse
 {
-    public List<SearchItem> Data { get; set; }
+    public List<SearchItem>? Data { get; set; }
 
-    public PaginationMetadata Pagination { get; set; }
+    public PaginationMetadata? Pagination { get; set; }
 }
