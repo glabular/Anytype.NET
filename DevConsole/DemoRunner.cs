@@ -794,8 +794,9 @@ public class DemoRunner
         var name = "C# fandom";
         var description = "This is a space created using Anytype.NET.";
 
-        var request = new CreateSpaceRequest(name)
+        var request = new CreateSpaceRequest()
         {
+            Name = name,
             Description = description
         };
 
