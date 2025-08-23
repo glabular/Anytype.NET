@@ -730,11 +730,8 @@ public class DemoRunner
 
     private async Task<AnyObject> GetObjectByIdAsync()
     {
-        var request = new ObjectRequest(
-            SpaceId,
-            ObjectId);
+        var anyObject = await _client.Objects.GetByIdAsync(SpaceId, ObjectId);
 
-        var anyObject = await _client.Objects.GetByIdAsync(request);
         Console.WriteLine("Object retrieved:");
         Console.WriteLine($"Name: {anyObject.Name}");
         Console.WriteLine($"ID: {anyObject.Id}");

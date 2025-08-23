@@ -51,11 +51,19 @@ public sealed class ObjectsClient : ClientBase
     /// <exception cref="HttpRequestException"/>
     /// <exception cref="InvalidOperationException"/>
     /// <exception cref="JsonException"/>
-    public async Task<AnyObject?> GetByIdAsync(ObjectRequest getObjectRequest, string? format = null)
+    public async Task<AnyObject?> GetByIdAsync(string spaceId, string objectId, string? format = null)
     {
-        ArgumentNullException.ThrowIfNull(getObjectRequest);
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
 
-        var relativeUrl = $"/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}";
+        if (string.IsNullOrWhiteSpace(objectId))
+        {
+            throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
+        }
+
+        var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
 
         if (!string.IsNullOrWhiteSpace(format))
         {
