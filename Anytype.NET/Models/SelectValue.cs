@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class SelectValue
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The color of the icon.
     /// </summary>
@@ -33,4 +35,6 @@ public sealed class SelectValue
     /// </summary>
     [JsonPropertyName("object")]
     public string Object { get; set; }
+
+#pragma warning restore CS8618
 }

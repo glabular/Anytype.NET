@@ -5,6 +5,8 @@ namespace Anytype.NET.Models;
 
 public sealed class Template
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// Whether the object is archived.
     /// </summary>
@@ -71,4 +73,6 @@ public sealed class Template
     /// </summary>
     [JsonPropertyName("type")]
     public ObjectType? Type { get; set; }
+
+#pragma warning restore CS8618
 }

@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class ObjectProperty
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The format of the property used for filtering.
     /// </summary>
@@ -44,7 +46,7 @@ public sealed class ObjectProperty
     /// The number value of the property.
     /// </summary>
     [JsonPropertyName("number")]
-    public double? Number { get; set; }
+    public double Number { get; set; }
 
     /// <summary>
     /// The selected tag value of the property.
@@ -62,7 +64,7 @@ public sealed class ObjectProperty
     /// The date value of the property.
     /// </summary>
     [JsonPropertyName("date")]
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// The file values of the property.
@@ -74,7 +76,7 @@ public sealed class ObjectProperty
     /// The checkbox value of the property.
     /// </summary>
     [JsonPropertyName("checkbox")]
-    public bool? Checkbox { get; set; }
+    public bool Checkbox { get; set; }
 
     /// <summary>
     /// The URL value of the property.
@@ -99,4 +101,6 @@ public sealed class ObjectProperty
     /// </summary>
     [JsonPropertyName("objects")]
     public List<string> Objects { get; set; }
+
+#pragma warning restore CS8618
 }

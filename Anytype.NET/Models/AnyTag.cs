@@ -6,7 +6,9 @@ namespace Anytype.NET.Models;
 /// Represents a tag in Anytype.
 /// </summary>
 public sealed class AnyTag
-{    
+{
+#pragma warning disable CS8618
+
     /// <summary>
     /// The color of the icon.
     /// </summary>
@@ -36,5 +38,6 @@ public sealed class AnyTag
     /// </summary>
     [JsonPropertyName("object")]
     public string Object { get; set; }
-    
+
+#pragma warning restore CS8618
 }

@@ -8,6 +8,8 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class AnyObject
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The data model of the object.
     /// </summary>
@@ -30,7 +32,7 @@ public sealed class AnyObject
     /// The icon of the object, or null if the object has no icon
     /// </summary>
     [JsonPropertyName("icon")]
-    public IIcon Icon { get; set; }
+    public IIcon? Icon { get; set; }
 
     /// <summary>
     /// Whether the object is archived.
@@ -73,4 +75,6 @@ public sealed class AnyObject
     /// </summary>
     [JsonPropertyName("markdown")]
     public string Markdown { get; set; }
+
+#pragma warning restore CS8618
 }

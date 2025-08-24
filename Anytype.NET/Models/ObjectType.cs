@@ -5,6 +5,8 @@ namespace Anytype.NET.Models;
 
 public sealed class ObjectType
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// Whether the type is archived.
     /// </summary>
@@ -59,5 +61,7 @@ public sealed class ObjectType
     /// The properties linked to the type.
     /// </summary>
     [JsonPropertyName("properties")]
-    public List<ObjectProperty> Properties { get; set; }    
+    public List<ObjectProperty> Properties { get; set; }
+
+#pragma warning restore CS8618
 }

@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class SortItem
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The id of the sort.
     /// </summary>
@@ -27,4 +29,6 @@ public sealed class SortItem
     /// </summary>
     [JsonPropertyName("sort_type")]
     public string SortType { get; set; }
+
+#pragma warning restore CS8618
 }

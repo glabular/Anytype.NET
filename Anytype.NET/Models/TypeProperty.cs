@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class TypeProperty
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The format of the property used for filtering.
     /// </summary>
@@ -33,4 +35,6 @@ public sealed class TypeProperty
     /// </summary>
     [JsonPropertyName("object")]
     public string Object { get; set; }
+
+#pragma warning restore CS8618
 }

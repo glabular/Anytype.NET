@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class ViewItem
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The id of the view.
     /// </summary>
@@ -33,4 +35,6 @@ public sealed class ViewItem
     /// </summary>
     [JsonPropertyName("sorts")]
     public List<SortItem> Sorts { get; set; }
+
+#pragma warning restore CS8618
 }

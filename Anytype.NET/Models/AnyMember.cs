@@ -8,6 +8,8 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class AnyMember
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The global name of the member in the network.
     /// </summary>
@@ -55,4 +57,6 @@ public sealed class AnyMember
     /// </summary>
     [JsonPropertyName("status")]
     public string Status { get; set; }
+
+#pragma warning restore CS8618
 }

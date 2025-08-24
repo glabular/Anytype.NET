@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class FilterItem
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The id of the filter.
     /// </summary>
@@ -33,4 +35,6 @@ public sealed class FilterItem
     /// </summary>
     [JsonPropertyName("value")]
     public object Value { get; set; }
+
+#pragma warning restore CS8618
 }

@@ -4,6 +4,8 @@ namespace Anytype.NET.Models;
 
 public sealed class Tag
 {
+#pragma warning disable CS8618
+
     [JsonPropertyName("id")]
     public string Id { get; set; }
 
@@ -18,4 +20,6 @@ public sealed class Tag
 
     [JsonPropertyName("object")]
     public string Object { get; set; }
+
+#pragma warning restore CS8618
 }

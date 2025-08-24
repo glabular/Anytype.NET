@@ -8,6 +8,8 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class Property
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The key identifying the property.
     /// </summary>
@@ -33,7 +35,7 @@ public sealed class Property
     /// </summary>
     [JsonPropertyName("checkbox")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public bool? Checkbox { get; set; }
+    public bool Checkbox { get; set; }
 
     /// <summary>
     /// TODO: Document purpose of this property..
@@ -61,7 +63,7 @@ public sealed class Property
     /// </summary>
     [JsonPropertyName("date")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// A list of object IDs if the property supports multiple object references.
@@ -69,4 +71,6 @@ public sealed class Property
     [JsonPropertyName("objects")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string> Objects { get; set; }
+
+#pragma warning restore CS8618
 }
