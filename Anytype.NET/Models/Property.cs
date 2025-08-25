@@ -17,7 +17,7 @@ public sealed class Property
     public string Key { get; set; }
 
     /// <summary>
-    /// The unique ID of the property.
+    /// The ID of the property.
     /// </summary>
     [JsonPropertyName("id")]
     public string Id { get; set; }
@@ -63,6 +63,18 @@ public sealed class Property
     /// </summary>
     [JsonPropertyName("objects")]
     public List<string> Objects { get; set; }
+
+    /// <summary>
+    /// The phone value of the property.
+    /// </summary>
+    [JsonPropertyName("phone")]
+    public string Phone { get; set; }
+
+    /// <summary>
+    /// The email value of the property.
+    /// </summary>
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
 
 #pragma warning restore CS8618
 }
