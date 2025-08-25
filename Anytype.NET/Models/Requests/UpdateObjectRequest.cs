@@ -8,11 +8,12 @@ namespace Anytype.NET.Models.Requests;
 /// </summary>
 public sealed class UpdateObjectRequest
 {
+#pragma warning disable CS8618
     /// <summary>
     /// The name (title) of the object.
     /// </summary>
     [JsonPropertyName("name")] 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// The icon of the object.
@@ -27,5 +28,7 @@ public sealed class UpdateObjectRequest
     /// ⚠ Experimental: Subject to change in future Anytype API updates. ⚠
     /// </remarks>
     [JsonPropertyName("properties")]
-    public object[]? Properties { get; set; }
+    public object[] Properties { get; set; }
+
+#pragma warning restore CS8618
 }
