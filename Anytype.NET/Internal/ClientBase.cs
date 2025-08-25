@@ -18,7 +18,7 @@ public abstract class ClientBase
             new IconConverter()
         }
     };
-    protected static readonly HttpClient HttpClient = new()
+    private static readonly HttpClient HttpClient = new()
     {
         BaseAddress = new Uri(BaseAddress)
     };
