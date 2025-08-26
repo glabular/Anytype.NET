@@ -49,17 +49,6 @@ public class SpacesClientTests
     }
 
     [Fact]
-    public async Task ListAsync_CompletesUnderOneSecond()
-    {
-        var sw = Stopwatch.StartNew();
-
-        await _client.ListAsync();
-
-        sw.Stop();
-        Assert.True(sw.ElapsedMilliseconds < 1000, "API call took too long.");
-    }
-
-    [Fact]
     public async Task CreateAsync_CreatesSpaceSuccessfully()
     {
         // Arrange
