@@ -1,4 +1,4 @@
-Before using any endpoint you should create a Anytype.NET client instance with you API key provided.
+Before using any endpoint you should create a Anytype.NET client instance with your API key provided.
 
 ```csharp
 using Anytype.NET;

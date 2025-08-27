@@ -1,4 +1,4 @@
-Before using any endpoint you should create a Anytype.NET client instance with you API key provided.
+Before using any endpoint you should create a Anytype.NET client instance with your API key provided.
 
 ```csharp
 using Anytype.NET;
@@ -13,7 +13,7 @@ var client = new AnytypeClient("your-api-key");
 Retrieves a paginated list of members in a specific space.
 
 ```csharp
-var response = await client.Members.ListAsync("space-id", offset: 0, limit: 100);
+var response = await client.Members.ListAsync("any-space-id", offset: 0, limit: 100);
 
 Console.WriteLine($"Total members: {response.Pagination.Total}");
 
@@ -40,7 +40,7 @@ A response object containing:
 Retrieves a single member from a space.
 
 ```csharp
-var member = await client.Members.GetByIdAsync("space-id", "member-id");
+var member = await client.Members.GetByIdAsync("any-space-id", "any-member-id");
 
 if (member != null)
 {
