@@ -11,7 +11,7 @@ public sealed class ListTagsResponse
     /// The list of tag items in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<AnyTag>? Tags { get; set; }
+    public List<AnyTag>? Tags { get; set; } // TODO: Replace with Tag!
 
     /// <summary>
     /// The pagination metadata for the response.
