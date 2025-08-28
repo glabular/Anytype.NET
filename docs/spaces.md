@@ -10,7 +10,7 @@ var client = new AnytypeClient("your-api-key");
 
 ## List Spaces
 
-Retrieves a paginated list of all spaces that are accessible by the authenticated user.
+Gets a paginated list of all spaces that are accessible by the authenticated user.
 
 ```csharp
 var response = await client.Spaces.ListAsync(offset: 0, limit: 100);

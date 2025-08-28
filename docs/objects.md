@@ -120,3 +120,31 @@ var deletedObject = await client.Objects.DeleteAsync("any-space-id", "any-object
 
 ### Returns
 - the deleted (archived) ```Object```.
+
+## List Objects
+
+Gets a list of objects from the given space.
+
+```csharp
+var objects = await client.Objects.ListAsync("any-space-id", offset: 0, limit: 100);
+
+Console.WriteLine("Objects retrieved:");
+
+foreach (var obj in objects.Data)
+{
+    Console.WriteLine($"Name: {obj.Name}");
+    Console.WriteLine($"ID: {obj.Id}");
+}
+```
+
+### Parameters
+
+- **spaceId** (string): ID of the space to list objects from
+- **offset** (int, optional): The number of items to skip before collecting the result set. Default is 0
+- **limit** (int, optional): The number of items to return. Max 1000. Default is 100
+
+### Returns
+
+A response object containing:
+- a list of objects returned by the endpoint.
+- pagination info: total count, offset, limit, and whether more objects are available.

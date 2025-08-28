@@ -10,7 +10,7 @@ var client = new AnytypeClient("your-api-key");
 
 ## List Members
 
-Retrieves a paginated list of members in a specific space.
+Gets a list of members in a specific space.
 
 ```csharp
 var response = await client.Members.ListAsync("any-space-id", offset: 0, limit: 100);
