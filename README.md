@@ -43,16 +43,17 @@ The snippet above lists all available spaces and prints their names and IDs in t
 
 | Category     | Endpoints |
 |--------------|-----------|
-| Search       | Search objects across all spaces • Search objects within a space |
-| Spaces       | List • Create • Get • Update |
-| Lists        | Add objects • Delete object • Get list views • Get objects |
-| Members      | List • Get |
-| Objects      | List • Create • Delete • Get • Update |
-| Tags         | List • Create • Delete • Get • Update |
-| Types        | List • Create • Delete • Get • Update |
-| Templates    | List • Get |
-| ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
+| [Search](/docs/search.md)       | Search objects across all spaces • Search objects within a space |
+| [Spaces](/docs/spaces.md)       | List • Create • Get • Update |
+| [Lists](/docs/lists.md)         | Add objects • Delete object • Get list views • Get objects |
+| [Members](/docs/members.md)     | List • Get |
+| [Objects](/docs/objects.md)     | List • Create • Delete • Get • Update |
+| [Tags](/docs/tags.md)           | List • Create • Delete • Get • Update |
+| [Types](/docs/types.md)         | List • Create • Delete • Get • Update |
+| [Templates](/docs/templates.md) | List • Get |
+| ⚠️ [Properties](/docs/properties.md) | List • Create • Delete • Get • Update |
 
+###### Click a category to see detailed documentation.
 ---
 
 ## Contributing
