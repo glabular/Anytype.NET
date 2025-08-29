@@ -30,7 +30,7 @@ var spaces = await _client.Spaces.GetAllAsync();
 
 foreach (var space in spaces)
 {
-    Console.WriteLine(space.Name);
+	Console.WriteLine(space.Name);
 	Console.WriteLine(space.Id);
 }
 ```
