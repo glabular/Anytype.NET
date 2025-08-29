@@ -504,9 +504,9 @@ public class DemoRunner
             {
                 new TypePropertyRequest
                 {
-                    Format = "text",
-                    Key = "last_modified_date",
-                    Name = "Last modified date"
+                    Format = "number",
+                    Key = "priority_level",
+                    Name = "Priority Level"
                 }
             }
         };
@@ -747,7 +747,7 @@ public class DemoRunner
         var createObjectRequest = new CreateObjectRequest
         {
             // Set the title of the page
-            Name = "listingtesting",
+            Name = "Antares",
 
             // Set the emoji icon for the page
             Icon = new EmojiIcon("🌟"),
