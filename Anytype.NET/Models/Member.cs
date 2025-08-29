@@ -6,7 +6,7 @@ namespace Anytype.NET.Models;
 /// <summary>
 /// Represents a member of an Anytype space.
 /// </summary>
-public sealed class AnyMember
+public sealed class Member
 {
 #pragma warning disable CS8618
 

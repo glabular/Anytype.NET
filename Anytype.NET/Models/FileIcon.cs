@@ -23,6 +23,9 @@ public sealed class FileIcon : IFileIcon
     [JsonPropertyName("file")]
     public string File { get; set; }
 
+    /// <summary>
+    /// The format of the icon.
+    /// </summary>
     [JsonPropertyName("format")]
     public string Format { get ; set ; }
 }

@@ -72,7 +72,7 @@ Console.WriteLine($"ID: {createdType.Id}");
 
 ### Returns
 
-- the created type (```AnyType```).
+- the created type (```Type```).
 
 ## Get Type by ID
 
@@ -93,7 +93,7 @@ Console.WriteLine($"ID: {anyType.Id}");
 
 ### Returns
 
-- ```AnyType``` — the type, or null if not found.
+- ```Type``` — the type, or null if not found.
 
 ## Update Type
 
@@ -121,7 +121,7 @@ var updatedType = await client.Types.UpdateAsync(
 
 ### Returns
 
-- ``AnyType`` — the updated type.
+- ``Type`` — the updated type.
 
 ## Delete Type
 
@@ -138,4 +138,4 @@ var deletedType = await client.Types.DeleteAsync("any-space-id", "any-type-id");
 
 ### Returns
 
-- ```AnyType``` — the deleted (archived) type.
+- ```Type``` — the deleted (archived) type.

@@ -5,5 +5,5 @@ namespace Anytype.NET.Models.Responses;
 public sealed class GetMemberResponse
 {
     [JsonPropertyName("member")]
-    public AnyMember? Member { get; set; }
+    public Member? Member { get; set; }
 }

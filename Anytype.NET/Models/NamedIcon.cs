@@ -33,6 +33,9 @@ public sealed class NamedIcon : INamedIcon
     [JsonPropertyName("color")]
     public string Color { get; set; }
 
+    /// <summary>
+    /// The format of the icon.
+    /// </summary>
     [JsonPropertyName("format")]
     public string Format { get; set; }
 }

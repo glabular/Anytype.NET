@@ -20,6 +20,9 @@ public sealed class EmojiIcon : IEmojiIcon
     [JsonPropertyName("emoji")]
     public string Emoji { get; set; }
 
+    /// <summary>
+    /// The format of the icon.
+    /// </summary>
     [JsonPropertyName("format")]
     public string Format { get; set; }
 }

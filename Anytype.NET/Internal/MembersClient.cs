@@ -45,12 +45,12 @@ public sealed class MembersClient : ClientBase
     /// </summary>
     /// <param name="spaceId">The ID of the space containing the member.</param>
     /// <param name="memberId">The ID of the member to retrieve.</param>
-    /// <returns>The requested <see cref="AnyMember"/>.</returns>
+    /// <returns>The requested <see cref="Member"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="HttpRequestException"></exception>
     /// <exception cref="JsonException"></exception>
-    public async Task<AnyMember?> GetByIdAsync(string spaceId, string memberId)
+    public async Task<Member?> GetByIdAsync(string spaceId, string memberId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {

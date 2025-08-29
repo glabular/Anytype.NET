@@ -562,7 +562,7 @@ public class DemoRunner
         }
     }
 
-    private async Task<AnyMember> GetAnytypeMemberAsync()
+    private async Task<Member> GetAnytypeMemberAsync()
     {
         var member = await _client.Members.GetByIdAsync(
             SpaceId,

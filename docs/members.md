@@ -55,4 +55,4 @@ if (member != null)
 
 ### Returns:
 
-- `AnyMember` — the member object, or `null` if not found.
+- `Member` — the member object, or `null` if not found.
