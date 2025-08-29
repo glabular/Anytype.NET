@@ -23,7 +23,7 @@ public abstract class ClientBase
         BaseAddress = new Uri(BaseAddress)
     };
 
-    protected ClientBase(string apiKey)
+    private protected ClientBase(string apiKey)
     {
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
     }
