@@ -28,7 +28,7 @@ public abstract class ClientBase
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
     }
 
-    protected async Task<T?> GetAsync<T>(string relativeUrl)
+    private protected async Task<T?> GetAsync<T>(string relativeUrl)
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl);
 
@@ -43,7 +43,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> PostAsync<T>(string relativeUrl, object body)
+    private protected async Task<T?> PostAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
 
@@ -63,7 +63,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> PatchAsync<T>(string relativeUrl, object body)
+    private protected async Task<T?> PatchAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
 
@@ -83,7 +83,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> DeleteAsync<T>(string relativeUrl)
+    private protected async Task<T?> DeleteAsync<T>(string relativeUrl)
     {
         using var request = new HttpRequestMessage(HttpMethod.Delete, relativeUrl);
 
