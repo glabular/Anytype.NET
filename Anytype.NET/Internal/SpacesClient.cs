@@ -7,7 +7,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class SpacesClient : ClientBase
 {
-    private const string RelativeSpacesUrl = "/v1/spaces";
+    private const string RelativeSpacesUrl = "v1/spaces";
 
     public SpacesClient(string apiKey) : base(apiKey) { }
 
