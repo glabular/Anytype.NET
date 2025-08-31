@@ -1,9 +1,12 @@
-﻿using Anytype.NET.Models.Responses;
+﻿using Anytype.NET.Models;
+using System.Text.Json;
+using Anytype.NET.Models.Responses;
+using System.Collections.Generic;
 
 namespace Anytype.NET.Internal;
 
 public sealed class ListsClient : ClientBase
-{
+{    
     public ListsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
@@ -34,7 +37,7 @@ public sealed class ListsClient : ClientBase
             throw new ArgumentNullException(nameof(listId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/views?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId, listId) + $"views?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListViewsResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to retrieve views, response was null.");
@@ -74,7 +77,8 @@ public sealed class ListsClient : ClientBase
 
         // ViewId can be omitted to retrieve all objects in the list.
         var viewSegment = string.IsNullOrWhiteSpace(viewId) ? string.Empty : viewId;
-        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/views/{viewSegment}/objects?offset={offset}&limit={limit}";
+
+        var relativeUrl = GetUrlPrefix(spaceId, listId) + $"views/{viewSegment}/objects?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListObjectsResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to retrieve objects, response was null.");
@@ -113,7 +117,7 @@ public sealed class ListsClient : ClientBase
             throw new ArgumentException("Object IDs list cannot be null or empty.", nameof(objectIds));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects";
+        var relativeUrl = GetUrlPrefix(spaceId, listId) + "objects";
         var payload = new { objects = objectIds };
         var response = await PostAsync<string>(relativeUrl, payload)
             ?? throw new InvalidOperationException("Failed to add objects, response was null.");
@@ -152,11 +156,19 @@ public sealed class ListsClient : ClientBase
             throw new ArgumentException("Object ID cannot be null, empty, or whitespace.", nameof(objectId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/lists/{listId}/objects/{objectId}";
+        var relativeUrl = GetUrlPrefix(spaceId, listId) + $"objects/{objectId}";
 
         var response = await DeleteAsync<string>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to remove object, response was null.");
 
         return response;
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for lists-related endpoints.
+    /// </summary>    
+    private static string GetUrlPrefix(string spaceId, string listId)
+    {
+        return $"v1/spaces/{spaceId}/lists/{listId}/";
     }
 }
