@@ -38,7 +38,7 @@ public sealed class TemplatesClient : ClientBase
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}/templates?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId, typeId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListTemplatesResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to retrieve templates, response was null.");
@@ -74,11 +74,16 @@ public sealed class TemplatesClient : ClientBase
             throw new ArgumentException("Template ID cannot be null or whitespace.", nameof(templateId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}/templates/{templateId}";
+        var relativeUrl = GetUrlPrefix(spaceId, typeId) + $"/{templateId}";
 
         var response = await GetAsync<GetTemplateResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get template, response was null.");
 
         return response.Template;
+    }
+
+    private static string GetUrlPrefix(string spaceId, string typeId)
+    {
+        return $"v1/spaces/{spaceId}/types/{typeId}/templates";
     }
 }
