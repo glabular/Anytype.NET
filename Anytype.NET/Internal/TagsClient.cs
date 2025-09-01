@@ -7,7 +7,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class TagsClient : ClientBase
 {
-    public TagsClient(string apiKey) : base(apiKey) { }
+    internal TagsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of tags.

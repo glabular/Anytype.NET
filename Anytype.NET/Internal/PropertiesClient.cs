@@ -11,7 +11,7 @@ namespace Anytype.NET.Internal;
 /// <remarks>⚠ Warning: Properties are experimental and may change in the next update. ⚠</remarks>
 public sealed class PropertiesClient : ClientBase
 {
-    public PropertiesClient(string apiKey) : base(apiKey) { }
+    internal PropertiesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of properties.

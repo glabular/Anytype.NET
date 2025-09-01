@@ -7,7 +7,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class ListsClient : ClientBase
 {    
-    public ListsClient(string apiKey) : base(apiKey) { }
+    internal ListsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Get a list of views for a specific list (collection or set).

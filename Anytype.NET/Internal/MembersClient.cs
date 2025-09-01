@@ -6,7 +6,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class MembersClient : ClientBase
 {
-    public MembersClient(string apiKey) : base(apiKey) { }
+    internal MembersClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of members in the specified space.

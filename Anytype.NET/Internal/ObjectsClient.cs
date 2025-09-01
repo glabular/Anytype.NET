@@ -10,7 +10,7 @@ namespace Anytype.NET.Internal;
 /// </summary>
 public sealed class ObjectsClient : ClientBase
 {
-    public ObjectsClient(string apiKey) : base(apiKey) { }
+    internal ObjectsClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Creates a new object.

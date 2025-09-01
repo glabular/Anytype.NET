@@ -5,7 +5,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class SearchClient : ClientBase
 {
-    public SearchClient(string apiKey) : base(apiKey) { }
+    internal SearchClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Executes a global search across all spaces.

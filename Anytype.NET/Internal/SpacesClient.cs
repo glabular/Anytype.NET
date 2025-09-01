@@ -9,7 +9,7 @@ public sealed class SpacesClient : ClientBase
 {
     private const string RelativeSpacesUrl = "v1/spaces";
 
-    public SpacesClient(string apiKey) : base(apiKey) { }
+    internal SpacesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of spaces.

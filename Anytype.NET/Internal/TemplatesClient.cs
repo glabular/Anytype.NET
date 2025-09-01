@@ -5,7 +5,7 @@ namespace Anytype.NET.Internal;
 
 public sealed class TemplatesClient : ClientBase
 {
-    public TemplatesClient(string apiKey) : base(apiKey) { }
+    internal TemplatesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of templates.

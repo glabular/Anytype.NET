@@ -1,7 +1,6 @@
 ﻿using Anytype.NET.Models;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
-using System;
 using System.Text.Json;
 
 namespace Anytype.NET.Internal;
@@ -11,7 +10,7 @@ namespace Anytype.NET.Internal;
 /// </summary>
 public sealed class TypesClient : ClientBase
 {
-    public TypesClient(string apiKey) : base(apiKey) { }
+    internal TypesClient(string apiKey) : base(apiKey) { }
 
     /// <summary>
     /// Gets a list of types.
