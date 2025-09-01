@@ -43,7 +43,7 @@ public sealed class AnytypeClient
 
     public IPropertiesApi Properties { get; }
 
-    public SearchClient Search { get; }
+    public ISearchApi Search { get; }
 
     public ListsClient Lists { get; }
 }
