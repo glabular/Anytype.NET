@@ -1,25 +1,15 @@
-﻿using System.Text.Json;
+﻿using Anytype.NET.Interfaces;
 using Anytype.NET.Models;
 using Anytype.NET.Models.Responses;
 
 namespace Anytype.NET.Internal;
 
-public sealed class MembersClient : ClientBase
+/// <inheritdoc />
+internal sealed class MembersClient : ClientBase, IMembersApi
 {
     internal MembersClient(string apiKey) : base(apiKey) { }
 
-    /// <summary>
-    /// Gets a list of members in the specified space.
-    /// </summary>
-    /// <param name="spaceId">The space ID to list members for.</param>
-    /// <param name="offset">Number of items to skip before collecting the result set (default 0).</param>
-    /// <param name="limit">Number of items to return (max 1000, default 100).</param>
-    /// <returns>A <see cref="ListMembersResponse"/> containing the members and pagination metadata.</returns>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<ListMembersResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -40,16 +30,7 @@ public sealed class MembersClient : ClientBase
         return response;
     }
 
-    /// <summary>
-    /// Gets a member by ID.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space containing the member.</param>
-    /// <param name="memberId">The ID of the member to retrieve.</param>
-    /// <returns>The requested <see cref="Member"/>.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
-    /// <exception cref="JsonException"></exception>
+    /// <inheritdoc />
     public async Task<Member?> GetByIdAsync(string spaceId, string memberId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))

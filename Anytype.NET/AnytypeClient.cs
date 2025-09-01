@@ -33,7 +33,7 @@ public sealed class AnytypeClient
 
     public IObjectsApi Objects { get; }
 
-    public MembersClient Members { get; }
+    public IMembersApi Members { get; }
 
     public TypesClient Types { get; }
 
