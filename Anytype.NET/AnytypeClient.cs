@@ -45,5 +45,5 @@ public sealed class AnytypeClient
 
     public ISearchApi Search { get; }
 
-    public ListsClient Lists { get; }
+    public IListsApi Lists { get; }
 }
