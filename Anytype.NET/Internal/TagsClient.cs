@@ -31,10 +31,9 @@ public sealed class TagsClient : ClientBase
             throw new ArgumentNullException(nameof(propertyId));
         }
 
-        // NB: According to the official API docs, offset and limit parameters are not specified for this endpoint.
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
-
-        var response = await GetAsync<ListTagsResponse>(relativeUrl)
+        // NB: According to the official API docs, offset and limit parameters are not specified for this endpoint (API ver. 2025-05-20)
+        
+        var response = await GetAsync<ListTagsResponse>(GetUrlPrefix(spaceId, propertyId))
             ?? throw new InvalidOperationException("Failed to retrieve tags, response was null");
 
         return response;
@@ -65,9 +64,7 @@ public sealed class TagsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request);
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags";
-
-        var response = await PostAsync<TagResponse>(relativeUrl, request)
+        var response = await PostAsync<TagResponse>(GetUrlPrefix(spaceId, propertyId), request)
             ?? throw new InvalidOperationException("Failed to create tag, response was null.");
 
         return response.Tag
@@ -107,7 +104,7 @@ public sealed class TagsClient : ClientBase
         // I'll still get the tag as long as the tagId is correct. 
         // Looks like the server isn't actually checking if the property and tag are related,
         // despite that propertyId is required by the documentation.
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
+        var relativeUrl = GetUrlPrefix(spaceId, propertyId) + $"/{tagId}";
 
         var response = await GetAsync<TagResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get tag, response was null.");
@@ -146,7 +143,7 @@ public sealed class TagsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request);
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
+        var relativeUrl = GetUrlPrefix(spaceId, propertyId) + $"/{tagId}";
 
         var response = await PatchAsync<TagResponse>(relativeUrl, request)
             ?? throw new InvalidOperationException("Failed to update tag, response was null.");
@@ -183,12 +180,20 @@ public sealed class TagsClient : ClientBase
             throw new ArgumentNullException(nameof(tagId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}/tags/{tagId}";
+        var relativeUrl = GetUrlPrefix(spaceId, propertyId) + $"/{tagId}";
 
         var response = await DeleteAsync<TagResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to delete tag, response was null.");
 
         return response.Tag 
             ?? throw new InvalidOperationException("Failed to delete tag, API did not return a valid tag.");
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for tags-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId, string propertyId)
+    {
+        return $"v1/spaces/{spaceId}/properties/{propertyId}/tags";
     }
 }
