@@ -37,7 +37,7 @@ public sealed class PropertiesClient : ClientBase
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListPropertiesResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to retrieve properties, response was null.");
@@ -65,9 +65,7 @@ public sealed class PropertiesClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request);
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties";
-
-        var response = await PostAsync<PropertyResponse>(relativeUrl, request)
+        var response = await PostAsync<PropertyResponse>(GetUrlPrefix(spaceId), request)
             ?? throw new InvalidOperationException("Failed to create property, response was null.");
 
         return response.Property
@@ -97,7 +95,7 @@ public sealed class PropertiesClient : ClientBase
             throw new ArgumentNullException(nameof(propertyId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{propertyId}";
 
         var response = await GetAsync<PropertyResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get property, response was null.");
@@ -128,7 +126,7 @@ public sealed class PropertiesClient : ClientBase
             throw new ArgumentNullException(nameof(propertyId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{propertyId}";
 
         var response = await DeleteAsync<PropertyResponse>(relativeUrl) 
             ?? throw new InvalidOperationException("Failed to delete property, response was null.");
@@ -163,12 +161,20 @@ public sealed class PropertiesClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request);
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/properties/{propertyId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{propertyId}";
 
         var response = await PatchAsync<PropertyResponse>(relativeUrl, request) 
             ?? throw new InvalidOperationException("Failed to update property, response was null.");
 
         return response.Property
             ?? throw new InvalidOperationException("Failed to update property, API did not return a valid property.");
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for properties-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/properties";
     }
 }
