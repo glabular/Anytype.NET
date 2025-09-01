@@ -1,6 +1,7 @@
 ﻿using Anytype.NET.Models;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
+using System;
 using System.Text.Json;
 
 namespace Anytype.NET.Internal;
@@ -38,7 +39,7 @@ public sealed class TypesClient : ClientBase
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListTypeResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to retrieve types, response was null.");
@@ -65,9 +66,7 @@ public sealed class TypesClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request, nameof(request));
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types";
-
-        var response = await PostAsync<TypeResponse>(relativeUrl, request) 
+        var response = await PostAsync<TypeResponse>(GetUrlPrefix(spaceId), request) 
             ?? throw new InvalidOperationException("Failed to create type, response was null.");
 
         return response.Type
@@ -96,7 +95,7 @@ public sealed class TypesClient : ClientBase
             throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{typeId}";
 
         var response = await DeleteAsync<TypeResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to delete type, response was null.");
@@ -127,7 +126,7 @@ public sealed class TypesClient : ClientBase
             throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{typeId}";
 
         var response = await GetAsync<TypeResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get type, response was null.");
@@ -160,12 +159,20 @@ public sealed class TypesClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(request, nameof(request));
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/types/{typeId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{typeId}";
 
         var response = await PatchAsync<TypeResponse>(relativeUrl, request)
             ?? throw new InvalidOperationException("Failed to update type, response was null.");
 
         return response.Type
             ?? throw new InvalidOperationException("Failed to update type, API did not return a valid type.");
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for types-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/types";
     }
 }

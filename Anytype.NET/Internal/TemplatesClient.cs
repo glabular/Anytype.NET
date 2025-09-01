@@ -82,6 +82,10 @@ public sealed class TemplatesClient : ClientBase
         return response.Template;
     }
 
+
+    /// <summary>
+    /// Builds the base relative URL for templates-related endpoints.
+    /// </summary>
     private static string GetUrlPrefix(string spaceId, string typeId)
     {
         return $"v1/spaces/{spaceId}/types/{typeId}/templates";
