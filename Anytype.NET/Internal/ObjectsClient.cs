@@ -34,7 +34,7 @@ public sealed class ObjectsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(createObjectRequest);
 
-        var response = await PostAsync<ObjectResponse>($"/v1/spaces/{spaceId}/objects", createObjectRequest)
+        var response = await PostAsync<ObjectResponse>(GetUrlPrefix(spaceId), createObjectRequest)
             ?? throw new InvalidOperationException("Failed to create object, response was null.");
 
         return response.Object
@@ -63,7 +63,7 @@ public sealed class ObjectsClient : ClientBase
             throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
 
         if (!string.IsNullOrWhiteSpace(format))
         {
@@ -104,8 +104,9 @@ public sealed class ObjectsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(updateObjectRequest);
 
-        var response = await PatchAsync<ObjectResponse>(
-            $"/v1/spaces/{spaceId}/objects/{objectId}", updateObjectRequest)
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
+
+        var response = await PatchAsync<ObjectResponse>(relativeUrl, updateObjectRequest)
             ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
         return response.Object
@@ -134,7 +135,7 @@ public sealed class ObjectsClient : ClientBase
             throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
 
         var response = await DeleteAsync<ObjectResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to update object, response was null.");
@@ -169,11 +170,19 @@ public sealed class ObjectsClient : ClientBase
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/objects?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListObjectsResponse>(relativeUrl) 
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response;
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for objects-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/objects";
     }
 }
