@@ -39,7 +39,7 @@ public sealed class AnytypeClient
 
     public ITemplatesApi Templates { get; }
 
-    public TagsClient Tags { get; }
+    public ITagsApi Tags { get; }
 
     public PropertiesClient Properties { get; }
 
