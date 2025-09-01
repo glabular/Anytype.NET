@@ -1,4 +1,5 @@
-﻿using Anytype.NET.Internal;
+﻿using Anytype.NET.Interfaces;
+using Anytype.NET.Internal;
 
 namespace Anytype.NET;
 
@@ -28,7 +29,7 @@ public sealed class AnytypeClient
         Lists = new ListsClient(_apiKey);
     }
 
-    public SpacesClient Spaces { get; }
+    public ISpacesApi Spaces { get; }
 
     public ObjectsClient Objects { get; }
 
