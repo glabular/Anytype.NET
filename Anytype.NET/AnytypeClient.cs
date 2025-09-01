@@ -35,7 +35,7 @@ public sealed class AnytypeClient
 
     public IMembersApi Members { get; }
 
-    public TypesClient Types { get; }
+    public ITypesApi Types { get; }
 
     public TemplatesClient Templates { get; }
 
