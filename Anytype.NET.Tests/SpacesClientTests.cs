@@ -1,13 +1,14 @@
+using Anytype.NET.Interfaces;
 using Anytype.NET.Internal;
 using Anytype.NET.Models;
-using System.Diagnostics;
 using Anytype.NET.Models.Requests;
+using System.Diagnostics;
 
 namespace Anytype.NET.Tests;
 
 public class SpacesClientTests
 {
-    private readonly SpacesClient _client;
+    private readonly ISpacesApi _client;
 
     public SpacesClientTests()
     {
@@ -18,7 +19,7 @@ public class SpacesClientTests
             throw new InvalidOperationException("Set ANYTYPE_API_TESTING_KEY environment variable first.");
         }
 
-        _client = new SpacesClient(apiKey);
+        _client = new AnytypeClient(apiKey).Spaces;
     }
 
     [Fact]
@@ -38,7 +39,7 @@ public class SpacesClientTests
     [Fact]
     public async Task ListAsync_Fails_WhenApiKeyMissing()
     {
-        var unauthClient = new SpacesClient("any_invalid_key");
+        var unauthClient = new AnytypeClient("any_invalid_key").Spaces;
 
         var ex = await Assert.ThrowsAsync<HttpRequestException>(async () =>
         {
