@@ -41,7 +41,7 @@ public sealed class AnytypeClient
 
     public ITagsApi Tags { get; }
 
-    public PropertiesClient Properties { get; }
+    public IPropertiesApi Properties { get; }
 
     public SearchClient Search { get; }
 
