@@ -31,7 +31,7 @@ public sealed class AnytypeClient
 
     public ISpacesApi Spaces { get; }
 
-    public ObjectsClient Objects { get; }
+    public IObjectsApi Objects { get; }
 
     public MembersClient Members { get; }
 
