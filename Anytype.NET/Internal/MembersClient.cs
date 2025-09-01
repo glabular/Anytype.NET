@@ -32,7 +32,7 @@ public sealed class MembersClient : ClientBase
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/members?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListMembersResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get members, response was null.");
@@ -62,11 +62,19 @@ public sealed class MembersClient : ClientBase
             throw new ArgumentException("Member ID cannot be null or whitespace.", nameof(memberId));
         }
 
-        var relativeUrl = $"v1/spaces/{spaceId}/members/{memberId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{memberId}";
 
         var response = await GetAsync<GetMemberResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get member, response was null.");
 
         return response.Member;
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for members-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/members";
     }
 }
