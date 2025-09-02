@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models.Responses;
 
+/// <summary>
+/// Represents the response from the API after listing properties.
+/// </summary>
 public sealed class ListPropertiesResponse
 {
     /// <summary>

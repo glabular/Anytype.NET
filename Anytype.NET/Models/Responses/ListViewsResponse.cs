@@ -2,10 +2,13 @@
 
 namespace Anytype.NET.Models.Responses;
 
+/// <summary>
+/// Represents the response from the API after listing views.
+/// </summary>
 public sealed class ListViewsResponse
 {
     /// <summary>
-    /// The list of items in the current result set.
+    /// The list of views in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
     public List<ViewItem>? Data { get; set; }

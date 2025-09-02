@@ -3,18 +3,18 @@
 namespace Anytype.NET.Models.Responses;
 
 /// <summary>
-/// Represents the response returned from the Anytype API when requesting a list of spaces.
+/// Represents the response from the API after listing spaces.
 /// </summary>
 public sealed class SpacesResponse
 {
     /// <summary>
-    /// A list of <see cref="Space"/> objects returned in the response.
+    /// The list of spaces in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
     public List<Space>? Spaces { get; set; }
 
     /// <summary>
-    /// Pagination metadata associated with the response, such as total items, offset, and limit.
+    /// The pagination metadata for the response.
     /// </summary>
     [JsonPropertyName("pagination")]
     public PaginationMetadata? Pagination { get; set; }
