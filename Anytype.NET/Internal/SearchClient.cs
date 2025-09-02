@@ -7,7 +7,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class SearchClient : ClientBase, ISearchApi
 {
-    internal SearchClient(string apiKey) : base(apiKey) { }
+    internal SearchClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<SearchResponse> AcrossSpacesAsync(

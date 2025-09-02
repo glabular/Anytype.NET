@@ -7,7 +7,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class MembersClient : ClientBase, IMembersApi
 {
-    internal MembersClient(string apiKey) : base(apiKey) { }
+    internal MembersClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<ListMembersResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)

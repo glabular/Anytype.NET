@@ -6,7 +6,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class ListsClient : ClientBase, IListsApi
 {    
-    internal ListsClient(string apiKey) : base(apiKey) { }
+    internal ListsClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<ListViewsResponse> ListViewsAsync(

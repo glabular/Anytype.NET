@@ -8,7 +8,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class ObjectsClient : ClientBase, IObjectsApi
 {
-    internal ObjectsClient(string apiKey) : base(apiKey) { }
+    internal ObjectsClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<AnyObject> CreateAsync(string spaceId, CreateObjectRequest createObjectRequest)

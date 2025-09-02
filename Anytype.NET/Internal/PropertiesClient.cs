@@ -9,7 +9,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class PropertiesClient : ClientBase, IPropertiesApi
 {
-    internal PropertiesClient(string apiKey) : base(apiKey) { }
+    internal PropertiesClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<ListPropertiesResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)

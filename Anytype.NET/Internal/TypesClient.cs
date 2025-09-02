@@ -8,7 +8,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class TypesClient : ClientBase, ITypesApi
 {
-    internal TypesClient(string apiKey) : base(apiKey) { }
+    internal TypesClient(string apiKey, string? apiVersion = null) 
+        : base(apiKey, apiVersion) { }
 
     public async Task<ListTypeResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {

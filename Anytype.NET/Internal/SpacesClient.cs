@@ -10,7 +10,8 @@ internal sealed class SpacesClient : ClientBase, ISpacesApi
 {
     private const string RelativeSpacesUrl = "v1/spaces";
 
-    internal SpacesClient(string apiKey) : base(apiKey) { }
+    internal SpacesClient(string apiKey, string? apiVersion = null) 
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<SpacesResponse> ListAsync(int offset = 0, int limit = 100)

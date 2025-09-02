@@ -7,7 +7,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class TemplatesClient : ClientBase, ITemplatesApi
 {
-    internal TemplatesClient(string apiKey) : base(apiKey) { }
+    internal TemplatesClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<ListTemplatesResponse> ListAsync(string spaceId, string typeId, int offset = 0, int limit = 100)

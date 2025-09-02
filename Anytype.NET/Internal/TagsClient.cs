@@ -8,7 +8,8 @@ namespace Anytype.NET.Internal;
 /// <inheritdoc />
 internal sealed class TagsClient : ClientBase, ITagsApi
 {
-    internal TagsClient(string apiKey) : base(apiKey) { }
+    internal TagsClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
     /// <inheritdoc />
     public async Task<ListTagsResponse> ListAsync(string spaceId, string propertyId)

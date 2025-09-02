@@ -1,4 +1,5 @@
-﻿using Anytype.NET.Converters;
+﻿using Anytype.NET.Constants;
+using Anytype.NET.Converters;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -8,9 +9,10 @@ namespace Anytype.NET.Internal;
 public abstract class ClientBase
 {
     protected const string BaseAddress = "http://localhost:31009";
-    protected const string AnytypeVersion = "2025-05-20";
     protected const int MaxPaginationLimit = 1000;
+
     private readonly string _apiKey;
+    private readonly string _apiVersion;
 
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
@@ -20,14 +22,16 @@ public abstract class ClientBase
             new IconConverter()
         }
     };
+
     private static readonly HttpClient HttpClient = new()
     {
         BaseAddress = new Uri(BaseAddress)
     };
 
-    private protected ClientBase(string apiKey)
+    private protected ClientBase(string apiKey, string? apiVersion = null)
     {
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+        _apiVersion = apiVersion ?? AnytypeApiVersions.GetLatest();
     }
 
     private protected async Task<T?> GetAsync<T>(string relativeUrl)
@@ -103,6 +107,6 @@ public abstract class ClientBase
     private void AddDefaultHeaders(HttpRequestMessage request)
     {
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+        request.Headers.Add("Anytype-Version", _apiVersion);
     }
 }
