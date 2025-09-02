@@ -30,8 +30,15 @@ public abstract class ClientBase
 
     private protected ClientBase(string apiKey, string? apiVersion = null)
     {
-        _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
-        _apiVersion = apiVersion ?? AnytypeApiVersions.GetLatest();
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            throw new ArgumentException("API key cannot be null or whitespace.", nameof(apiKey));
+        }
+
+        _apiKey = apiKey;
+        _apiVersion = string.IsNullOrWhiteSpace(apiVersion)
+            ? AnytypeApiVersions.GetLatest()
+            : apiVersion;
     }
 
     private protected async Task<T?> GetAsync<T>(string relativeUrl)
