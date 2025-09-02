@@ -1,5 +1,4 @@
-﻿using Anytype.NET.Models.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
@@ -35,7 +34,7 @@ public sealed class Property
     public bool Checkbox { get; set; }
 
     /// <summary>
-    /// TODO: Document purpose of this property..
+    /// The data model of the object.
     /// </summary>
     [JsonPropertyName("object")]
     public string Object { get; set; }
@@ -47,7 +46,7 @@ public sealed class Property
     public string Name { get; set; }
 
     /// <summary>
-    /// TODO: Document purpose of this property.
+    /// The format of the property used for filtering.
     /// </summary>
     [JsonPropertyName("format")]
     public string Format { get; set; }
