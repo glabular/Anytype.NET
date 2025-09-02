@@ -19,9 +19,9 @@ internal sealed class PropertiesClient : ClientBase, IPropertiesApi
             throw new ArgumentNullException(nameof(spaceId));
         }
 
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";

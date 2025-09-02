@@ -110,9 +110,9 @@ internal sealed class ObjectsClient : ClientBase, IObjectsApi
             throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
         }
 
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";

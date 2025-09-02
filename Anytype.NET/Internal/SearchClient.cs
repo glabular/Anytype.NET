@@ -40,11 +40,9 @@ internal sealed class SearchClient : ClientBase, ISearchApi
     // TODO: Maybe check the offset for positive value only.
     private async Task<SearchResponse> ExecuteSearchAsync(string relativeUrl, SearchRequest request, int limit)
     {
-        const int MaxLimit = 1000;
-
-        if (limit > MaxLimit)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         ArgumentNullException.ThrowIfNull(request);

@@ -22,9 +22,9 @@ internal sealed class TemplatesClient : ClientBase, ITemplatesApi
             throw new ArgumentException("Type ID cannot be null or whitespace.", nameof(typeId));
         }
 
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         var relativeUrl = GetUrlPrefix(spaceId, typeId) + $"?offset={offset}&limit={limit}";

@@ -9,7 +9,9 @@ public abstract class ClientBase
 {
     protected const string BaseAddress = "http://localhost:31009";
     protected const string AnytypeVersion = "2025-05-20";
+    protected const int MaxPaginationLimit = 1000;
     private readonly string _apiKey;
+
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,

@@ -15,9 +15,9 @@ internal sealed class SpacesClient : ClientBase, ISpacesApi
     /// <inheritdoc />
     public async Task<SpacesResponse> ListAsync(int offset = 0, int limit = 100)
     {
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         var relativeUrl = $"{RelativeSpacesUrl}?offset={offset}&limit={limit}";
