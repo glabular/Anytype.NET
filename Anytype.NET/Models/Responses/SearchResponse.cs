@@ -11,7 +11,7 @@ public sealed class SearchResponse
     /// The list of search results in the current response.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<SearchItem>? Data { get; set; }
+    public List<SearchItem>? Results { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.

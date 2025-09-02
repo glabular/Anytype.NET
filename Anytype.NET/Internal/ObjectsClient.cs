@@ -24,7 +24,7 @@ internal sealed class ObjectsClient : ClientBase, IObjectsApi
         var response = await PostAsync<ObjectResponse>(GetUrlPrefix(spaceId), createObjectRequest)
             ?? throw new InvalidOperationException("Failed to create object, response was null.");
 
-        return response.Object
+        return response.AnyObject
             ?? throw new InvalidOperationException("Failed to create object, API did not return a valid object.");        
     }
 
@@ -51,7 +51,7 @@ internal sealed class ObjectsClient : ClientBase, IObjectsApi
         var response = await GetAsync<ObjectResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to get object, response was null.");
 
-        return response.Object;
+        return response.AnyObject;
     }
 
     /// <inheritdoc />
@@ -77,7 +77,7 @@ internal sealed class ObjectsClient : ClientBase, IObjectsApi
         var response = await PatchAsync<ObjectResponse>(relativeUrl, updateObjectRequest)
             ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        return response.Object
+        return response.AnyObject
             ?? throw new InvalidOperationException("Failed to update object, API did not return a valid object.");
     }
 
@@ -99,7 +99,7 @@ internal sealed class ObjectsClient : ClientBase, IObjectsApi
         var response = await DeleteAsync<ObjectResponse>(relativeUrl)
             ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        return response.Object
+        return response.AnyObject
             ?? throw new InvalidOperationException("Failed to delete object, API did not return a valid object.");
     }
 

@@ -11,7 +11,7 @@ public sealed class ListTemplatesResponse
     /// The list of templates in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<Template>? Data { get; set; }
+    public List<Template>? Templates { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.

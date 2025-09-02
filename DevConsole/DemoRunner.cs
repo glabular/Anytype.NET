@@ -153,7 +153,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total views for list {ListId}: {response.Pagination.Total}");
 
-        foreach (var view in response.Data)
+        foreach (var view in response.Views)
         {
             Console.WriteLine($"- View ID: {view.Id}, Name: {view.Name}, Layout: {view.Layout}, " +
                               $"Filters: {view.Filters?.Count ?? 0}, Sorts: {view.Sorts?.Count ?? 0}");
@@ -179,7 +179,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total results in space {SpaceId}: {searchResponse.Pagination.Total}");
 
-        foreach (var item in searchResponse.Data)
+        foreach (var item in searchResponse.Results)
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
@@ -204,7 +204,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total results: {searchResponse.Pagination.Total}");
 
-        foreach (var item in searchResponse.Data)
+        foreach (var item in searchResponse.Results)
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
@@ -410,9 +410,9 @@ public class DemoRunner
         {
             var response = await _client.Templates.ListAsync(SpaceId, TypeId, offset, limit);
 
-            Console.WriteLine($"Retrieved {response.Data.Count} templates out of total {response.Pagination.Total} (offset {offset}).\n");
+            Console.WriteLine($"Retrieved {response.Templates.Count} templates out of total {response.Pagination.Total} (offset {offset}).\n");
             
-            foreach (var template in response.Data)
+            foreach (var template in response.Templates)
             {
                 Console.WriteLine($"- {template.Name} (ID: {template.Id}, Archived: {template.Archived})");
             }
@@ -529,9 +529,9 @@ public class DemoRunner
         {
             var response = await _client.Types.ListAsync(SpaceId, offset, limit);
 
-            Console.WriteLine($"Retrieved {response.Data.Count} types out of total {response.Pagination.Total} (offset {offset}).\n");
+            Console.WriteLine($"Retrieved {response.Types.Count} types out of total {response.Pagination.Total} (offset {offset}).\n");
 
-            foreach (var type in response.Data)
+            foreach (var type in response.Types)
             {
                 Console.WriteLine($"- {type.Name} (ID: {type.Id}, Key: {type.Key}, Archived: {type.Archived})");
             }

@@ -11,7 +11,7 @@ public sealed class ListTypeResponse
     /// The list of types in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<AnyType>? Data { get; set; }
+    public List<AnyType>? Types { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.

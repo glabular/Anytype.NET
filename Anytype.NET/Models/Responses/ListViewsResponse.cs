@@ -11,7 +11,7 @@ public sealed class ListViewsResponse
     /// The list of views in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<ViewItem>? Data { get; set; }
+    public List<ViewItem>? Views { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.
