@@ -1,12 +1,15 @@
-﻿namespace Anytype.NET.Models.Responses;
+﻿using System.Text.Json.Serialization;
+
+namespace Anytype.NET.Models.Responses;
 
 /// <summary>
-/// Represents a standard response wrapper containing an <see cref="AnyObject"/> returned by the Anytype API.
+/// Represents the response from the API containing an <see cref="Models.AnyObject"/>.
 /// </summary>
 public sealed class ObjectResponse
 {
     /// <summary>
-    /// The <see cref="AnyObject"/> contained within the response body.
+    /// The object.
     /// </summary>
-    public AnyObject Object { get; set; }
+    [JsonPropertyName("object")]
+    public AnyObject? AnyObject { get; set; }
 }

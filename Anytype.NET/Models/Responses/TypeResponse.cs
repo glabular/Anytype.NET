@@ -1,9 +1,15 @@
-﻿namespace Anytype.NET.Models.Responses;
+﻿using System.Text.Json.Serialization;
 
+namespace Anytype.NET.Models.Responses;
+
+/// <summary>
+/// Represents the response from the API containing an <see cref="AnyType"/>.
+/// </summary>
 public sealed class TypeResponse
 {
     /// <summary>
-    /// The <see cref="AnyType"/> contained within the response body.
+    /// The <see cref="AnyType"/> contained in the response body.
     /// </summary>
-    public AnyType Type { get; set; }
+    [JsonPropertyName("type")]
+    public AnyType? Type { get; set; }
 }

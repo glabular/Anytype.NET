@@ -8,6 +8,9 @@ namespace Anytype.NET.Models.Responses;
 /// </summary>
 public sealed class CreateSpaceResponse
 {
+    /// <summary>
+    /// The space.
+    /// </summary>
     [JsonPropertyName("space")]
     public Space? Space { get; set; }
 }

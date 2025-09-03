@@ -2,17 +2,20 @@
 
 namespace Anytype.NET.Models.Responses;
 
+/// <summary>
+/// Represents the response from the API after listing objects.
+/// </summary>
 public sealed class ListObjectsResponse
 {
     /// <summary>
-    /// A list of <see cref="AnyObject"/> objects returned in the response.
+    /// The list of objects in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<AnyObject> Objects { get; set; }
+    public List<AnyObject>? Objects { get; set; }
 
     /// <summary>
-    /// Pagination metadata associated with the response, such as total items, offset, and limit.
+    /// The pagination metadata for the response.
     /// </summary>
     [JsonPropertyName("pagination")]
-    public PaginationMetadata Pagination { get; set; }
+    public PaginationMetadata? Pagination { get; set; }
 }

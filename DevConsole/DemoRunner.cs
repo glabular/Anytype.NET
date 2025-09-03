@@ -1,8 +1,6 @@
 ﻿using Anytype.NET;
 using Anytype.NET.Models;
-using Anytype.NET.Models.Enums;
 using Anytype.NET.Models.Requests;
-using System.Collections.Generic;
 
 namespace DevConsole;
 
@@ -152,7 +150,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total views for list {ListId}: {response.Pagination.Total}");
 
-        foreach (var view in response.Data)
+        foreach (var view in response.Views)
         {
             Console.WriteLine($"- View ID: {view.Id}, Name: {view.Name}, Layout: {view.Layout}, " +
                               $"Filters: {view.Filters?.Count ?? 0}, Sorts: {view.Sorts?.Count ?? 0}");
@@ -178,7 +176,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total results in space {SpaceId}: {searchResponse.Pagination.Total}");
 
-        foreach (var item in searchResponse.Data)
+        foreach (var item in searchResponse.Results)
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
@@ -203,7 +201,7 @@ public class DemoRunner
 
         Console.WriteLine($"Total results: {searchResponse.Pagination.Total}");
 
-        foreach (var item in searchResponse.Data)
+        foreach (var item in searchResponse.Results)
         {
             Console.WriteLine($"- {item.Name} (ID: {item.Id}, Type: {item.Type?.Name ?? "Unknown"}, Archived: {item.Archived})");
         }
@@ -223,7 +221,7 @@ public class DemoRunner
     {
         var oldTag = await _client.Tags.GetByIdAsync(SpaceId, PropertyId, TagId);
 
-        var updateRequest = new TagRequest
+        var updateRequest = new UpdateTagRequest
         {
             Name = "Updated test in progress",
             Color = "yellow"
@@ -247,7 +245,7 @@ public class DemoRunner
 
     private async Task<Tag> CreateTagAsync()
     {
-        var createTagRequest = new TagRequest
+        var createTagRequest = new CreateTagRequest
         {
             Name = "In progress",
             Color = "yellow"
@@ -409,9 +407,9 @@ public class DemoRunner
         {
             var response = await _client.Templates.ListAsync(SpaceId, TypeId, offset, limit);
 
-            Console.WriteLine($"Retrieved {response.Data.Count} templates out of total {response.Pagination.Total} (offset {offset}).\n");
+            Console.WriteLine($"Retrieved {response.Templates.Count} templates out of total {response.Pagination.Total} (offset {offset}).\n");
             
-            foreach (var template in response.Data)
+            foreach (var template in response.Templates)
             {
                 Console.WriteLine($"- {template.Name} (ID: {template.Id}, Archived: {template.Archived})");
             }
@@ -443,7 +441,7 @@ public class DemoRunner
 
     private async Task<AnyType> UpdateTypeByIdAsync()
     {
-        var updateRequest = new TypeRequest
+        var updateRequest = new UpdateTypeRequest
         {
             Icon = new EmojiIcon("📄"),
             Key = "your_key",
@@ -493,7 +491,7 @@ public class DemoRunner
 
     private async Task<AnyType> CreateTypeAsync()
     {
-        var createRequest = new TypeRequest
+        var createRequest = new CreateTypeRequest
         {
             Icon = new EmojiIcon("📄"),
             Key = "some_user_defined_key",
@@ -504,9 +502,9 @@ public class DemoRunner
             {
                 new TypePropertyRequest
                 {
-                    Format = "text",
-                    Key = "last_modified_date",
-                    Name = "Last modified date"
+                    Format = "number",
+                    Key = "priority_level",
+                    Name = "Priority Level"
                 }
             }
         };
@@ -528,9 +526,9 @@ public class DemoRunner
         {
             var response = await _client.Types.ListAsync(SpaceId, offset, limit);
 
-            Console.WriteLine($"Retrieved {response.Data.Count} types out of total {response.Pagination.Total} (offset {offset}).\n");
+            Console.WriteLine($"Retrieved {response.Types.Count} types out of total {response.Pagination.Total} (offset {offset}).\n");
 
-            foreach (var type in response.Data)
+            foreach (var type in response.Types)
             {
                 Console.WriteLine($"- {type.Name} (ID: {type.Id}, Key: {type.Key}, Archived: {type.Archived})");
             }
@@ -562,7 +560,7 @@ public class DemoRunner
         }
     }
 
-    private async Task<AnyMember> GetAnytypeMemberAsync()
+    private async Task<Member> GetAnytypeMemberAsync()
     {
         var member = await _client.Members.GetByIdAsync(
             SpaceId,
@@ -684,8 +682,9 @@ public class DemoRunner
 
     private async Task<Space?> UpdateSpaceAsync()
     {
-        var updateSpaceRequest = new UpdateSpaceRequest("Updated Space Name")
+        var updateSpaceRequest = new UpdateSpaceRequest()
         {
+            Name = "Updated Space Name",
             Description = "The local-first wiki"
         };
 
@@ -730,14 +729,14 @@ public class DemoRunner
 
     private async Task<AnyObject> GetObjectByIdAsync()
     {
-        var request = new ObjectRequest(
-            SpaceId,
-            ObjectId);
+        var anyObject = await _client.Objects.GetByIdAsync(SpaceId, ObjectId);
 
-        var anyObject = await _client.Objects.GetByIdAsync(request);
-        Console.WriteLine("Object retrieved:");
-        Console.WriteLine($"Name: {anyObject.Name}");
-        Console.WriteLine($"ID: {anyObject.Id}");
+        if (anyObject != null)
+        {
+            Console.WriteLine("Object retrieved:");
+            Console.WriteLine($"Name: {anyObject.Name}");
+            Console.WriteLine($"ID: {anyObject.Id}");
+        }
 
         return anyObject;
     }
@@ -747,7 +746,7 @@ public class DemoRunner
         var createObjectRequest = new CreateObjectRequest
         {
             // Set the title of the page
-            Name = "listingtesting",
+            Name = "Antares",
 
             // Set the emoji icon for the page
             Icon = new EmojiIcon("🌟"),
@@ -794,8 +793,9 @@ public class DemoRunner
         var name = "C# fandom";
         var description = "This is a space created using Anytype.NET.";
 
-        var request = new CreateSpaceRequest(name)
+        var request = new CreateSpaceRequest()
         {
+            Name = name,
             Description = description
         };
 

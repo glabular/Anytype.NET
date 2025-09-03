@@ -1,6 +1,16 @@
-﻿namespace Anytype.NET.Models.Responses;
+﻿using System.Text.Json.Serialization;
 
+namespace Anytype.NET.Models.Responses;
+
+/// <summary>
+/// Represents the response from the API after creating a member.
+/// Contains the created <see cref="Models.Member"/> object if successful.
+/// </summary>
 public sealed class GetMemberResponse
 {
-    public AnyMember Member { get; set; }
+    /// <summary>
+    /// The member.
+    /// </summary>
+    [JsonPropertyName("member")]
+    public Member? Member { get; set; }
 }

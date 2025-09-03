@@ -1,4 +1,6 @@
-﻿namespace Anytype.NET.Models.Requests;
+﻿using System.Text.Json.Serialization;
+
+namespace Anytype.NET.Models.Requests;
 
 /// <summary>
 /// Represents the data required to update an existing space.
@@ -8,23 +10,18 @@
 /// </remarks>
 public sealed class UpdateSpaceRequest
 {
-    public UpdateSpaceRequest(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Space name cannot be null, empty, or whitespace.", nameof(name));
-        }
-
-        Name = name;
-    }
-
+#pragma warning disable CS8618
     /// <summary>
     /// The name of the space.
     /// </summary>
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
     /// <summary>
     /// The description of the space.
     /// </summary>
-    public string? Description { get; set; }
+    [JsonPropertyName("description")]
+    public string Description { get; set; }
+
+#pragma warning restore CS8618
 }

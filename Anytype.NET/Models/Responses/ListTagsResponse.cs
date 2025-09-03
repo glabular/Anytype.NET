@@ -3,18 +3,19 @@
 namespace Anytype.NET.Models.Responses;
 
 /// <summary>
-/// Represents the response returned from the Anytype API when requesting a list of tags.
+/// Represents the response from the API after listing tags.
 /// </summary>
 public sealed class ListTagsResponse
 {
     /// <summary>
-    /// The list of tag items in the current result set.
+    /// The list of tags in the current result set.
     /// </summary>
     [JsonPropertyName("data")]
-    public List<AnyTag> Tags { get; set; }
+    public List<Tag>? Tags { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.
     /// </summary>
-    public PaginationMetadata Pagination { get; set; }
+    [JsonPropertyName("pagination")]
+    public PaginationMetadata? Pagination { get; set; }
 }

@@ -9,28 +9,30 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class Space
 {
+#pragma warning disable CS8618
+
     /// <summary>
     /// The data model of the object.
     /// </summary>
     [JsonPropertyName("object")]
-    public string? ObjectType { get; set; }
+    public string Object { get; set; }
 
     /// <summary>
     /// The unique identifier of the space.
     /// </summary>
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// The name of the space.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// The icon associated with the space. May be null if no icon is set.
     /// </summary>
-    //[JsonPropertyName("icon")]
+    [JsonPropertyName("icon")]
     [JsonConverter(typeof(IconConverter))]
     public IIcon? Icon { get; set; }
 
@@ -38,17 +40,19 @@ public sealed class Space
     /// The description of the space.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     /// <summary>
     /// The gateway URL used to serve files and media.
     /// </summary>
     [JsonPropertyName("gateway_url")]
-    public string? GatewayUrl { get; set; }
+    public string GatewayUrl { get; set; }
 
     /// <summary>
     /// The network id of the space.
     /// </summary>
     [JsonPropertyName("network_id")]
-    public string? NetworkId { get; set; }
+    public string NetworkId { get; set; }
+
+#pragma warning restore CS8618
 }

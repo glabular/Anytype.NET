@@ -1,25 +1,16 @@
-﻿using System.Text.Json;
+﻿using Anytype.NET.Interfaces;
 using Anytype.NET.Models;
 using Anytype.NET.Models.Responses;
 
 namespace Anytype.NET.Internal;
 
-public sealed class MembersClient : ClientBase
+/// <inheritdoc />
+internal sealed class MembersClient : ClientBase, IMembersApi
 {
-    public MembersClient(string apiKey) : base(apiKey) { }
+    internal MembersClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
-    /// <summary>
-    /// Gets a list of members in the specified space.
-    /// </summary>
-    /// <param name="spaceId">The space ID to list members for.</param>
-    /// <param name="offset">Number of items to skip before collecting the result set (default 0).</param>
-    /// <param name="limit">Number of items to return (max 1000, default 100).</param>
-    /// <returns>A <see cref="ListMembersResponse"/> containing the members and pagination metadata.</returns>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<ListMembersResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -27,30 +18,21 @@ public sealed class MembersClient : ClientBase
             throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
         }
 
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/members?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListMembersResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get members, response was null.");
 
         return response;
     }
 
-    /// <summary>
-    /// Gets a member by ID.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space containing the member.</param>
-    /// <param name="memberId">The ID of the member to retrieve.</param>
-    /// <returns>The requested <see cref="AnyMember"/>.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
-    /// <exception cref="HttpRequestException"></exception>
-    /// <exception cref="JsonException"></exception>
-    public async Task<AnyMember> GetByIdAsync(string spaceId, string memberId)
+    /// <inheritdoc />
+    public async Task<Member?> GetByIdAsync(string spaceId, string memberId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -62,11 +44,19 @@ public sealed class MembersClient : ClientBase
             throw new ArgumentException("Member ID cannot be null or whitespace.", nameof(memberId));
         }
 
-        var relativeUrl = $"v1/spaces/{spaceId}/members/{memberId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{memberId}";
 
         var response = await GetAsync<GetMemberResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to get member, response was null.");
 
         return response.Member;
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for members-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/members";
     }
 }

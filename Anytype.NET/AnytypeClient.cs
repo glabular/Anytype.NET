@@ -1,4 +1,6 @@
-﻿using Anytype.NET.Internal;
+﻿using Anytype.NET.Constants;
+using Anytype.NET.Interfaces;
+using Anytype.NET.Internal;
 
 namespace Anytype.NET;
 
@@ -14,35 +16,40 @@ public sealed class AnytypeClient
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
     /// <exception cref="ArgumentNullException"/>
-    public AnytypeClient(string apiKey)
+    public AnytypeClient(string apiKey, string? apiVersion = null)
     {
         _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
-        Spaces = new SpacesClient(_apiKey);
-        Objects = new ObjectsClient(_apiKey);
-        Members = new MembersClient(_apiKey);
-        Types = new TypesClient(_apiKey);
-        Templates = new TemplatesClient(_apiKey);
-        Tags = new TagsClient(_apiKey);
-        Properties = new PropertiesClient(_apiKey);
-        Search = new SearchClient(_apiKey);
-        Lists = new ListsClient(_apiKey);
+        ApiVersion = apiVersion ?? AnytypeApiVersions.GetLatest();
+        Spaces = new SpacesClient(_apiKey, ApiVersion);
+        Objects = new ObjectsClient(_apiKey, ApiVersion);
+        Members = new MembersClient(_apiKey, ApiVersion);
+        Types = new TypesClient(_apiKey, ApiVersion);
+        Templates = new TemplatesClient(_apiKey, ApiVersion);
+        Tags = new TagsClient(_apiKey, ApiVersion);
+        Properties = new PropertiesClient(_apiKey, ApiVersion);
+        Search = new SearchClient(_apiKey, ApiVersion);
+        Lists = new ListsClient(_apiKey, ApiVersion);
     }
 
-    public SpacesClient Spaces { get; }
+    public string ApiVersion { get; }
+    
+    public ISpacesApi Spaces { get; }
 
-    public ObjectsClient Objects { get; }
+    public IObjectsApi Objects { get; }
 
-    public MembersClient Members { get; }
+    public IMembersApi Members { get; }
 
-    public TypesClient Types { get; }
+    public ITypesApi Types { get; }
 
-    public TemplatesClient Templates { get; }
+    public ITemplatesApi Templates { get; }
 
-    public TagsClient Tags { get; }
+    public ITagsApi Tags { get; }
 
-    public PropertiesClient Properties { get; }
+    public IPropertiesApi Properties { get; }
 
-    public SearchClient Search { get; }
+    public ISearchApi Search { get; }
 
-    public ListsClient Lists { get; }
+    public IListsApi Lists { get; }
+
+    public static IAuthApi Auth { get; } = new AuthClient();    
 }

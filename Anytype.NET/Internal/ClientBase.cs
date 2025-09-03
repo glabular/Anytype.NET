@@ -1,7 +1,6 @@
-﻿using Anytype.NET.Converters;
-using Anytype.NET.Models.Enums;
+﻿using Anytype.NET.Constants;
+using Anytype.NET.Converters;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -10,8 +9,11 @@ namespace Anytype.NET.Internal;
 public abstract class ClientBase
 {
     protected const string BaseAddress = "http://localhost:31009";
-    protected const string AnytypeVersion = "2025-05-20";
+    protected const int MaxPaginationLimit = 1000;
+
     private readonly string _apiKey;
+    private readonly string _apiVersion;
+
     private static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -20,17 +22,26 @@ public abstract class ClientBase
             new IconConverter()
         }
     };
-    protected static readonly HttpClient HttpClient = new()
+
+    private static readonly HttpClient HttpClient = new()
     {
         BaseAddress = new Uri(BaseAddress)
     };
 
-    protected ClientBase(string apiKey)
+    private protected ClientBase(string apiKey, string? apiVersion = null)
     {
-        _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            throw new ArgumentException("API key cannot be null or whitespace.", nameof(apiKey));
+        }
+
+        _apiKey = apiKey;
+        _apiVersion = string.IsNullOrWhiteSpace(apiVersion)
+            ? AnytypeApiVersions.GetLatest()
+            : apiVersion;
     }
 
-    protected async Task<T?> GetAsync<T>(string relativeUrl)
+    private protected async Task<T?> GetAsync<T>(string relativeUrl)
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl);
 
@@ -45,7 +56,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> PostAsync<T>(string relativeUrl, object body)
+    private protected async Task<T?> PostAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
 
@@ -65,7 +76,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> PatchAsync<T>(string relativeUrl, object body)
+    private protected async Task<T?> PatchAsync<T>(string relativeUrl, object body)
     {
         var jsonContent = JsonSerializer.Serialize(body, SerializerOptions);
 
@@ -85,7 +96,7 @@ public abstract class ClientBase
         return JsonSerializer.Deserialize<T>(json, SerializerOptions);
     }
 
-    protected async Task<T?> DeleteAsync<T>(string relativeUrl)
+    private protected async Task<T?> DeleteAsync<T>(string relativeUrl)
     {
         using var request = new HttpRequestMessage(HttpMethod.Delete, relativeUrl);
 
@@ -103,6 +114,6 @@ public abstract class ClientBase
     private void AddDefaultHeaders(HttpRequestMessage request)
     {
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        request.Headers.Add("Anytype-Version", AnytypeVersion);
+        request.Headers.Add("Anytype-Version", _apiVersion);
     }
 }

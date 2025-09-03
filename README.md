@@ -26,6 +26,9 @@ var client = new AnytypeClient("your-api-key");
 >- Navigate to the API Keys section
 >- Click "Create new" and give it a meaningful name
 >- Copy the generated API key
+> 
+> You can also generate an API key directly from code.  
+> See [Auth Docs](docs/auth.md) for details.
 
 3. Usage example
 ```csharp
@@ -51,15 +54,22 @@ The snippet above creates a new space and prints its name, description, and ID i
 
 | Category     | Endpoints |
 |--------------|-----------|
-| Search       | Search objects across all spaces • Search objects within a space |
-| Spaces       | List • Create • Get • Update |
-| Lists        | Add objects • Delete object • Get list views • Get objects |
-| Members      | List • Get |
-| Objects      | List • Create • Delete • Get • Update |
-| Tags         | List • Create • Delete • Get • Update |
-| Types        | List • Create • Delete • Get • Update |
-| Templates    | List • Get |
-| ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
+| [Auth](/docs/auth.md)       | Create Challenge • Create API Key |
+| [Search](/docs/search.md)       | Search objects across all spaces • Search objects within a space |
+| [Spaces](/docs/spaces.md)       | List • Create • Get • Update |
+| [Lists](/docs/lists.md)         | Add objects • Delete object • Get list views • Get objects |
+| [Members](/docs/members.md)     | List • Get |
+| [Objects](/docs/objects.md)     | List • Create • Delete • Get • Update |
+| [Tags](/docs/tags.md)           | List • Create • Delete • Get • Update |
+| [Types](/docs/types.md)         | List • Create • Delete • Get • Update |
+| [Templates](/docs/templates.md) | List • Get |
+| ⚠️ [Properties](/docs/properties.md) | List • Create • Delete • Get • Update |
+
+###### Click a category to see detailed documentation.
+
+## Compatibility
+This client has been developed and tested with API version 2025-05-20 (latest).  
+Other versions (2025-04-22, 2025-03-17) may work, but compatibility is not guaranteed.
 
 ---
 

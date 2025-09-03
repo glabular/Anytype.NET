@@ -1,14 +1,21 @@
-﻿namespace Anytype.NET.Models.Responses;
+﻿using System.Text.Json.Serialization;
 
+namespace Anytype.NET.Models.Responses;
+
+/// <summary>
+/// Represents the response from the API after listing views.
+/// </summary>
 public sealed class ListViewsResponse
 {
     /// <summary>
-    /// The list of items in the current result set.
+    /// The list of views in the current result set.
     /// </summary>
-    public List<ViewItem> Data { get; set; }
+    [JsonPropertyName("data")]
+    public List<ViewItem>? Views { get; set; }
 
     /// <summary>
     /// The pagination metadata for the response.
     /// </summary>
-    public PaginationMetadata Pagination { get; set; }
+    [JsonPropertyName("pagination")]
+    public PaginationMetadata? Pagination { get; set; }
 }

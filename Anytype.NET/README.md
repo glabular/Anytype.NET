@@ -23,6 +23,9 @@ var client = new AnytypeClient("your-api-key");
 >- Navigate to the API Keys section
 >- Click "Create new" and give it a meaningful name
 >- Copy the generated API key
+> 
+> You can also generate an API key directly from code.  
+> See the Auth documentation in the GitHub repository for details.
 
 3. Usage example
 ```csharp
@@ -30,7 +33,7 @@ var spaces = await _client.Spaces.GetAllAsync();
 
 foreach (var space in spaces)
 {
-    Console.WriteLine(space.Name);
+	Console.WriteLine(space.Name);
 	Console.WriteLine(space.Id);
 }
 ```
@@ -41,6 +44,7 @@ The snippet above lists all available spaces and prints their names and IDs in t
 
 | Category     | Endpoints |
 |--------------|-----------|
+| Auth       | Create Challenge • Create API Key |
 | Search       | Search objects across all spaces • Search objects within a space |
 | Spaces       | List • Create • Get • Update |
 | Lists        | Add objects • Delete object • Get list views • Get objects |
@@ -50,6 +54,10 @@ The snippet above lists all available spaces and prints their names and IDs in t
 | Types        | List • Create • Delete • Get • Update |
 | Templates    | List • Get |
 | ⚠️ (Warning: experimental) Properties | List • Create • Delete • Get • Update |
+
+## Compatibility
+This client has been developed and tested with API version 2025-05-20 (latest).  
+Other versions (2025-04-22, 2025-03-17) may work, but compatibility is not guaranteed.
 
 ---
 

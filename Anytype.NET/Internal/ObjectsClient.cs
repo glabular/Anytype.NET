@@ -1,30 +1,17 @@
-﻿using Anytype.NET.Models;
-using System.Text.Json;
+﻿using Anytype.NET.Interfaces;
+using Anytype.NET.Models;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
 
 namespace Anytype.NET.Internal;
 
-/// <summary>
-/// Provides methods to interact with Anytype objects.
-/// </summary>
-public sealed class ObjectsClient : ClientBase
+/// <inheritdoc />
+internal sealed class ObjectsClient : ClientBase, IObjectsApi
 {
-    public ObjectsClient(string apiKey) : base(apiKey) { }
+    internal ObjectsClient(string apiKey, string? apiVersion = null)
+        : base(apiKey, apiVersion) { }
 
-    /// <summary>
-    /// Creates a new object.
-    /// </summary>
-    /// <param name="spaceId">
-    /// The ID of the space where the object will be created.
-    /// </param>
-    /// <param name="createObjectRequest">The data required to create the object.</param>
-    /// <returns>The created <see cref="AnyObject"/>.</returns>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<AnyObject> CreateAsync(string spaceId, CreateObjectRequest createObjectRequest)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -34,58 +21,40 @@ public sealed class ObjectsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(createObjectRequest);
 
-        var response = await PostAsync<ObjectResponse>($"/v1/spaces/{spaceId}/objects", createObjectRequest);
+        var response = await PostAsync<ObjectResponse>(GetUrlPrefix(spaceId), createObjectRequest)
+            ?? throw new InvalidOperationException("Failed to create object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the created object.");
-        }
-
-        return response.Object;
+        return response.AnyObject
+            ?? throw new InvalidOperationException("Failed to create object, API did not return a valid object.");        
     }
 
-    /// <summary>
-    /// Gets an object.
-    /// </summary>
-    /// <param name="getObjectRequest">The request containing SpaceId and ObjectId.</param>
-    /// <param name="format">The format to return the object body in. Default is "md".</param>
-    /// <returns>The requested <see cref="AnyObject"/>.</returns>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="JsonException"/>
-    public async Task<AnyObject> GetByIdAsync(ObjectRequest getObjectRequest, string? format = null)
+    /// <inheritdoc />    
+    public async Task<AnyObject?> GetByIdAsync(string spaceId, string objectId, string? format = null)
     {
-        ArgumentNullException.ThrowIfNull(getObjectRequest);
+        if (string.IsNullOrWhiteSpace(spaceId))
+        {
+            throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
+        }
 
-        var relativeUrl = $"/v1/spaces/{getObjectRequest.SpaceId}/objects/{getObjectRequest.ObjectId}";
+        if (string.IsNullOrWhiteSpace(objectId))
+        {
+            throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
+        }
+
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
 
         if (!string.IsNullOrWhiteSpace(format))
         {
             relativeUrl += $"?format={format}";
         }
 
-        var response = await GetAsync<ObjectResponse>(relativeUrl);
+        var response = await GetAsync<ObjectResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to get object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the retrieved object.");
-        }
-
-        return response.Object;
+        return response.AnyObject;
     }
 
-    /// <summary>
-    /// Updates the object.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space containing the object to update.</param>
-    /// <param name="objectId">The ID of the object to update.</param>
-    /// <param name="updateObjectRequest">The data to update on the object.</param>
-    /// <returns>The updated <see cref="AnyObject"/>.</returns>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<AnyObject> UpdateAsync(
         string spaceId,
         string objectId,
@@ -103,27 +72,16 @@ public sealed class ObjectsClient : ClientBase
 
         ArgumentNullException.ThrowIfNull(updateObjectRequest);
 
-        var response = await PatchAsync<ObjectResponse>(
-            $"/v1/spaces/{spaceId}/objects/{objectId}", updateObjectRequest);
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the updated object.");
-        }
+        var response = await PatchAsync<ObjectResponse>(relativeUrl, updateObjectRequest)
+            ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        return response.Object;
+        return response.AnyObject
+            ?? throw new InvalidOperationException("Failed to update object, API did not return a valid object.");
     }
 
-    /// <summary>
-    /// Deletes (archives) the object.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space containing the object.</param>
-    /// <param name="objectId">The ID of the object to delete.</param>
-    /// <returns>The deleted (archived) <see cref="AnyObject"/>.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<AnyObject> DeleteAsync(string spaceId, string objectId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -136,32 +94,16 @@ public sealed class ObjectsClient : ClientBase
             throw new ArgumentException("Object ID cannot be null or whitespace.", nameof(objectId));
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/objects/{objectId}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"/{objectId}";
 
-        var response = await DeleteAsync<ObjectResponse>(relativeUrl);
+        var response = await DeleteAsync<ObjectResponse>(relativeUrl)
+            ?? throw new InvalidOperationException("Failed to update object, response was null.");
 
-        if (response == null || response.Object == null)
-        {
-            throw new InvalidOperationException("Failed to deserialize the deleted object.");
-        }
-
-        return response.Object;
+        return response.AnyObject
+            ?? throw new InvalidOperationException("Failed to delete object, API did not return a valid object.");
     }
 
-    /// <summary>
-    /// Gets list of objects in a given space.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space to list objects from.</param>
-    /// <param name="offset">The number of items to skip before collecting the result set. Default is 0.</param>
-    /// <param name="limit">The number of items to return. Max 1000. Default is 100.</param>
-    /// <returns>
-    /// A <see cref="ListObjectsResponse"/> containing the objects and pagination metadata.
-    /// </returns>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<ListObjectsResponse> ListAsync(string spaceId, int offset = 0, int limit = 100)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -169,16 +111,24 @@ public sealed class ObjectsClient : ClientBase
             throw new ArgumentException("Space ID cannot be null or whitespace.", nameof(spaceId));
         }
 
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
-        var relativeUrl = $"/v1/spaces/{spaceId}/objects?offset={offset}&limit={limit}";
+        var relativeUrl = GetUrlPrefix(spaceId) + $"?offset={offset}&limit={limit}";
 
         var response = await GetAsync<ListObjectsResponse>(relativeUrl) 
             ?? throw new InvalidOperationException("The API returned an empty response.");
 
         return response;
+    }
+
+    /// <summary>
+    /// Builds the base relative URL for objects-related endpoints.
+    /// </summary>
+    private static string GetUrlPrefix(string spaceId)
+    {
+        return $"v1/spaces/{spaceId}/objects";
     }
 }

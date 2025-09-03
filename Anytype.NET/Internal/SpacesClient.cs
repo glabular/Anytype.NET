@@ -1,71 +1,48 @@
-﻿using Anytype.NET.Models;
+﻿using Anytype.NET.Interfaces;
+using Anytype.NET.Models;
 using Anytype.NET.Models.Requests;
 using Anytype.NET.Models.Responses;
-using System.Text.Json;
 
 namespace Anytype.NET.Internal;
 
-public sealed class SpacesClient : ClientBase
+/// <inheritdoc />
+internal sealed class SpacesClient : ClientBase, ISpacesApi
 {
-    private const string RelativeSpacesUrl = "/v1/spaces";
+    private const string RelativeSpacesUrl = "v1/spaces";
 
-    public SpacesClient(string apiKey) : base(apiKey) { }
+    internal SpacesClient(string apiKey, string? apiVersion = null) 
+        : base(apiKey, apiVersion) { }
 
-    /// <summary>
-    /// Gets a list of spaces.
-    /// </summary>
-    /// <param name="offset">The number of items to skip before starting to collect the result set (default: 0).</param>
-    /// <param name="limit">The number of items to return (default: 100, maximum: 1000).</param>
-    /// <returns>A <see cref="SpacesResponse"/> containing the spaces and pagination metadata.</returns>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
-    public async Task<SpacesResponse?> ListAsync(int offset = 0, int limit = 100)
+    /// <inheritdoc />
+    public async Task<SpacesResponse> ListAsync(int offset = 0, int limit = 100)
     {
-        if (limit > 1000)
+        if (limit > MaxPaginationLimit)
         {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit cannot exceed 1000.");
+            throw new ArgumentOutOfRangeException(nameof(limit), $"Limit cannot exceed {MaxPaginationLimit}.");
         }
 
         var relativeUrl = $"{RelativeSpacesUrl}?offset={offset}&limit={limit}";
 
         var response = await GetAsync<SpacesResponse>(relativeUrl)
-            ?? throw new InvalidOperationException("The API returned an empty response.");
+            ?? throw new InvalidOperationException("Failed to retrieve spaces, response was null.");
 
         return response;
     }
 
-    /// <summary>
-    /// Creates a new space.
-    /// </summary>
-    /// <param name="request">The space creation data.</param>
-    /// <returns>The created <see cref="Space"/>.</returns>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
-    public async Task<Space?> CreateAsync(CreateSpaceRequest request)
+    /// <inheritdoc />
+    public async Task<Space> CreateAsync(CreateSpaceRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         var response = await PostAsync<CreateSpaceResponse>(RelativeSpacesUrl, request) 
             ?? throw new InvalidOperationException("Failed to create space, response was null.");
 
-        return response?.Space;
+        return response.Space
+            ?? throw new InvalidOperationException("Failed to create space, API did not return a valid space.");
     }
-
-    /// <summary>
-    /// Updates the space.
-    /// </summary>
-    /// <param name="spaceId">The ID of the space to update.</param>
-    /// <param name="request">The update details.</param>
-    /// <returns>The updated <see cref="Space"/>.</returns>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
-    public async Task<Space?> UpdateAsync(string spaceId, UpdateSpaceRequest request)
+        
+    /// <inheritdoc />
+    public async Task<Space> UpdateAsync(string spaceId, UpdateSpaceRequest request)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
         {
@@ -76,20 +53,14 @@ public sealed class SpacesClient : ClientBase
 
         var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
 
-        var response = await PatchAsync<SpaceResponse>(relativeUrl, request);
+        var response = await PatchAsync<SpaceResponse>(relativeUrl, request)
+            ?? throw new InvalidOperationException("Failed to update space, response was null.");
 
-        return response?.Space;
+        return response.Space
+            ?? throw new InvalidOperationException("Failed to update space, API did not return a valid space.");
     }
 
-    /// <summary>
-    /// Gets a space by ID.
-    /// </summary>
-    /// <param name="spaceId">The space’s ID.</param>
-    /// <returns>The retrieved <see cref="Space"/>.</returns>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="InvalidOperationException"/>
-    /// <exception cref="HttpRequestException"/>
-    /// <exception cref="JsonException"/>
+    /// <inheritdoc />
     public async Task<Space?> GetByIdAsync(string spaceId)
     {
         if (string.IsNullOrWhiteSpace(spaceId))
@@ -98,8 +69,10 @@ public sealed class SpacesClient : ClientBase
         }
 
         var relativeUrl = $"{RelativeSpacesUrl}/{spaceId}";
-        var response = await GetAsync<SpaceResponse>(relativeUrl);
+        var response = await GetAsync<SpaceResponse>(relativeUrl) 
+            ?? throw new InvalidOperationException("Failed to get space, response was null.");
 
-        return response?.Space;
+        // TODO: Check what returns if space not found and handle accordingly
+        return response.Space;
     }
 }
