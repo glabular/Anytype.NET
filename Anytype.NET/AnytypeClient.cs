@@ -32,7 +32,7 @@ public sealed class AnytypeClient
     }
 
     public string ApiVersion { get; }
-
+    
     public ISpacesApi Spaces { get; }
 
     public IObjectsApi Objects { get; }
@@ -50,4 +50,6 @@ public sealed class AnytypeClient
     public ISearchApi Search { get; }
 
     public IListsApi Lists { get; }
+
+    public static IAuthApi Auth { get; } = new AuthClient();    
 }

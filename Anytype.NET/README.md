@@ -41,6 +41,7 @@ The snippet above lists all available spaces and prints their names and IDs in t
 
 | Category     | Endpoints |
 |--------------|-----------|
+| Auth       | Create Challenge • Create API Key |
 | Search       | Search objects across all spaces • Search objects within a space |
 | Spaces       | List • Create • Get • Update |
 | Lists        | Add objects • Delete object • Get list views • Get objects |

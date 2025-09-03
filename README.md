@@ -43,6 +43,7 @@ The snippet above lists all available spaces and prints their names and IDs in t
 
 | Category     | Endpoints |
 |--------------|-----------|
+| [Auth](/docs/auth.md)       | Create Challenge • Create API Key |
 | [Search](/docs/search.md)       | Search objects across all spaces • Search objects within a space |
 | [Spaces](/docs/spaces.md)       | List • Create • Get • Update |
 | [Lists](/docs/lists.md)         | Add objects • Delete object • Get list views • Get objects |
