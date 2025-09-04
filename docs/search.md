@@ -87,21 +87,6 @@ A response object containing:
 
 ## Search Request Structure
 
-The `SearchRequest` object contains the following properties:
-
-```csharp
-public sealed class SearchRequest
-{
-    public string Query { get; set; }
-    
-    public string[] Types { get; set; }
-    
-    public SortOptions Sort { get; set; }
-}
-```
-
-### Search Request Properties
-
 - **Query** (string): The text to search within object names and content
 - **Types** (string[]): The types of objects to include in results (e.g., "page", "task", "bookmark")
 - **Sort** (`SortOptions`): The sorting options for the search results
