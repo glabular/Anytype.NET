@@ -15,7 +15,7 @@ Creates a new object in the given space.
 ```csharp
 var createObjectRequest = new CreateObjectRequest
 {
-    Name = "listingtesting",
+    Name = "Any name",
     Icon = new EmojiIcon("🌟"),
     Body = "Any text goes here. Markdown supported",
     TypeKey = "page",	

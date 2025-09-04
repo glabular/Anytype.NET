@@ -3,7 +3,7 @@
 
 ## Create Challenge
 
-Generates a one-time authentication challenge for the specified app. The challenge ID is required to obtain an API key.
+Generates a one-time authentication challenge for the specified app. **This step is only necessary when creating a new API key.**
 
 ```csharp
 var challengeId = await AnytypeClient.Auth.CreateChallengeAsync("MyApp");
@@ -44,7 +44,11 @@ var client = new AnytypeClient(apiKey);
 
 - `string` — the API key used to authenticate requests.
 
-## Authentication Flow
+> [!NOTE]
+> You do NOT need to create a new API key each time.
+> Store the key securely (e.g., in environment variables) and reuse it in future sessions.
+
+## Authentication Flow Example
 
 The typical authentication flow involves these steps:
 
@@ -63,5 +67,6 @@ var apiKey = await AnytypeClient.Auth.CreateApiKeyAsync(challengeId, userCode);
 var authenticatedClient = new AnytypeClient(apiKey);
 
 // Step 5: Use the client for API calls
-var spaces = await authenticatedClient.Spaces.ListAsync();
+var response = await authenticatedClient.Spaces.ListAsync();
+Console.WriteLine($"Spaces retrieved: {response?.Spaces?.Count ?? 0}");
 ```

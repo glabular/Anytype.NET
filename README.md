@@ -20,7 +20,9 @@ var client = new AnytypeClient("your-api-key");
 > [!TIP]
 > **How to get an API key?**
 >
-> The simplest way to generate an API key is through the Anytype desktop client (available in v0.46.6 or later):
+> An API key is your access token — you create it once and then reuse it for all future sessions.
+> 
+> The simplest way to generate an API key is through the Anytype desktop client **(available in v0.46.6 or later)**:
 >- Open the Anytype desktop app
 >- Go to Settings
 >- Navigate to the API Keys section
@@ -32,22 +34,15 @@ var client = new AnytypeClient("your-api-key");
 
 3. Usage example
 ```csharp
-var name = "C# fandom";
-var description = "This is a space created using Anytype.NET";
+var response = await _client.Spaces.ListAsync();
 
-var request = new CreateSpaceRequest(name)
+foreach (var space in response.Spaces)
 {
-    Description = description
-};
-
-var newSpace = await client.Spaces.CreateAsync(request);
-
-Console.WriteLine("New space created:");
-Console.WriteLine(newSpace.Name);
-Console.WriteLine($"Description: {newSpace.Description}");
-Console.WriteLine($"ID: {newSpace.Id}");
+    Console.WriteLine(space.Name);
+    Console.WriteLine(space.Id);
+}
 ```
-The snippet above creates a new space and prints its name, description, and ID in the console.
+The snippet above lists all available spaces and prints their names and IDs in the console.
 
 
 ## Supported Endpoints

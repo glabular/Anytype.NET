@@ -1,4 +1,5 @@
 ﻿using Anytype.NET;
+using Anytype.NET.Models.Responses;
 
 namespace DevConsole;
 
@@ -25,7 +26,7 @@ public static class AuthDemoRunner
 
         // Use the main client
         Console.WriteLine("\nTesting main client: retrieving spaces...");
-        var spaces = await client.Spaces.ListAsync();
-        Console.WriteLine($"Spaces retrieved: {spaces?.Spaces?.Count ?? 0}");
+        var response = await client.Spaces.ListAsync();
+        Console.WriteLine($"Spaces retrieved: {response?.Spaces?.Count ?? 0}");
     }
 }

@@ -16,8 +16,11 @@ using Anytype.NET;
 
 var client = new AnytypeClient("your-api-key");
 ```
-> **TIP:** How to get an API key: 
->The simplest way to generate an API key is through the Anytype desktop client (available in v0.46.6 or later):
+> **TIP:** How to get an API key?
+> 
+> An API key is your access token — you create it once and then reuse it for all future sessions.
+> 
+> The simplest way to generate an API key is through the Anytype desktop client **(available in v0.46.6 or later)**:
 >- Open the Anytype desktop app
 >- Go to Settings
 >- Navigate to the API Keys section
@@ -25,13 +28,13 @@ var client = new AnytypeClient("your-api-key");
 >- Copy the generated API key
 > 
 > You can also generate an API key directly from code.  
-> See the Auth documentation in the GitHub repository for details.
+> See [Auth Docs](https://github.com/glabular/Anytype.NET/blob/master/docs/auth.md) for details.
 
 3. Usage example
 ```csharp
-var spaces = await _client.Spaces.GetAllAsync();
+var response = await _client.Spaces.ListAsync();
 
-foreach (var space in spaces)
+foreach (var space in response.Spaces)
 {
     Console.WriteLine(space.Name);
     Console.WriteLine(space.Id);
