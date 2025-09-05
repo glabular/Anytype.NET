@@ -1,4 +1,4 @@
-> [!IMPORTANT]
+> [!NOTE]
 > The latest API version is used for all authentication endpoints.
 
 ## Create Challenge

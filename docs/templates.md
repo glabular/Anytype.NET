@@ -12,11 +12,11 @@ var client = new AnytypeClient("your-api-key");
 Gets a list of templates from the given type in the specified space.
 
 ```csharp
-var templates = await client.Templates.ListAsync("any-space-id", "any-type-id", offset: 0, limit: 100);
+var response = await _anytypeClient.Templates.ListAsync("any-space-id", "any-type-id", offset: 0, limit: 100);
 
-Console.WriteLine("Templates retrieved:");
+Console.WriteLine($"{response.Pagination.Total} templates retrieved:");
 
-foreach (var template in templates.Data)
+foreach (var template in response.Templates)
 {
     Console.WriteLine($"Name: {template.Name}");
     Console.WriteLine($"ID: {template.Id}");

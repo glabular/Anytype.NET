@@ -13,7 +13,7 @@ var client = new AnytypeClient("your-api-key");
 Gets a list of tags from the given property in the specified space.
 
 ```csharp
-var response  = await client.Tags.ListAsync("any-space-id", "any-property-id");
+var response = await client.Tags.ListAsync("any-space-id", "any-property-id");
 
 Console.WriteLine($"{response.Pagination.Total} tags retrieved:");
 

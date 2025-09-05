@@ -13,11 +13,11 @@ var client = new AnytypeClient("your-api-key");
 Gets a list of views defined for a specific list (collection or set) within a space.
 
 ```csharp
-var views = await client.Lists.ListViewsAsync("any-space-id", "any-list-id", offset: 0, limit: 100);
+var response = await _anytypeClient.Lists.ListViewsAsync("any-space-id", "any-list-id", offset: 0, limit: 100);
 
-Console.WriteLine("Views retrieved:");
+Console.WriteLine($"{response.Pagination.Total} views retrieved:");
 
-foreach (var view in views.Data)
+foreach (var view in response.Views)
 {
     Console.WriteLine($"Name: {view.Name}");
     Console.WriteLine($"ID: {view.Id}");

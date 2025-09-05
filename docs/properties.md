@@ -16,11 +16,11 @@ var client = new AnytypeClient("your-api-key");
 Gets a list of properties from the given space.
 
 ```csharp
-var properties = await client.Properties.ListAsync("any-space-id", offset: 0, limit: 100);
+var response = await _anytypeClient.Properties.ListAsync("any-space-id", offset: 0, limit: 100);
 
-Console.WriteLine("Properties retrieved:");
+Console.WriteLine($"{response.Pagination.Total} properties retrieved:");
 
-foreach (var property in properties.Data)
+foreach (var property in response.Properties)
 {
     Console.WriteLine($"Name: {property.Name}");
     Console.WriteLine($"ID: {property.Id}");
@@ -103,8 +103,8 @@ var updateRequest = new UpdatePropertyRequest
 
 var updatedProperty = await client.Properties.UpdateAsync(SpaceId, PropertyId, updateRequest);
 
-Console.WriteLine($"Old property - ID: {oldProperty.Id}, Key: {oldProperty.Key}, Name: {oldProperty.Name}.");
-Console.WriteLine($"Updated property - ID: {updatedProperty.Id}, Key: {updatedProperty.Key}, Name: {updatedProperty.Name}.");
+Console.WriteLine($"Old property - Key: {oldProperty.Key}, Name: {oldProperty.Name}.");
+Console.WriteLine($"Updated property - Key: {updatedProperty.Key}, Name: {updatedProperty.Name}.");
 
 ```
 

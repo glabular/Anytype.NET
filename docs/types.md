@@ -12,11 +12,11 @@ var client = new AnytypeClient("your-api-key");
 Gets a list of types from the given space.
 
 ```csharp
-var types = await client.Types.ListAsync("any-space-id", offset: 0, limit: 100);
+var response = await client.Types.ListAsync("any-space-id", offset: 0, limit: 100);
 
-Console.WriteLine("Types retrieved:");
+Console.WriteLine($"{response.Pagination.Total} types retrieved:");
 
-foreach (var type in types.Data)
+foreach (var type in response.Types)
 {
     Console.WriteLine($"Name: {type.Name}");
     Console.WriteLine($"ID: {type.Id}");

@@ -126,11 +126,11 @@ var deletedObject = await client.Objects.DeleteAsync("any-space-id", "any-object
 Gets a list of objects from the given space.
 
 ```csharp
-var objects = await client.Objects.ListAsync("any-space-id", offset: 0, limit: 100);
+var response = await _anytypeClient.Objects.ListAsync("any-space-id", offset: 0, limit: 100);
 
-Console.WriteLine("Objects retrieved:");
+Console.WriteLine($"{response.Pagination.Total} objects retrieved:");
 
-foreach (var obj in objects.Data)
+foreach (var obj in response.Objects)
 {
     Console.WriteLine($"Name: {obj.Name}");
     Console.WriteLine($"ID: {obj.Id}");

@@ -29,8 +29,7 @@ var client = new AnytypeClient("your-api-key");
 >- Click "Create new" and give it a meaningful name
 >- Copy the generated API key
 > 
-> You can also generate an API key directly from code.  
-> See [Auth Docs](docs/auth.md) for details.
+> You can also generate an API key directly from code. See [Auth Docs](docs/auth.md) for details.
 
 3. Usage example
 ```csharp
