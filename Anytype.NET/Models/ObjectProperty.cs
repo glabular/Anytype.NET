@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// Represents a property associated with an object in Anytype.
+/// </summary>
 public sealed class ObjectProperty
 {
 #pragma warning disable CS8618

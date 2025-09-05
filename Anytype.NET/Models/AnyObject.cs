@@ -68,7 +68,7 @@ public sealed class AnyObject
     /// The properties of the object.
     /// </summary>
     [JsonPropertyName("properties")]
-    public List<Property> Properties { get; set; }
+    public List<ObjectProperty> Properties { get; set; }
 
     /// <summary>
     /// The markdown body of the object.
