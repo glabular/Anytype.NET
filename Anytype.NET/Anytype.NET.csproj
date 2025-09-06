@@ -12,6 +12,8 @@
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<RepositoryUrl>https://github.com/glabular/Anytype.NET</RepositoryUrl>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+
   </PropertyGroup>
 
 	<ItemGroup>
