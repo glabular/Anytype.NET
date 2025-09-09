@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Anytype.NET.Internal;
 
-public abstract class ClientBase
+internal abstract class ClientBase
 {
     protected const string BaseAddress = "http://localhost:31009";
     protected const int MaxPaginationLimit = 1000;

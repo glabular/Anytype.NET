@@ -13,9 +13,7 @@ public interface IObjectsApi
     /// <summary>
     /// Creates a new object.
     /// </summary>
-    /// <param name="spaceId">
-    /// The ID of the space where the object will be created.
-    /// </param>
+    /// <param name="spaceId">The ID of the space where the object will be created.</param>
     /// <param name="createObjectRequest">The data required to create the object.</param>
     /// <returns>The created <see cref="AnyObject"/>.</returns>
     /// <exception cref="ArgumentException"/>
@@ -28,7 +26,8 @@ public interface IObjectsApi
     /// <summary>
     /// Gets an object.
     /// </summary>
-    /// <param name="getObjectRequest">The request containing SpaceId and ObjectId.</param>
+    /// <param name="spaceId">The ID of the space to get the object from.</param>
+    /// <param name="objectId">The ID of the object to get.</param>
     /// <param name="format">The format to return the object body in. Default is "md".</param>
     /// <returns>The requested <see cref="AnyObject"/>.</returns>
     /// <exception cref="ArgumentNullException"/>

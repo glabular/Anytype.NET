@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Anytype.NET.Models.Requests;
 
 /// <summary>
-/// Represents a request to create a new object in Anytype.
+/// A request to create a new object.
 /// </summary>
 public sealed class CreateObjectRequest
 {

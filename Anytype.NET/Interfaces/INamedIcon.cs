@@ -5,7 +5,13 @@
 /// </summary>
 public interface INamedIcon : IIcon
 {
+    /// <summary>
+    /// The name of the icon.
+    /// </summary>
     string Name { get; set; }
 
+    /// <summary>
+    /// The color of the icon.
+    /// </summary>
     string Color { get; set; }
 }

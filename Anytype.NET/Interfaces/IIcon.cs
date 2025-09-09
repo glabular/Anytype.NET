@@ -5,5 +5,8 @@
 /// </summary>
 public interface IIcon
 {
+    /// <summary>
+    /// The format of the icon.
+    /// </summary>
     string Format { get; set; }
 }

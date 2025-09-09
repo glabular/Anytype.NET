@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// A request payload for updating a type.
+/// </summary>
 public sealed class UpdateTypeRequest
 {
 #pragma warning disable CS8618

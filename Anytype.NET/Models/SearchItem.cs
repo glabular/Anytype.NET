@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// The list of items in the current result set.
+/// </summary>
 public sealed class SearchItem
 {
 #pragma warning disable CS8618

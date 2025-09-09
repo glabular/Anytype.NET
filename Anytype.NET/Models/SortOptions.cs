@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// The sorting options for the search results.
+/// </summary>
 public sealed class SortOptions
 {
     /// <summary>

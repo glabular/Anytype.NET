@@ -1,3 +1,9 @@
+## [3.0.1] - 09.09.2025
+
+### Anytype.NET
+- Added missing XML comments for publicly visible members.
+- Removed Property class duplicate model.
+
 ## [3.0.0] - 03.09.2025
 
 ### Anytype.NET

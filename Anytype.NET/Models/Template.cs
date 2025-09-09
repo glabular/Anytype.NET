@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// Represents a template associated with a particular type in Anytype.
+/// </summary>
 public sealed class Template
 {
 #pragma warning disable CS8618

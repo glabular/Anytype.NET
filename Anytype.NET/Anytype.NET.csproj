@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<PackageId>Anytype.NET</PackageId>
-	<Version>3.0.0</Version>
+	<Version>3.0.1</Version>
 	<Authors>glu_max</Authors>
 	<Product>Anytype.NET</Product>
 	<Description>Anytype.NET is an unofficial .NET client library for accessing the Anytype API.</Description>

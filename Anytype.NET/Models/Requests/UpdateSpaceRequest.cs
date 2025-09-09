@@ -3,7 +3,7 @@
 namespace Anytype.NET.Models.Requests;
 
 /// <summary>
-/// Represents the data required to update an existing space.
+/// A request payload for updating an existing space.
 /// </summary>
 /// <remarks>
 /// The request body should contain the new name and/or description in JSON format.

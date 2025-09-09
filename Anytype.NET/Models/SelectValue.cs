@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// The selected tag value of the property.
+/// </summary>
 public sealed class SelectValue
 {
 #pragma warning disable CS8618

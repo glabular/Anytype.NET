@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// A filter for associated with a view.
+/// </summary>
 public sealed class FilterItem
 {
 #pragma warning disable CS8618

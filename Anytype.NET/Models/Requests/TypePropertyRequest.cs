@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// Defines the properties linked to the type in Anytype.
+/// </summary>
 public sealed class TypePropertyRequest
 {
     /// <summary>

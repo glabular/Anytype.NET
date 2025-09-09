@@ -15,6 +15,7 @@ public sealed class AnytypeClient
     /// Initializes a new instance of <see cref="AnytypeClient"/> with the given API key.
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
+    /// <param name="apiVersion">The API version to use (optional).</param>
     /// <exception cref="ArgumentNullException"/>
     public AnytypeClient(string apiKey, string? apiVersion = null)
     {
@@ -31,25 +32,59 @@ public sealed class AnytypeClient
         Lists = new ListsClient(_apiKey, ApiVersion);
     }
 
+    /// <summary>
+    /// Gets the API version being used by the client.
+    /// </summary>
     public string ApiVersion { get; }
-    
-    public ISpacesApi Spaces { get; }
 
-    public IObjectsApi Objects { get; }
+    /// <summary>
+    /// Provides methods to interact with Anytype auth endpoints.
+    /// </summary>
+    public static IAuthApi Auth { get; } = new AuthClient();
 
-    public IMembersApi Members { get; }
-
-    public ITypesApi Types { get; }
-
-    public ITemplatesApi Templates { get; }
-
-    public ITagsApi Tags { get; }
-
-    public IPropertiesApi Properties { get; }
-
-    public ISearchApi Search { get; }
-
+    /// <summary>
+    /// Provides methods to interact with Anytype lists and their views.
+    /// </summary>
     public IListsApi Lists { get; }
 
-    public static IAuthApi Auth { get; } = new AuthClient();    
+    /// <summary>
+    /// Provides methods to interact with Anytype members.
+    /// </summary>
+    public IMembersApi Members { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype objects.
+    /// </summary>
+    public IObjectsApi Objects { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype properties.
+    /// </summary>
+    /// <remarks>⚠ Warning: Properties are experimental and may change in the next update.⚠</remarks>
+    public IPropertiesApi Properties { get; }
+
+    /// <summary>
+    /// Provides methods to search Anytype entities.
+    /// </summary>
+    public ISearchApi Search { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype spaces.
+    /// </summary>
+    public ISpacesApi Spaces { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype tags.
+    /// </summary>
+    public ITagsApi Tags { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype templates.
+    /// </summary>
+    public ITemplatesApi Templates { get; }
+
+    /// <summary>
+    /// Provides methods to interact with Anytype types.
+    /// </summary>
+    public ITypesApi Types { get; }
 }

@@ -8,6 +8,9 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class FileIcon : IFileIcon
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FileIcon"/> class.
+    /// </summary>
     public FileIcon(string file)
     {
         File = file ?? throw new ArgumentNullException(nameof(file));

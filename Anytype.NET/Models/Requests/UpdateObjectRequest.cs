@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Anytype.NET.Models.Requests;
 
 /// <summary>
-/// Represents the payload to update an existing object in Anytype.
+/// A payload to update an existing object.
 /// </summary>
 public sealed class UpdateObjectRequest
 {

@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// A request payload for creating a new type.
+/// </summary>
 public sealed class CreateTypeRequest
 {
 #pragma warning disable CS8618

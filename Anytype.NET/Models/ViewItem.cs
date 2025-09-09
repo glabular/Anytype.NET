@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// A views defined for a specific list (query or collection) within a space.
+/// </summary>
 public sealed class ViewItem
 {
 #pragma warning disable CS8618

@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// A request payload for updating a tag.
+/// </summary>
 public sealed class UpdateTagRequest
 {
 #pragma warning disable CS8618

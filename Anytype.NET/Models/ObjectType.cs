@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// Represents a type of an object in Anytype.
+/// </summary>
 public sealed class ObjectType
 {
 #pragma warning disable CS8618

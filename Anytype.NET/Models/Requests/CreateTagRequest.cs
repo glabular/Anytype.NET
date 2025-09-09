@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// A request payoad to create a new tag.
+/// </summary>
 public sealed class CreateTagRequest
 {
     /// <summary>

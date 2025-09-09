@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models;
 
+/// <summary>
+/// A sorting criterion for a list view.
+/// </summary>
 public sealed class SortItem
 {
 #pragma warning disable CS8618

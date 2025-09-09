@@ -14,6 +14,9 @@ namespace Anytype.NET.Models;
 /// </remarks>
 public sealed class NamedIcon : INamedIcon
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NamedIcon"/> class.
+    /// </summary>
     public NamedIcon(string name, string color)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));

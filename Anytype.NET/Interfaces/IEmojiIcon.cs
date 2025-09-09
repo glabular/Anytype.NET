@@ -5,5 +5,8 @@
 /// </summary>
 public interface IEmojiIcon : IIcon
 {
+    /// <summary>
+    /// The emoji of the icon.
+    /// </summary>
     string Emoji { get; set; }
 }

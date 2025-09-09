@@ -2,6 +2,9 @@
 
 namespace Anytype.NET.Models.Requests;
 
+/// <summary>
+/// A request payload for updating a property.
+/// </summary>
 public sealed class UpdatePropertyRequest
 {
 #pragma warning disable CS8618

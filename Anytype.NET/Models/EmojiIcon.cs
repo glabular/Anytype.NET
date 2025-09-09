@@ -8,6 +8,9 @@ namespace Anytype.NET.Models;
 /// </summary>
 public sealed class EmojiIcon : IEmojiIcon
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmojiIcon"/> class.
+    /// </summary>
     public EmojiIcon(string emoji)
     {
         Emoji = emoji;

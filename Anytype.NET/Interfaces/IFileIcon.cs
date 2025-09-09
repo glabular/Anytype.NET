@@ -5,5 +5,8 @@
 /// </summary>
 public interface IFileIcon : IIcon
 {
+    /// <summary>
+    /// The file of the icon.
+    /// </summary>
     string File { get; set; }
 }
