@@ -32,7 +32,7 @@ var client = new AnytypeClient("your-api-key");
 
 3. Usage example
 ```csharp
-var response = await _client.Spaces.ListAsync();
+var response = await client.Spaces.ListAsync();
 
 foreach (var space in response.Spaces)
 {
